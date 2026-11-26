@@ -659,6 +659,9 @@
         .x-stat { padding: 22px 16px; }
       }
       @media (max-width: 340px) { .x-search__row { grid-template-columns: 1fr; } }
+      .x-consent { font-size: 12px; color: var(--x-mute); margin: 0; }
+      .x-consent a, .x-note a { color: inherit; text-decoration: underline; }
+      .x-ok a, .x-sent a { color: inherit; font-weight: 700; text-decoration: underline; }
     </style>
   </head>
   <body>
@@ -917,6 +920,10 @@
                   <option>On-demand help</option>
                 </select>
               </label>
+              <div class="x-two">
+                <label class="x-field">Name<input name="name" required autocomplete="name" placeholder="Your name" /></label>
+                <label class="x-field">Phone<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="98765 43210" /></label>
+              </div>
               <label class="x-field">Address<input name="address" required autocomplete="street-address" placeholder="House, street, area" /></label>
               <fieldset class="x-pick">
                 <legend>Date</legend>
@@ -941,6 +948,7 @@
               </fieldset>
               <p class="x-err" id="x-book-err" role="alert">Pick a date and a time slot.</p>
               <button class="x-btn" type="submit">Book now</button>
+              <p class="x-consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
               <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Booked. Your Chekd Captain will call to confirm.</span></p>
             </form>
           </div>
@@ -958,14 +966,19 @@
               <li><span class="x-n">02</span><h3>Free Chekd Check at home</h3><p>A Chekd Cars inspector checks your vehicle at your door, at no cost.</p></li>
               <li><span class="x-n">03</span><h3>Instant offer, same-day payment</h3><p>Accept the offer and the money reaches your account the same day.</p></li>
             </ol>
-            <form class="x-form x-js-form" novalidate>
+            <form class="x-form x-js-form" data-lead="sell" novalidate>
               <h3>Get your offer</h3>
-              <label class="x-field">Registration number<input name="reg" required placeholder="KA 01 AB 1234" autocomplete="off" style="text-transform: uppercase" /></label>
+              <div class="x-two">
+                <label class="x-field">Name<input name="name" required autocomplete="name" placeholder="Your name" /></label>
+                <label class="x-field">Phone<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="98765 43210" /></label>
+              </div>
+                            <label class="x-field">Registration number<input name="reg" required placeholder="KA 01 AB 1234" autocomplete="off" style="text-transform: uppercase" /></label>
               <div class="x-two">
                 <label class="x-field">Kilometres<input name="km" required inputmode="numeric" pattern="[0-9,]+" placeholder="32,000" /></label>
                 <label class="x-field">City<select name="city"><option>Bengaluru</option><option>Hubballi</option><option>Belagavi</option><option>Mysuru</option></select></label>
               </div>
               <button class="x-btn" type="submit">Get my offer</button>
+              <p class="x-consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
               <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Done. We'll WhatsApp you an offer within 30 minutes.</span></p>
             </form>
           </div>
@@ -1139,7 +1152,7 @@
           </div>
           <div class="x-passcta">
             <div><button class="x-btn" type="button" id="x-passbtn" aria-expanded="false" aria-controls="x-pform">Get my free Chekd Passport</button></div>
-            <form class="x-form x-js-form x-pform" id="x-pform" novalidate hidden>
+            <form class="x-form x-js-form x-pform" id="x-pform" data-lead="passport" novalidate hidden>
               <h3>Your free Chekd Passport</h3>
               <div class="x-pform__row">
                 <label class="x-field">Name<input name="name" required autocomplete="name" /></label>
@@ -1177,7 +1190,7 @@
             <div class="x-town"><span class="x-status">Coming soon</span><h3>Mysuru</h3></div>
             <div class="x-town"><span class="x-status">Coming soon</span><h3>Mangaluru</h3></div>
           </div>
-          <form class="x-form x-js-form" novalidate>
+          <form class="x-form x-js-form" data-lead="town" novalidate>
             <h3>Notify me when you launch in my town</h3>
             <div class="x-inline">
               <label class="x-field">Town<input name="town" required autocomplete="address-level2" list="x-townlist" placeholder="Hubballi" /></label>
@@ -1222,6 +1235,7 @@
               <label class="x-fl"><input name="city" required autocomplete="address-level2" placeholder=" " /><span>City</span></label>
               <label class="x-fl"><select name="business"><option>Car dealer</option><option>Garage</option><option>Investor</option><option>Other</option></select><span>Current business</span></label>
               <button class="x-btn" type="submit">Send enquiry</button>
+              <p class="x-consent">By sending, you agree to our <a href="privacy.html">Privacy Policy</a>.</p>
               <div class="x-sent" hidden>
                 <svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="27" /><path d="M21 33l7 7 15-16" /></svg>
                 <b>Enquiry sent.</b>
@@ -1263,7 +1277,7 @@
           <p class="x-mute">Bengaluru 560064<br /><a href="tel:+919019088160">+91 901 908 8160</a></p>
           <div class="x-foot__links"><a class="x-btn x-btn--ghost" href="https://wa.me/919019088160" target="_blank" rel="noopener">WhatsApp us</a></div>
         </div>
-        <p class="x-note">© 2026 Chekd Cars. All rights reserved.</p>
+        <p class="x-note">© 2026 Chekd Cars. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a></p>
       </footer>
     </div>
 
@@ -1479,6 +1493,36 @@
           rows.forEach(function (r) { r.hidden = r.getAttribute("data-for").split(" ").indexOf(k) < 0; });
         });
 
+        // ---- Leads: save to Supabase; if that fails, hand off to WhatsApp so nothing is lost ----
+        var SB_URL = "https://yjxwiibpcuukucwvlkwq.supabase.co", SB_KEY = "sb_publishable_TRVnPURKF2tOgQ8vab4ySQ_bKIvcvL2", WA = "919019088160";
+        function saveLead(table, row) {
+          return fetch(SB_URL + "/rest/v1/" + table, { method: "POST", headers: { apikey: SB_KEY, Authorization: "Bearer " + SB_KEY, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(row) })
+            .then(function (r) { if (!r.ok) throw new Error("save " + r.status); return true; });
+        }
+        function waLink(text) { return "https://wa.me/" + WA + "?text=" + encodeURIComponent(text); }
+        function stamp() { return new Date().toLocaleString("en-IN", { day: "2-digit", month: "short", hour: "numeric", minute: "2-digit" }); }
+        function v(f, n) { return f[n] ? String(f[n].value || "").trim() : ""; }
+        function lead(kind, f, extra) {
+          var name = v(f, "name"), phone = v(f, "phone"), row, table = "leads", msg;
+          if (kind === "partner") {
+            table = "partner_leads";
+            row = { name: name, phone: phone, town: v(f, "city"), source: "Website", stage: 0, notes: "Current business: " + v(f, "business") + " · " + stamp() };
+            msg = "Hi Chekd Cars, I'd like to enquire about a partnership.\nName: " + name + "\nPhone: " + phone + "\nCity: " + v(f, "city") + "\nBusiness: " + v(f, "business");
+          } else {
+            var base = { name: name || "Website visitor", phone: phone, source: "Website", status: "New", date: stamp() };
+            if (kind === "doorstep") { row = Object.assign(base, { type: "Doorstep", car: v(f, "service"), area: v(f, "address"), town: "Bengaluru", interest: v(f, "service") + " · " + extra }); msg = "Hi Chekd Cars, I'd like to book: " + v(f, "service") + ", " + extra + ".\nAddress: " + v(f, "address"); }
+            else if (kind === "sell") { row = Object.assign(base, { type: "Sell", car: v(f, "reg").toUpperCase(), town: v(f, "city"), interest: "Reg " + v(f, "reg").toUpperCase() + ", " + v(f, "km") + " km" }); msg = "Hi Chekd Cars, I want to sell my vehicle.\nReg: " + v(f, "reg").toUpperCase() + "\nKm: " + v(f, "km") + "\nCity: " + v(f, "city"); }
+            else if (kind === "passport") { row = Object.assign(base, { type: "Passport", car: v(f, "reg").toUpperCase(), interest: "Free Chekd Passport" }); msg = "Hi Chekd Cars, please send my free Chekd Passport.\nCar: " + v(f, "reg").toUpperCase(); }
+            else { row = Object.assign(base, { type: "Town waitlist", town: v(f, "town"), interest: "Notify when we launch in " + v(f, "town") }); msg = "Hi Chekd Cars, please tell me when you launch in " + v(f, "town") + "."; }
+            msg += "\nName: " + (name || "-") + "\nPhone: " + phone;
+          }
+          return saveLead(table, row).then(function () { return null; }, function () { return waLink(msg); });
+        }
+        function fallback(f, link) {
+          var ok = f.querySelector(".x-ok span, .x-sent p");
+          if (link && ok) ok.innerHTML = 'Almost there. <a href="' + link + '" target="_blank" rel="noopener">Tap to send it on WhatsApp</a> and we\'ll confirm.';
+        }
+
         // forms: inline success, no alerts
         $$(".x-js-form").forEach(function (f) {
           f.addEventListener("submit", function (e) {
@@ -1487,7 +1531,7 @@
               var bad = f.querySelector(":invalid"); bad.focus(); f.reportValidity(); return;
             }
             $$("input, select, button[type=submit]", f).forEach(function (el) { el.disabled = true; });
-            f.querySelector(".x-ok").classList.add("is-on");
+            lead(f.getAttribute("data-lead") || "town", f).then(function (link) { fallback(f, link); f.querySelector(".x-ok").classList.add("is-on"); });
           });
         });
 
@@ -1509,8 +1553,10 @@
           if (!book.checkValidity()) { book.querySelector(":invalid").focus(); book.reportValidity(); return; }
           var picked = function (set) { return set.some(function (b) { return b.getAttribute("aria-pressed") === "true"; }); };
           if (!picked(days) || !picked(slots)) { bookErr.classList.add("is-on"); return; }
+          var lbl = function (set) { var b = set.filter(function (x) { return x.getAttribute("aria-pressed") === "true"; })[0]; return b ? b.textContent.trim() : ""; };
+          var when = lbl(days) + ", " + lbl(slots);
           $$("input, select, button", book).forEach(function (el) { el.disabled = true; });
-          book.querySelector(".x-ok").classList.add("is-on");
+          lead("doorstep", book, when).then(function (link) { fallback(book, link); book.querySelector(".x-ok").classList.add("is-on"); });
         });
 
         // partner enquiry: reveal the formats after submit
@@ -1519,6 +1565,7 @@
           e.preventDefault();
           if (!pf.checkValidity()) { pf.querySelector(":invalid").focus(); pf.reportValidity(); return; }
           $$("input, select, button", pf).forEach(function (el) { el.disabled = true; });
+          lead("partner", pf).then(function (link) { fallback(pf, link); });
           pf.querySelector("button[type=submit]").textContent = "Enquiry sent";
           pf.classList.add("is-sent");
           pf.querySelector(".x-sent").hidden = false;

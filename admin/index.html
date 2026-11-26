@@ -249,13 +249,9 @@
           <p>Sign in to the Chekd Cars admin console.</p>
           <label class="x-field">Email<input class="x-input" type="email" name="email" placeholder="you@chekdcars.in" autocomplete="username" /></label>
           <label class="x-field">Password<input class="x-input" type="password" name="password" placeholder="••••••••" autocomplete="current-password" /></label>
-          <label class="x-field">Role
-            <select class="x-input" name="role"><option>Super Admin</option><option>Outlet Manager</option><option>Chekd Captain</option></select>
-          </label>
           <button class="x-btn x-btn--primary x-btn--lg" type="submit" id="login-go">Sign in</button>
           <div class="x-row">
-            <button class="x-btn" type="button" id="login-signup">Create account</button>
-            <button class="x-btn" type="button" id="login-forgot">Forgot password</button>
+                        <button class="x-btn" type="button" id="login-forgot">Forgot password</button>
           </div>
           <p class="x-fine" id="login-msg" role="status" aria-live="polite"></p>
         </form>
@@ -439,7 +435,7 @@
       /* ---------- Supabase ---------- */
       const SB_URL = "https://yjxwiibpcuukucwvlkwq.supabase.co", SB_KEY = "sb_publishable_TRVnPURKF2tOgQ8vab4ySQ_bKIvcvL2";
       // State key -> table. Demo rows live in DEMO and are only written when asked.
-      const TABLES = { outlets: "outlets", leads: "leads", cars: "cars", tasks: "doorstep", jobs: "service", parts: "parts", orders: "part_orders", partners: "partner_leads", staff: "staff", customers: "customers" };
+      const TABLES = { outlets: "outlets", leads: "leads", cars: "cars", tasks: "doorstep_bookings", jobs: "service_jobs", parts: "parts", orders: "part_orders", partners: "partner_leads", staff: "staff", customers: "customers" };
       const DEMO = {};
       Object.keys(TABLES).forEach((k) => { DEMO[k] = S[k].map(({ id, ...r }) => r); S[k] = []; });
       const VIEW_TABLES = { leads: ["leads"], inventory: ["cars"], doorstep: ["tasks"], service: ["jobs"], parts: ["parts", "orders"], outlets: ["outlets"], partners: ["partners"], staff: ["staff"], customers: ["customers"] };
@@ -460,6 +456,7 @@
       }
       function setSession(s) {
         session = { access_token: s.access_token, refresh_token: s.refresh_token, email: (s.user && s.user.email) || (session && session.email) || "" };
+        try { sessionStorage.setItem("chekd-rt", session.refresh_token); } catch (e) { /* private mode */ }
         clearTimeout(refreshTimer);
         const secs = Math.max(30, (+s.expires_in || 3600) - 60);
         refreshTimer = setTimeout(() => refreshSession().catch(() => { toast("Session expired. Sign in again.", true); signOut(true); }), secs * 1000);
@@ -487,7 +484,7 @@
         $("#view").innerHTML = `<div class="x-loading"><span class="x-spin"></span>Loading your workspace…</div>`;
         const fails = [];
         await Promise.all(Object.keys(TABLES).map(async (k) => {
-          try { S[k] = (await rest(TABLES[k], "?select=*&order=id.asc")) || []; } catch (e) { S[k] = []; fails.push(`${LABELS[k]}: ${e.message}`); }
+          try { S[k] = (await rest(TABLES[k], "?select=*&order=created_at.asc")) || []; } catch (e) { S[k] = []; fails.push(`${LABELS[k]}: ${e.message}`); }
         }));
         S.customers.forEach((c) => { c.cars = c.cars || []; c.log = c.log || []; });
         try {
@@ -525,14 +522,16 @@
       const D_STATUS = ["Scheduled", "On the way", "Done"];
       const STAGES = ["Received", "Inspecting", "Awaiting approval", "In progress", "Ready", "Delivered"];
       const ROLES = ["Outlet Manager", "Chekd Captain", "Technician", "Sales", "Telecaller"];
-      const OUTLETS = ["Chekd Hub Bengaluru", "Chekd Garage Koramangala", "Chekd Garage Whitefield"];
+      const OUTLETS_DEFAULT = ["Chekd Hub Bengaluru", "Chekd Garage HSR Layout"];
+      const outletNames = () => (S.outlets.length ? S.outlets.map((o) => o.name) : OUTLETS_DEFAULT);
+      const captainNames = () => { const c = S.staff.filter((x) => x.role === "Chekd Captain" && x.active !== false).map((x) => x.name); return c.length ? c : S.captains; };
       const CHECK = { car: "Maruti Swift VXi · 2020 · 41,200 km · KA-04-PR-3318", score: 88, groups: [
         ["Engine", 27, 2, 1], ["Transmission", 17, 1, 0], ["Brakes", 15, 1, 0], ["Suspension", 18, 2, 0], ["Electricals", 25, 2, 1],
         ["Body", 28, 4, 0], ["Interior", 24, 2, 0], ["Tyres", 10, 2, 0], ["Documents", 18, 0, 0]] };
       const NAV = ["Dashboard", "Leads", "Inventory", "Doorstep", "Service", "Parts", "Outlets", "Partners", "Staff", "Customers", "Reports", "Settings"];
       const LEAD_STATUS = ["New", "Contacted", "Test drive", "Negotiating", "Won", "Lost"];
       const $ = (s, r = document) => r.querySelector(s);
-      const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
       const tone = { New: "red", Won: "teal", Live: "teal", Lost: "dim", Sold: "dim", "Test drive": "warm", Negotiating: "warm", Reserved: "warm", Done: "teal", "En route": "warm",
         "Awaiting approval": "red", "In progress": "warm", Ready: "teal", Delivered: "dim", "Low stock": "red", Opening: "warm", Planned: "dim", Agreement: "warm", "On the way": "warm", Yes: "teal", No: "dim" };
       const kpi = ([l, v]) => `<div class="x-card x-kpi"><span class="x-kpi__label">${l}</span><span class="x-kpi__fig">${v}</span></div>`;
@@ -562,7 +561,7 @@
                 <div class="chart__canvas"><canvas id="c-rev" role="img" aria-label="Car sales 10.4L, Service 4.6L, Parts 2.3L, Doorstep fees 1.1L"></canvas></div></div>
             </div>
             <div class="x-card"><h2>Today's Doorstep</h2><p>First ${tasks.length} of ${S.tasks.length} tasks across Bengaluru · <a class="link" href="#doorstep">Open Doorstep</a></p>
-              <ul class="x-list">${tasks.length ? "" : `<li><span></span><p class="x-fine">No bookings yet.</p></li>`}${tasks.map((t) => `<li><time>${t.time.replace(/^0/, "")}</time><div>${t.type} · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>${pill(t.status)}</li>`).join("")}</ul></div>`;
+              <ul class="x-list">${tasks.length ? "" : `<li><span></span><p class="x-fine">No bookings yet.</p></li>`}${tasks.map((t) => `<li><time>${t.time.replace(/^0/, "")}</time><div>${esc(t.type)} · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>${pill(t.status)}</li>`).join("")}</ul></div>`;
           if (empty) $("#demo-all").onclick = () => loadDemo(Object.keys(TABLES));
           const sold = Hark.data("sold-data"), R = Hark.data("report-data"), last = R.months.length - 1;
           const rev = STREAMS.map((n) => ({ stream: n, lakh: R.streams[n][last] }));
@@ -632,7 +631,7 @@
             <label class="x-field">Customer<input class="x-input" name="customer" required placeholder="e.g. Rohan Desai" /></label>
             <label class="x-field">Area<input class="x-input" name="area" required placeholder="e.g. Whitefield" /></label>
             <label class="x-field">Car<input class="x-input" name="car" required placeholder="e.g. Hyundai Venue" /></label>
-            <label class="x-field">Chekd Captain<select class="x-input" name="captain">${opts(S.captains)}</select></label>`, (f) => {
+            <label class="x-field">Chekd Captain<select class="x-input" name="captain">${opts(captainNames())}</select></label>`, (f) => {
             if (f.time.value < "09:00" || f.time.value > "19:00") f.time.value = "19:00";
             const row = { time: f.time.value, type: f.type.value, customer: f.customer.value.trim(), area: f.area.value.trim(), car: f.car.value.trim(), captain: f.captain.value, status: "Scheduled" };
             return add("tasks", row).then((ok) => { if (ok) { render(); toast(`Booked ${row.type} at ${row.time}`); } return ok; });
@@ -684,7 +683,7 @@
           $("#add-staff").onclick = () => modal("Add staff", `
             <label class="x-field x-full">Name<input class="x-input" name="name" required placeholder="e.g. Anil Kumar" /></label>
             <label class="x-field">Role<select class="x-input" name="role">${opts(ROLES)}</select></label>
-            <label class="x-field">Outlet<select class="x-input" name="outlet">${opts(OUTLETS)}</select></label>
+            <label class="x-field">Outlet<select class="x-input" name="outlet">${opts(outletNames())}</select></label>
             <label class="x-field x-full">Phone<input class="x-input" name="phone" type="tel" required placeholder="+91 98450 00000" /></label>`, (f) => {
             const row = { name: f.name.value.trim(), role: f.role.value, outlet: f.outlet.value, phone: f.phone.value.trim(), jobs: 0, rating: null, active: true };
             return add("staff", row).then((ok) => { if (ok) { S.staffRole = "All"; render(); toast(`${row.name} added to staff`); } return ok; });
@@ -714,7 +713,7 @@
           };
           const orderRows = () => { $("#p-orders").innerHTML = S.orders.length ? S.orders.map((o, i) => `
             <div class="x-task"><div><b>${esc(o.code)}</b> · ${esc(o.who)} · <b>${inr(o.amt)}</b><small>${esc(o.items)}</small></div>
-            <select class="x-input" data-i="${i}" data-s="${o.status}" aria-label="Status for ${esc(o.code)}">${opts(ORDER_STATUS, o.status)}</select></div>`).join("")
+            <select class="x-input" data-i="${i}" data-s="${esc(o.status)}" aria-label="Status for ${esc(o.code)}">${opts(ORDER_STATUS, o.status)}</select></div>`).join("")
             : `<p class="x-fine">No parts orders yet.</p>`; };
           orderRows();
           $("#p-orders").onchange = (e) => {
@@ -813,7 +812,7 @@
           const rows = S.outlets.filter((o) => S.town === "All towns" || o.town === S.town);
           const total = S.outlets.reduce((a, o) => a + o.sales, 0);
           const share = (o) => (total ? Math.round((o.sales / total) * 100) : 0) + "%";
-          $("#r-rows").innerHTML = rows.length ? rows.map((o) => `<tr><td><b>${esc(o.name)}</b></td><td>${o.type}</td><td>${o.town}</td><td>${esc(o.manager)}</td>
+          $("#r-rows").innerHTML = rows.length ? rows.map((o) => `<tr><td><b>${esc(o.name)}</b></td><td>${esc(o.type)}</td><td>${esc(o.town)}</td><td>${esc(o.manager)}</td>
             <td class="x-num">${o.staff || "—"}</td><td class="x-num">${o.cars || "—"}</td><td class="x-num"><b>${o.sales ? "₹" + o.sales + "L" : "—"}</b></td>
             <td class="x-num">${o.sales ? share(o) : "—"}</td><td class="x-num">${o.jobs || "—"}</td><td>${pill(o.status)}</td></tr>`).join("")
             : `<tr><td colspan="10" class="x-empty">No outlets in ${esc(S.town)} yet.</td></tr>`;
@@ -912,18 +911,18 @@
           (S.cType === "All types" || c.type === S.cType) && (S.town === "All towns" || c.town === S.town) &&
           (!q || [c.name, c.town, c.phone, c.type, ...c.cars].join(" ").toLowerCase().includes(q)));
         $("#cust-rows").innerHTML = rows.length ? rows.map(([c, i]) => `
-          <tr class="x-click" data-i="${i}" tabindex="0"><td><b>${esc(c.name)}</b></td><td>${c.town}</td><td class="x-num">${c.phone}</td><td>${c.type}</td>
+          <tr class="x-click" data-i="${i}" tabindex="0"><td><b>${esc(c.name)}</b></td><td>${esc(c.town)}</td><td class="x-num">${esc(c.phone)}</td><td>${esc(c.type)}</td>
           <td>${esc(c.cars[0] || "—")}${c.cars.length > 1 ? `<small>+${c.cars.length - 1} more</small>` : ""}</td>
-          <td class="x-num"><b>${inr(c.ltv)}</b></td><td>${pill(c.passport ? "Yes" : "No")}</td><td>${c.last}</td></tr>`).join("")
+          <td class="x-num"><b>${inr(c.ltv)}</b></td><td>${pill(c.passport ? "Yes" : "No")}</td><td>${esc(c.last)}</td></tr>`).join("")
           : `<tr><td colspan="8" class="x-empty">No customers match these filters.</td></tr>`;
       }
       function openCustomer(i) {
         const c = S.customers[i];
         layer.innerHTML = `<div class="x-overlay" data-close></div>
           <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Customer details">
-            <div class="x-drawer__head"><div><h2>${esc(c.name)}</h2><p class="x-fine">${c.type} · ${c.town}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
-            <dl class="x-dl"><dt>Phone</dt><dd>${c.phone}</dd><dt>Cars</dt><dd>${esc(c.cars.join(", ") || "—")}</dd><dt>Lifetime value</dt><dd><b>${inr(c.ltv)}</b></dd>
-              <dt>Chekd Passport</dt><dd>${pill(c.passport ? "Yes" : "No")}</dd><dt>Last visit</dt><dd>${c.last}</dd></dl>
+            <div class="x-drawer__head"><div><h2>${esc(c.name)}</h2><p class="x-fine">${esc(c.type)} · ${esc(c.town)}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <dl class="x-dl"><dt>Phone</dt><dd>${esc(c.phone)}</dd><dt>Cars</dt><dd>${esc(c.cars.join(", ") || "—")}</dd><dt>Lifetime value</dt><dd><b>${inr(c.ltv)}</b></dd>
+              <dt>Chekd Passport</dt><dd>${pill(c.passport ? "Yes" : "No")}</dd><dt>Last visit</dt><dd>${esc(c.last)}</dd></dl>
             <h3>Activity</h3>
             <ol class="x-tl">${[...c.log].reverse().map(([d, t]) => `<li><time>${d}</time>${esc(t)}</li>`).join("")}</ol>
             <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
@@ -941,8 +940,8 @@
         const rows = S.parts.map((p, i) => [p, i]).filter(([p]) => (S.pType === "All types" || p.type === S.pType) &&
           (!q || [p.name, p.sku, p.brand, p.fits].join(" ").toLowerCase().includes(q)));
         $("#part-rows").innerHTML = rows.length ? rows.map(([p, i]) => `
-          <tr><td><b>${esc(p.name)}</b></td><td><span class="x-reg">${esc(p.sku)}</span></td><td>${esc(p.brand)}</td><td>${esc(p.fits)}</td><td>${p.type}</td>
-          <td><span class="x-stock"><b class="x-num">${p.qty}</b>${low(p) ? pill("Low stock") : ""}</span></td><td class="x-num">${p.reorder}</td>
+          <tr><td><b>${esc(p.name)}</b></td><td><span class="x-reg">${esc(p.sku)}</span></td><td>${esc(p.brand)}</td><td>${esc(p.fits)}</td><td>${esc(p.type)}</td>
+          <td><span class="x-stock"><b class="x-num">${esc(p.qty)}</b>${low(p) ? pill("Low stock") : ""}</span></td><td class="x-num">${esc(p.reorder)}</td>
           <td class="x-num"><b>${inr(p.price)}</b></td><td><button class="x-btn" data-restock="${i}" aria-label="Restock ${esc(p.name)} by 10">Restock +10</button></td></tr>`).join("")
           : `<tr><td colspan="9" class="x-empty">No parts match these filters.</td></tr>`;
       }
@@ -953,7 +952,7 @@
         $("#o-sub").textContent = `${S.town} · ${rows.length} outlet${rows.length === 1 ? "" : "s"}, ${rows.filter(([o]) => o.status === "Live").length} live`;
         $("#outlets").innerHTML = rows.length ? rows.map(([o, i]) => `
           <article class="x-card x-job">
-            <div class="x-job__head"><div><h2>${esc(o.name)}</h2><p class="x-fine">${o.type} · ${esc(o.area)}, ${o.town}${o.note ? " · " + o.note : ""}</p></div>${pill(o.status)}</div>
+            <div class="x-job__head"><div><h2>${esc(o.name)}</h2><p class="x-fine">${esc(o.type)} · ${esc(o.area)}, ${esc(o.town)}${o.note ? " · " + o.note : ""}</p></div>${pill(o.status)}</div>
             <dl class="x-dl"><dt>Manager</dt><dd>${esc(o.manager)}</dd><dt>Staff</dt><dd>${dash(o.staff)}</dd><dt>Cars in stock</dt><dd>${dash(o.cars)}</dd>
               <dt>Revenue (Nov)</dt><dd><b>${o.sales ? "₹" + o.sales + "L" : "—"}</b></dd><dt>Service jobs</dt><dd>${dash(o.jobs)}</dd></dl>
             <label class="x-field">Set status<select class="x-input" data-i="${i}">${opts(O_STATUS, o.status)}</select></label>
@@ -968,7 +967,7 @@
           return `<section class="x-col" aria-label="${s}"><div class="x-col__head"><h2>${s}</h2><span aria-label="${cards.length} leads">${cards.length}</span></div>
             ${cards.map(([p, i]) => `<article class="x-kcard" data-p="${i}">
               <button class="x-kcard__name" type="button">${esc(p.name)}</button>
-              <p class="x-fine">${esc(p.town)} · ${p.type}<br />${p.band} · ${p.source}</p>
+              <p class="x-fine">${esc(p.town)} · ${esc(p.type)}<br />${esc(p.band)} · ${esc(p.source)}</p>
               <button class="x-btn" data-move="${i}"${k === last ? " disabled" : ""}>${k === last ? "Live ✓" : "Move → " + P_STAGES[k + 1]}</button>
             </article>`).join("") || `<p class="x-fine">No leads</p>`}</section>`;
         }).join("");
@@ -982,9 +981,9 @@
         const p = S.partners[i], last = p.stage === P_STAGES.length - 1;
         layer.innerHTML = `<div class="x-overlay" data-close></div>
           <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Partner lead">
-            <div class="x-drawer__head"><div><h2>${esc(p.name)}</h2><p class="x-fine">Chekd ${p.type} partner · ${esc(p.town)}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
-            <dl class="x-dl"><dt>Stage</dt><dd>${pill(P_STAGES[p.stage])}</dd><dt>Town</dt><dd>${esc(p.town)}</dd><dt>Type</dt><dd>${p.type}</dd>
-              <dt>Investment</dt><dd>${p.band}</dd><dt>Source</dt><dd>${p.source}</dd></dl>
+            <div class="x-drawer__head"><div><h2>${esc(p.name)}</h2><p class="x-fine">Chekd ${esc(p.type)} partner · ${esc(p.town)}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <dl class="x-dl"><dt>Stage</dt><dd>${pill(P_STAGES[p.stage])}</dd><dt>Town</dt><dd>${esc(p.town)}</dd><dt>Type</dt><dd>${esc(p.type)}</dd>
+              <dt>Investment</dt><dd>${esc(p.band)}</dd><dt>Source</dt><dd>${esc(p.source)}</dd></dl>
             <label class="x-field">Notes<textarea class="x-input" id="p-notes">${esc(p.notes)}</textarea></label>
             <button class="x-btn" id="p-move"${last ? " disabled" : ""}>${last ? "Live ✓" : "Move → " + P_STAGES[p.stage + 1]}</button>
             <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
@@ -1009,8 +1008,8 @@
         for (let h = 9; h <= 19; h++) {
           const here = list.filter((t) => parseInt(t.time, 10) === h);
           html += `<li><time>${h}:00</time><div>${here.length ? here.map((t) => `
-            <div class="x-task"><div><b>${t.time.replace(/^0/, "")} · ${t.type}</b> · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>
-            <select class="x-input" data-id="${t.id}" data-s="${t.status}" aria-label="Status for ${esc(t.customer)}">${opts(D_STATUS, t.status)}</select></div>`).join("")
+            <div class="x-task"><div><b>${t.time.replace(/^0/, "")} · ${esc(t.type)}</b> · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>
+            <select class="x-input" data-id="${esc(t.id)}" data-s="${esc(t.status)}" aria-label="Status for ${esc(t.customer)}">${opts(D_STATUS, t.status)}</select></div>`).join("")
             : `<p class="x-fine">Open</p>`}</div></li>`;
         }
         $("#d-slots").innerHTML = html;
@@ -1020,8 +1019,8 @@
         const last = STAGES.length - 1;
         $("#jobs").innerHTML = S.jobs.map((j, i) => `
           <article class="x-card x-job">
-            <div class="x-job__head"><h2>${esc(j.car)}</h2><span class="x-reg">${j.reg}</span></div>
-            <dl class="x-dl"><dt>Customer</dt><dd>${esc(j.customer)}</dd><dt>Garage</dt><dd>${j.garage}</dd><dt>Job</dt><dd>${esc(j.job)}</dd><dt>Estimate</dt><dd><b>${inr(j.est)}</b></dd></dl>
+            <div class="x-job__head"><h2>${esc(j.car)}</h2><span class="x-reg">${esc(j.reg)}</span></div>
+            <dl class="x-dl"><dt>Customer</dt><dd>${esc(j.customer)}</dd><dt>Garage</dt><dd>${esc(j.garage)}</dd><dt>Job</dt><dd>${esc(j.job)}</dd><dt>Estimate</dt><dd><b>${inr(j.est)}</b></dd></dl>
             <div><div class="x-job__head" style="margin-bottom:8px"><span class="x-fine">Stage ${j.stage + 1} of ${STAGES.length}</span>${pill(STAGES[j.stage])}</div>
               <div class="x-stage${j.stage === last ? " is-done" : ""}" role="progressbar" aria-valuemin="1" aria-valuemax="${STAGES.length}" aria-valuenow="${j.stage + 1}" aria-valuetext="${STAGES[j.stage]}">${STAGES.map((s, k) => `<span class="${k <= j.stage ? "on" : ""}" title="${s}"></span>`).join("")}</div></div>
             <button class="x-btn" data-adv="${i}"${j.stage === last ? " disabled" : ""}>${j.stage === last ? "Delivered ✓" : "Advance to " + STAGES[j.stage + 1]}</button>
@@ -1031,8 +1030,8 @@
         if (!$("#staff-rows")) return;
         const rows = S.staff.map((s, i) => [s, i]).filter(([s]) => S.staffRole === "All" || s.role === S.staffRole);
         $("#staff-rows").innerHTML = rows.length ? rows.map(([s, i]) => `
-          <tr class="${s.active ? "" : "is-off"}"><td><b>${esc(s.name)}</b></td><td>${s.role}</td><td>${s.outlet}</td><td class="x-num">${esc(s.phone)}</td>
-          <td class="x-num">${s.jobs}</td><td class="x-num">${s.rating ? "★ " + (+s.rating).toFixed(1) : "—"}</td>
+          <tr class="${s.active ? "" : "is-off"}"><td><b>${esc(s.name)}</b></td><td>${esc(s.role)}</td><td>${esc(s.outlet)}</td><td class="x-num">${esc(s.phone)}</td>
+          <td class="x-num">${esc(s.jobs)}</td><td class="x-num">${s.rating ? "★ " + (+s.rating).toFixed(1) : "—"}</td>
           <td><label class="x-switch"><input type="checkbox" data-i="${i}"${s.active ? " checked" : ""} aria-label="${esc(s.name)} active" /><span></span></label></td></tr>`).join("")
           : `<tr><td colspan="7" class="x-empty">No staff in this role.</td></tr>`;
       }
@@ -1062,9 +1061,9 @@
           (S.town === "All towns" || l.town === S.town) &&
           (!q || [l.name, l.car, l.area, l.town, l.captain, l.type, l.source].join(" ").toLowerCase().includes(q)));
         $("#lead-rows").innerHTML = rows.length ? rows.map((l) => `
-          <tr class="x-click" data-id="${l.id}" tabindex="0">
-            <td><b>${esc(l.name)}</b><small>${esc(l.area)}</small></td><td>${l.type}</td><td>${esc(l.car)}</td><td>${l.source}</td>
-            <td>${l.town}</td><td>${pill(l.status)}</td><td>${esc(l.captain)}</td></tr>`).join("")
+          <tr class="x-click" data-id="${esc(l.id)}" tabindex="0">
+            <td><b>${esc(l.name)}</b><small>${esc(l.area)}</small></td><td>${esc(l.type)}</td><td>${esc(l.car)}</td><td>${esc(l.source)}</td>
+            <td>${esc(l.town)}</td><td>${pill(l.status)}</td><td>${esc(l.captain)}</td></tr>`).join("")
           : `<tr><td colspan="7" class="x-empty">No leads match these filters.</td></tr>`;
       }
       function carRows() {
@@ -1072,7 +1071,7 @@
         const q = S.q.trim().toLowerCase();
         const rows = S.cars.filter((c) => !q || [c.model, c.fuel, c.status].join(" ").toLowerCase().includes(q));
         $("#car-rows").innerHTML = rows.length ? rows.map((c) => `
-          <tr><td><b>${esc(c.model)}</b></td><td class="x-num">${c.year}</td><td class="x-num">${(+c.km || 0).toLocaleString("en-IN")}</td><td>${esc(c.fuel)}</td>
+          <tr><td><b>${esc(c.model)}</b></td><td class="x-num">${esc(c.year)}</td><td class="x-num">${(+c.km || 0).toLocaleString("en-IN")}</td><td>${esc(c.fuel)}</td>
           <td class="x-num"><b>₹${(+c.price || 0).toFixed(2)} L</b></td><td>${score(c.score)}</td><td>${pill(c.status)}</td></tr>`).join("")
           : `<tr><td colspan="7" class="x-empty">No cars match “${esc(S.q)}”.</td></tr>`;
       }
@@ -1086,10 +1085,10 @@
         const l = S.leads.find((x) => String(x.id) === String(id)); if (!l) return;
         layer.innerHTML = `<div class="x-overlay" data-close></div>
           <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Lead details">
-            <div class="x-drawer__head"><div><h2>${esc(l.name)}</h2><p class="x-fine">${l.type} lead · ${l.date}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <div class="x-drawer__head"><div><h2>${esc(l.name)}</h2><p class="x-fine">${esc(l.type)} lead · ${esc(l.date)}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
             <dl class="x-dl">
-              <dt>Phone</dt><dd>${l.phone}</dd><dt>Car</dt><dd>${esc(l.car)}</dd><dt>Area</dt><dd>${esc(l.area)}, ${l.town}</dd>
-              <dt>Source</dt><dd>${l.source}</dd><dt>Captain</dt><dd>${esc(l.captain)}</dd>
+              <dt>Phone</dt><dd>${esc(l.phone)}</dd><dt>Car</dt><dd>${esc(l.car)}</dd><dt>Area</dt><dd>${esc(l.area)}, ${esc(l.town)}</dd>
+              <dt>Source</dt><dd>${esc(l.source)}</dd><dt>Captain</dt><dd>${esc(l.captain)}</dd>
             </dl>
             <label class="x-field">Status<select class="x-input" id="lead-set">${LEAD_STATUS.map((s) => `<option${s === l.status ? " selected" : ""}>${s}</option>`).join("")}</select></label>
             <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
@@ -1108,7 +1107,7 @@
             <form id="car-form">
               <h2 class="x-full">Add car</h2>
               <label class="x-field x-full">Make / model<input class="x-input" name="model" required placeholder="e.g. Hyundai Creta SX" /></label>
-              <label class="x-field">Year<input class="x-input" name="year" type="number" min="2000" max="2025" value="2021" required /></label>
+              <label class="x-field">Year<input class="x-input" name="year" type="number" min="2000" max="${new Date().getFullYear() + 1}" value="2021" required /></label>
               <label class="x-field">Km driven<input class="x-input" name="km" type="number" min="0" value="30000" required /></label>
               <label class="x-field">Fuel<select class="x-input" name="fuel"><option>Petrol</option><option>Diesel</option><option>CNG</option><option>Electric</option></select></label>
               <label class="x-field">Price (₹ lakh)<input class="x-input" name="price" type="number" step="0.01" min="0" value="8.5" required /></label>
@@ -1150,7 +1149,8 @@
 
       function render() {
         const key = location.hash.slice(1) || "dashboard";
-        const name = NAV.find((n) => n.toLowerCase() === key) || "Dashboard";
+        let name = NAV.find((n) => n.toLowerCase() === key) || "Dashboard";
+        if (!allowed(name)) name = NAV.find(allowed) || "Dashboard";
         charts.forEach((c) => c.destroy()); charts = [];
         closeLayer(); setDrawer(false);
         document.querySelectorAll("#nav a").forEach((a) => a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + name.toLowerCase()));
@@ -1188,8 +1188,21 @@
         if (lf.password.value.length < 6) { loginMsg("Use a password of at least 6 characters."); toast("Use a password of at least 6 characters.", true); lf.password.focus(); return null; }
         return { email: lf.email.value.trim(), password: lf.password.value };
       };
+      // Role comes from the profiles table, never from the browser. v1 'admin' rows count as Super Admin.
+      async function loadRole() {
+        let role = "Chekd Captain";
+        try {
+          const u = await sbFetch("/auth/v1/user");
+          const r = (await rest("profiles", `?id=eq.${u.id}&select=role`)) || [];
+          const v = r[0] && r[0].role;
+          if (v === "admin") role = "Super Admin"; else if (v && S.perm[v]) role = v;
+        } catch (e) { /* least privilege */ }
+        return role;
+      }
+      const allowed = (name) => S.role === "Super Admin" || (S.perm[S.role] || []).includes(name);
+      function drawNav() { $("#nav").innerHTML = NAV.filter(allowed).map((n) => `<a href="#${n.toLowerCase()}">${n}</a>`).join(""); }
       async function enterApp() {
-        S.role = lf.role.value;
+        S.role = await loadRole();
         $("#who-role").textContent = S.role;
         const email = session.email || "";
         const base = (email.split("@")[0] || S.role).replace(/[^a-z ]/gi, " ").trim() || S.role;
@@ -1200,6 +1213,7 @@
         $("#login").hidden = true;
         $("#app").hidden = false;
         await loadAll();
+        drawNav();
         if (session) render();
       }
       lf.onsubmit = (e) => {
@@ -1211,7 +1225,7 @@
           await enterApp();
         });
       };
-      $("#login-signup").onclick = (e) => {
+      if ($("#login-signup")) $("#login-signup").onclick = (e) => {
         const c = creds(); if (!c) return;
         loginBusy(e.currentTarget, async () => {
           const r = await sbFetch(`/auth/v1/signup?redirect_to=${encodeURIComponent(location.href.split("#")[0])}`, { method: "POST", body: c, auth: false });
@@ -1230,6 +1244,7 @@
       async function signOut(silent) {
         const s = session;
         session = null; clearTimeout(refreshTimer);
+        try { sessionStorage.removeItem("chekd-rt"); } catch (e) { /* ignore */ }
         if (s && !silent) { try { await fetch(SB_URL + "/auth/v1/logout", { method: "POST", headers: { apikey: SB_KEY, Authorization: `Bearer ${s.access_token}` } }); } catch (e) { /* signed out locally anyway */ } }
         Object.keys(TABLES).forEach((k) => (S[k] = []));
         charts.forEach((c) => c.destroy()); charts = [];
@@ -1243,7 +1258,16 @@
       (async () => {
         const h = new URLSearchParams(location.hash.slice(1));
         if (!h.get("access_token")) {
-          if (h.get("error_description")) { loginMsg(h.get("error_description")); history.replaceState(null, "", location.pathname + location.search); }
+          if (h.get("error_description")) { loginMsg(h.get("error_description")); history.replaceState(null, "", location.pathname + location.search); return; }
+          // Restore a session after a page refresh
+          let rt = null; try { rt = sessionStorage.getItem("chekd-rt"); } catch (e) { /* ignore */ }
+          if (rt) {
+            try {
+              setSession(await sbFetch("/auth/v1/token?grant_type=refresh_token", { method: "POST", body: { refresh_token: rt }, auth: false }));
+              const u = await sbFetch("/auth/v1/user"); session.email = (u && u.email) || "";
+              await enterApp();
+            } catch (e) { session = null; try { sessionStorage.removeItem("chekd-rt"); } catch (x) { /* ignore */ } }
+          }
           return;
         }
         const type = h.get("type");

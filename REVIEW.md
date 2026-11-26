@@ -3,6 +3,20 @@
 Scope: `web-app/` (public site, 1,672 lines), `admin/` (Supabase admin, 1,272 lines, ~83 KB inline JS), `backend/schema.sql` (v1).
 The live Supabase project was probed read-only with the publishable key.
 
+## Status (updated 2026-11-26)
+
+Done in code:
+- Admin: table names fixed (`doorstep_bookings`, `service_jobs`); rows ordered by `created_at`; every rendered field escaped; role read from `profiles` (v1 `admin` = Super Admin, anything else unknown = Chekd Captain) and the nav hides modules the role can't open; role picker and "Create account" removed from login; session survives a refresh (tab-scoped); add-car year limit follows the calendar; outlet and Captain dropdowns come from real data.
+- Public site: all five forms now save to Supabase (`leads`, `partner_leads`). If the save fails, the visitor gets a prefilled WhatsApp link so no lead is lost. Name and phone added to the Doorstep and Sell forms. Privacy Policy and Terms pages (drafts) with consent lines on forms. Mobile layout fixes.
+
+Still needs the owner (Supabase dashboard):
+1. SQL editor: run `backend/migrations/002_align_admin_schema.sql`, then `003_lock_down_access.sql`.
+2. Approve yourself: `update profiles set approved = true, role = 'Super Admin' where id = (select id from auth.users where email = 'YOUR EMAIL');`
+3. Authentication > Sign In / Providers > Email: turn off "Allow new users to sign up". Invite staff from Authentication > Users.
+4. Authentication > URL Configuration: set Site URL to `https://wowcars777.github.io/wowcars/admin/` so reset links land on the admin.
+
+Until step 1 runs, public forms fall back to WhatsApp and admin saves still fail.
+
 ## Verdict
 
 The front end is polished: strong brand, responsive, accessible (aria labels, focus handling, reduced motion), clean vanilla JS with no build step.
