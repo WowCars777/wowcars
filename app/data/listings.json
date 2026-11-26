@@ -1,0 +1,145 @@
+[
+ {
+  "id": "maruti-swift-vxi",
+  "type": "car",
+  "name": "Maruti Swift VXi",
+  "price": 585000,
+  "score": 92,
+  "year": 2021,
+  "km": 28400,
+  "fuel": "Petrol",
+  "city": "Bengaluru",
+  "passport": true,
+  "specs": [
+   "2021",
+   "28,400 km",
+   "Petrol",
+   "Bengaluru"
+  ]
+ },
+ {
+  "id": "hyundai-creta-sx",
+  "type": "car",
+  "name": "Hyundai Creta SX",
+  "price": 1140000,
+  "score": 88,
+  "year": 2020,
+  "km": 46100,
+  "fuel": "Diesel",
+  "city": "Bengaluru",
+  "passport": true,
+  "specs": [
+   "2020",
+   "46,100 km",
+   "Diesel",
+   "Bengaluru"
+  ]
+ },
+ {
+  "id": "tata-nexon-ev-max",
+  "type": "car",
+  "name": "Tata Nexon EV Max",
+  "price": 1225000,
+  "score": 90,
+  "year": 2022,
+  "km": 31000,
+  "fuel": "EV, battery 94%",
+  "city": "Hubballi",
+  "passport": true,
+  "specs": [
+   "2022",
+   "31,000 km",
+   "EV, battery 94%",
+   "Hubballi"
+  ]
+ },
+ {
+  "id": "honda-city-zx",
+  "type": "car",
+  "name": "Honda City ZX",
+  "price": 810000,
+  "score": 84,
+  "year": 2019,
+  "km": 52300,
+  "fuel": "Petrol",
+  "city": "Mysuru",
+  "passport": true,
+  "specs": [
+   "2019",
+   "52,300 km",
+   "Petrol",
+   "Mysuru"
+  ]
+ },
+ {
+  "id": "mahindra-xuv700-ax5",
+  "type": "car",
+  "name": "Mahindra XUV700 AX5",
+  "price": 1690000,
+  "score": 91,
+  "year": 2022,
+  "km": 38900,
+  "fuel": "Diesel",
+  "city": "Bengaluru",
+  "passport": true,
+  "specs": [
+   "2022",
+   "38,900 km",
+   "Diesel",
+   "Bengaluru"
+  ]
+ },
+ {
+  "id": "maruti-baleno-zeta",
+  "type": "car",
+  "name": "Maruti Baleno Zeta",
+  "price": 635000,
+  "score": 87,
+  "year": 2020,
+  "km": 41200,
+  "fuel": "Petrol",
+  "city": "Belagavi",
+  "passport": true,
+  "specs": [
+   "2020",
+   "41,200 km",
+   "Petrol",
+   "Belagavi"
+  ]
+ },
+ {
+  "id": "royal-enfield-classic-350",
+  "type": "bike",
+  "name": "Royal Enfield Classic 350",
+  "price": 149000,
+  "score": 91,
+  "year": 2021,
+  "km": 14200,
+  "fuel": "Petrol",
+  "city": "Bengaluru",
+  "passport": true,
+  "specs": [
+   "2021",
+   "14,200 km",
+   "Bengaluru"
+  ]
+ },
+ {
+  "id": "ather-450x",
+  "type": "bike",
+  "name": "Ather 450X",
+  "price": 108000,
+  "score": 93,
+  "year": 2023,
+  "km": 7600,
+  "fuel": "EV, battery 97%",
+  "city": "Bengaluru",
+  "passport": true,
+  "specs": [
+   "2023",
+   "7,600 km",
+   "EV, battery 97%",
+   "Bengaluru"
+  ]
+ }
+]

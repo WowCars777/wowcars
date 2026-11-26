@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en-IN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Chekd Cars · Checked. Trusted. Wow.</title>
+<meta name="description" content="Buy, sell and service pre-owned cars and bikes in Karnataka. Every vehicle gets a 200-point Chekd Check, 7-day money-back and a 1-year warranty.">
+<meta name="theme-color" content="#0d1117" id="meta-theme">
+<meta name="color-scheme" content="dark light">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Chekd">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/favicon-64.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css">
+<link rel="modulepreload" href="js/motion.js">
+<link rel="modulepreload" href="js/core.js">
+<link rel="modulepreload" href="js/ui.js">
+<link rel="modulepreload" href="js/views.js">
+<link rel="preload" href="data/listings.json" as="fetch" crossorigin>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('chekd.theme');
+      if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      if (document.documentElement.dataset.theme === 'light') document.getElementById('meta-theme').content = '#f4f1ea';
+      if (sessionStorage.getItem('chekd.splash')) document.documentElement.classList.add('no-splash');
+    } catch (e) {}
+  })();
+</script>
+<script type="module" src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#views">Skip to content</a>
+
+<div id="splash" class="splash" aria-hidden="true">
+  <svg class="splash-mark" viewBox="0 0 100 100" width="96" height="96">
+    <path class="sm-arc" d="M27 78A34 34 0 1 1 73 78" pathLength="1"/>
+    <path class="sm-tick" d="M34 52l12 11 22-24" pathLength="1"/>
+  </svg>
+  <p class="splash-line"><span>Checked.</span> <span>Trusted.</span> <span>Wow.</span></p>
+</div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="#/home" aria-label="Chekd Cars home">
+    <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M27 78A34 34 0 1 1 73 78"/><path class="tk" d="M34 52l12 11 22-24"/></svg>
+    <span class="brand-word"><b>chekd</b><i>cars</i></span>
+  </a>
+  <div class="topbar-right">
+    <button class="icon-btn" id="theme-quick" type="button" aria-label="Switch to light theme"><svg class="i"><use href="#i-sun"/></svg></button>
+    <a class="avatar" href="#/profile" aria-label="Your profile, requests and wishlist"><svg class="i"><use href="#i-user"/></svg><span class="avatar-dot" hidden></span></a>
+  </div>
+</header>
+
+<main id="views" class="views" tabindex="-1"></main>
+
+<nav class="tabbar" id="tabbar" aria-label="Main">
+  <span class="tab-pill" aria-hidden="true"></span>
+  <a class="tab" href="#/home" data-tab="home"><svg class="i"><use href="#i-home"/></svg><span>Home</span></a>
+  <a class="tab" href="#/buy" data-tab="buy"><svg class="i"><use href="#i-search"/></svg><span>Buy</span></a>
+  <a class="tab" href="#/sell" data-tab="sell"><svg class="i"><use href="#i-tag"/></svg><span>Sell</span></a>
+  <a class="tab" href="#/doorstep" data-tab="doorstep"><svg class="i"><use href="#i-door"/></svg><span>Doorstep</span></a>
+  <a class="tab" href="#/passport" data-tab="passport"><svg class="i"><use href="#i-shield"/></svg><span>Passport</span></a>
+</nav>
+
+<div id="sheet-root"></div>
+<div id="toasts" class="toasts" role="status" aria-live="polite" aria-atomic="false"></div>
+<canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="v-car" viewBox="0 0 120 56"><path d="M21 44H13q-3 0-3-3v-8q0-4 5-5l14-4 13-11h31l15 11 15 3q7 2 7 7v7q0 3-3 3h-8"/><path d="M37 44h46M44 16l-9 8h53l-11-8z"/><circle cx="29" cy="44" r="8"/><circle cx="91" cy="44" r="8"/><path class="acc" d="M60 16v8"/></symbol>
+    <symbol id="v-bike" viewBox="0 0 120 56"><circle cx="26" cy="40" r="12"/><circle cx="94" cy="40" r="12"/><path d="M26 40l20-16h26l22 16M46 24l-6-6H28M72 24l8-14h10M50 24q10-10 22 0"/><path class="acc" d="M54 40h16"/></symbol>
+    <symbol id="v-car-front" viewBox="0 0 64 56"><path d="M8 46V31q0-4 4-6l6-13h28l6 13q4 2 4 6v15z"/><path d="M18 25l5-10h18l5 10z"/><circle cx="15" cy="33" r="3"/><circle cx="49" cy="33" r="3"/><path d="M10 46v6h8v-6M46 46v6h8v-6M8 40h48"/><path class="acc" d="M25 34h14"/></symbol>
+    <symbol id="v-bike-front" viewBox="0 0 64 56"><ellipse cx="32" cy="42" rx="4" ry="11"/><path d="M29 32l-2-12M35 32l2-12M13 16q19-6 38 0M13 16l-4-7M51 16l4-7"/><circle cx="32" cy="23" r="5"/><path class="acc" d="M30 23h4"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.5"/></symbol>
+    <symbol id="i-door" viewBox="0 0 24 24"><path d="M3 10l9-6 9 6M5 9v11h14V9"/><path d="M10 20v-5h4v5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.5 7.5-5.5s6.3 1.5 7.5 5.5"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.2a4.3 4.3 0 0 1 7.5 2.6C19.5 15.4 12 20 12 20z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-sort" viewBox="0 0 24 24"><path d="M4 7h11M4 12h8M4 17h5M18 5v14M15 16l3 3 3-3"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path d="M4 20l1.2-3.8A8 8 0 1 1 8 19z"/><path d="M9 8.5c0 3.5 2.8 6.5 6.5 6.5l1-1.6-2-1-1 .9c-1.2-.5-2.3-1.6-2.8-2.8l.9-1-1-2z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3M8 7l4-4 4 4M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.7M20 4v4h-4"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 3L5 13h6l-1 8 8-10h-6z"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5a4 4 0 0 1-2-2z"/></symbol>
+    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M8 4h8v3H8zM6 5.5H5v15h14v-15h-1M9 12l2 2 4-4"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 16.5v.5"/></symbol>
+    <symbol id="i-steer" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2"/><path d="M3.8 10.5L10 12M14 12l6.2-1.5M12 14v6.5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+  </defs>
+</svg>
+<noscript><p class="noscript">Chekd Cars needs JavaScript. You can also use our website at <a href="../web-app/">wowcars777.github.io/wowcars/web-app</a>.</p></noscript>
+</body>
+</html>
