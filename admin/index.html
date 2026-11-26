@@ -1,0 +1,1272 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chekd Cars Admin</title>
+    <link rel="icon" type="image/png" href="icon_red.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Geist+Mono:wght@400&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <link rel="stylesheet" href="hark-charts.css" />
+    <style>
+      /* Brand: Chekd Cars dark console. Tokens remapped once, used everywhere below. */
+      :root, :root[data-theme] {
+        color-scheme: dark;
+        --x-bg: #0D1117; --x-panel: #161B22; --x-panel-2: #1C222B; --x-line: #262D37;
+        --x-text: #F4F1EA; --x-muted: #8A93A3; --x-red: #E8412C; --x-teal: #12B5A6;
+        --x-head: "Sora", var(--sans); --x-r: 14px;
+        --sans: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --text-primary: var(--x-text); --text-secondary: var(--x-muted);
+        --fill-primary-on: var(--x-bg); --fill-tertiary: var(--x-panel);
+        --fill-primary: var(--x-text); --text-primary-on: var(--x-bg);
+        --stroke-primary: var(--x-line); --stroke-secondary: #1F252E;
+        --chart-ink: var(--x-red); --chart-ink-2: var(--x-muted); --chart-ink-3: #8A93A355;
+        --chart-grid: #F4F1EA12; --chart-reference: #F4F1EA24;
+      }
+      body { background: var(--x-bg); color: var(--x-text); font: 500 14px/1.45 var(--sans); }
+      h1, h2, h3 { font-family: var(--x-head); font-weight: 600; letter-spacing: -0.01em; }
+      button, input, select { font: inherit; color: inherit; }
+      button { cursor: pointer; }
+      :focus-visible { outline: 2px solid var(--x-red); }
+      [hidden] { display: none !important; }
+
+      /* Login */
+      .x-login { position: fixed; inset: 0; display: grid; place-items: center; padding: 20px; z-index: 50; background: var(--x-bg); }
+      .x-login__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.35) saturate(0.8); }
+      .x-login::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, #0D1117cc, #0D111766 60%, #E8412C22); }
+      .x-login__card { position: relative; z-index: 1; width: min(400px, 100%); padding: 32px 28px; background: #161B22e6; border: 1px solid var(--x-line); border-radius: var(--x-r); backdrop-filter: var(--hark-blur); display: grid; gap: 14px; }
+      .x-login__card img { height: 34px; width: auto; margin-bottom: 4px; }
+      .x-login__card h1 { font-size: 22px; }
+      .x-login__card > p { color: var(--x-muted); margin-top: -8px; }
+      .x-field { display: grid; gap: 6px; font-size: 12px; color: var(--x-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+      .x-input { height: 44px; padding: 0 12px; background: var(--x-bg); border: 1px solid var(--x-line); border-radius: 10px; text-transform: none; letter-spacing: 0; font-size: 14px; font-weight: 500; color: var(--x-text); width: 100%; }
+      .x-input:focus { border-color: var(--x-red); outline: none; }
+      .x-btn { height: 40px; padding: 0 16px; border-radius: 10px; border: 1px solid var(--x-line); background: var(--x-panel-2); font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; white-space: nowrap; }
+      .x-btn:hover { border-color: var(--x-muted); }
+      .x-btn--primary { background: #C8341F; border-color: #C8341F; color: #fff; }
+      .x-btn--primary:hover { background: #B02E1B; border-color: #B02E1B; }
+      .x-btn--teal { background: var(--x-teal); border-color: var(--x-teal); color: #06201d; }
+      .x-btn--lg { height: 46px; }
+      .x-fine { font-size: 12px; color: var(--x-muted); }
+
+      /* Shell */
+      .x-app { display: grid; grid-template-columns: 232px 1fr; min-height: 100vh; }
+      .x-side { position: sticky; top: 0; height: 100vh; background: var(--x-panel); border-right: 1px solid var(--x-line); padding: 20px 12px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; z-index: 40; }
+      .x-side__logo { height: 28px; width: auto; margin: 0 10px 6px; }
+      .x-nav { display: grid; gap: 2px; }
+      .x-nav a { display: flex; align-items: center; gap: 10px; min-height: 40px; padding: 0 12px; border-radius: 10px; color: var(--x-muted); text-decoration: none; font-weight: 600; }
+      .x-nav a::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; opacity: 0.5; }
+      .x-nav a:hover { background: var(--x-panel-2); color: var(--x-text); }
+      .x-nav a[aria-current] { background: #E8412C1f; color: var(--x-text); }
+      .x-nav a[aria-current]::before { background: var(--x-red); opacity: 1; }
+      .x-side__foot { margin-top: auto; padding: 12px; border: 1px solid var(--x-line); border-radius: var(--x-r); font-size: 12px; color: var(--x-muted); }
+      .x-side__foot b { display: block; color: var(--x-text); font-size: 13px; }
+      .x-main { min-width: 0; display: flex; flex-direction: column; }
+      .x-top { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; gap: 10px; padding: 12px 24px; background: #0D1117e6; backdrop-filter: blur(12px); border-bottom: 1px solid var(--x-line); }
+      .x-top .x-search { flex: 1; max-width: 420px; height: 40px; }
+      .x-top select.x-input { width: auto; height: 40px; }
+      .x-menu { display: none; width: 40px; padding: 0; }
+      .x-spacer { flex: 1; }
+      .x-bell { position: relative; width: 40px; padding: 0; }
+      .x-bell span { position: absolute; top: -4px; right: -4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--x-red); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; }
+      .x-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--x-teal); color: #06201d; font-weight: 700; display: grid; place-items: center; flex: none; }
+      .x-demo { padding: 4px 10px; border-radius: var(--r-pill); border: 1px solid #E8412C66; color: #FF8A78; font-size: 12px; font-weight: 700; white-space: nowrap; }
+      .x-who { font-size: 12px; color: var(--x-muted); font-weight: 600; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .x-spin { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--x-line); border-top-color: var(--x-red); animation: x-spin 0.8s linear infinite; flex: none; }
+      .x-loading { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 48px; color: var(--x-muted); }
+      @keyframes x-spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .x-spin { animation-duration: 2.4s; } }
+      .x-toast.is-error { background: var(--x-red); color: #fff; }
+      .x-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .x-row .x-btn { flex: 1; height: var(--tap); }
+      .x-empty-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-style: dashed; }
+      .x-card h2 .x-demo { margin-left: 8px; vertical-align: middle; font-family: var(--sans); }
+      .x-view { padding: 24px; display: grid; gap: 20px; align-content: start; }
+      .x-scrim { position: fixed; inset: 0; background: #0008; z-index: 35; }
+
+      /* Content */
+      .x-title { display: flex; align-items: end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+      .x-title h1 { font-size: 24px; }
+      .x-title p { color: var(--x-muted); }
+      .x-card { background: var(--x-panel); border: 1px solid var(--x-line); border-radius: var(--x-r); padding: 18px; min-width: 0; }
+      .x-card h2 { font-size: 15px; margin-bottom: 4px; }
+      .x-card h2 + p { color: var(--x-muted); font-size: 12px; margin-bottom: 14px; }
+      .x-kpis { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; }
+      .x-kpi { display: grid; gap: 6px; }
+      .x-kpi__label { color: var(--x-muted); font-size: 12px; font-weight: 600; }
+      .x-kpi__fig { font: 600 26px/1.1 var(--x-head); }
+      .x-up { color: var(--x-teal); font-size: 12px; font-weight: 700; }
+      .x-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+      .x-list { list-style: none; margin: 0; padding: 0; }
+      .x-list li { display: grid; grid-template-columns: 56px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--x-line); }
+      .x-list li:first-child { border-top: 0; }
+      .x-list time { font: 600 13px var(--x-head); }
+      .x-list small { display: block; color: var(--x-muted); }
+
+      .x-tools { display: flex; gap: 10px; flex-wrap: wrap; }
+      .x-tools .x-input { width: auto; height: 40px; }
+      .x-tools .x-input[type="search"] { flex: 1; min-width: 180px; }
+      .x-tablewrap { overflow-x: auto; padding: 0; }
+      .x-table { width: 100%; border-collapse: collapse; font-size: 13px; white-space: nowrap; }
+      .x-table th, .x-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--x-line); }
+      .x-table thead th { color: var(--x-muted); font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; background: var(--x-panel-2); }
+      .x-table tbody tr:last-child td { border-bottom: 0; }
+      .x-table tbody tr.x-click { cursor: pointer; }
+      .x-table tbody tr.x-click:hover { background: var(--x-panel-2); }
+      .x-table td small { display: block; color: var(--x-muted); font-size: 12px; }
+      .x-table .x-num { font-variant-numeric: tabular-nums; }
+      .x-empty { padding: 28px; text-align: center; color: var(--x-muted); }
+
+      .x-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: var(--r-pill); font-size: 12px; font-weight: 700; border: 1px solid var(--x-line); color: var(--x-text); }
+      .x-pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--x-muted); }
+      .x-pill--red { border-color: #E8412C66; color: #FF8A78; } .x-pill--red::before { background: var(--x-red); }
+      .x-pill--teal { border-color: #12B5A666; color: #4FD6C9; } .x-pill--teal::before { background: var(--x-teal); }
+      .x-pill--warm::before { background: #E8A92C; }
+      .x-pill--dim { color: var(--x-muted); }
+      .x-score { display: inline-grid; place-items: center; min-width: 40px; height: 26px; border-radius: 8px; font-weight: 700; font-size: 12px; background: var(--x-panel-2); border: 1px solid var(--x-line); }
+      .x-score--hi { background: #12B5A626; border-color: #12B5A666; color: #4FD6C9; }
+      .x-score--lo { background: #E8412C1f; border-color: #E8412C66; color: #FF8A78; }
+
+      /* Customers timeline, settings tabs, toggles, matrix */
+      .x-tl { list-style: none; margin: 0; padding: 0; }
+      .x-tl li { position: relative; margin-left: 5px; padding: 0 0 16px 20px; border-left: 1px solid var(--x-line); }
+      .x-tl li:last-child { border-left-color: transparent; padding-bottom: 0; }
+      .x-tl li::before { content: ""; position: absolute; left: -6px; top: 3px; width: 11px; height: 11px; border-radius: 50%; background: var(--x-panel); border: 2px solid var(--x-muted); }
+      .x-tl li:first-child::before { border-color: var(--x-red); background: var(--x-red); }
+      .x-tl time { display: block; font-size: 12px; font-weight: 600; color: var(--x-muted); }
+      .x-drawer h3 { font-size: 13px; color: var(--x-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+      .x-chip[aria-selected="true"] { background: #E8412C1f; border-color: #E8412C66; color: var(--x-text); }
+      .x-form { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+      .x-toggles { list-style: none; margin: 0; padding: 0; }
+      .x-toggles li { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 56px; padding: 8px 0; border-top: 1px solid var(--x-line); }
+      .x-toggles li:first-child { border-top: 0; }
+      .x-toggles small { display: block; color: var(--x-muted); font-size: 12px; }
+      .x-check { width: 20px; height: 20px; margin: 0; accent-color: var(--x-red); cursor: pointer; vertical-align: middle; }
+      .x-table td.x-c, .x-table th.x-c { text-align: center; }
+
+      /* Slim banner, chips, schedule, jobs, inspection, switch */
+      .x-banner { position: relative; min-height: 120px; border-radius: var(--x-r); overflow: hidden; border: 1px solid var(--x-line); display: flex; }
+      .x-banner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.4) saturate(0.85); }
+      .x-banner > div { position: relative; flex: 1; display: flex; align-items: end; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 18px; background: linear-gradient(90deg, #0D1117cc, transparent 70%); }
+      .x-banner h1 { font-size: 24px; }
+      .x-banner p { color: #F4F1EAcc; }
+      .x-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+      .x-chip { height: 40px; padding: 0 14px; border-radius: var(--r-pill); border: 1px solid var(--x-line); background: var(--x-panel); color: var(--x-muted); font-weight: 600; }
+      .x-chip[aria-pressed="true"] { background: #E8412C1f; border-color: #E8412C66; color: var(--x-text); }
+      .x-slots { list-style: none; margin: 0; padding: 0; }
+      .x-slots > li { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding: 10px 0; border-top: 1px solid var(--x-line); }
+      .x-slots > li:first-child { border-top: 0; }
+      .x-slots time { font: 600 13px var(--x-head); padding-top: 10px; }
+      .x-slots .x-fine { padding-top: 10px; }
+      .x-task { display: grid; grid-template-columns: 1fr 160px; gap: 12px; align-items: center; padding: 10px 12px; border-radius: 10px; background: var(--x-panel-2); }
+      .x-task + .x-task { margin-top: 6px; }
+      .x-task small { display: block; color: var(--x-muted); }
+      .x-task select { height: 40px; }
+      .x-task select[data-s="On the way"] { border-color: #E8A92C99; }
+      .x-task select[data-s="Done"] { border-color: #12B5A699; color: #4FD6C9; }
+      .x-jobs { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+      .x-job { display: grid; gap: 12px; align-content: start; }
+      .x-job__head { display: flex; justify-content: space-between; gap: 8px; align-items: start; }
+      .x-reg { font: 400 12px "Geist Mono", monospace; padding: 2px 8px; border-radius: 6px; border: 1px solid var(--x-line); white-space: nowrap; }
+      .x-job .x-dl { grid-template-columns: 80px 1fr; font-size: 13px; gap: 6px 10px; }
+      .x-stage { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+      .x-stage span { height: 6px; border-radius: 3px; background: var(--x-line); }
+      .x-stage span.on { background: var(--x-red); }
+      .x-stage.is-done span { background: var(--x-teal); }
+      .x-insp { display: grid; gap: 16px; }
+      .x-insp__head { display: flex; justify-content: space-between; gap: 12px; align-items: start; flex-wrap: wrap; }
+      .x-insp__score { text-align: right; }
+      .x-insp__score span { display: block; color: var(--x-muted); font-size: 12px; font-weight: 600; }
+      .x-insp__score b { font: 600 40px/1 var(--x-head); color: #4FD6C9; }
+      .x-mix { display: flex; width: 140px; height: 6px; border-radius: 3px; overflow: hidden; background: var(--x-line); }
+      .x-mix i:nth-child(1) { background: var(--x-teal); } .x-mix i:nth-child(2) { background: #E8A92C; } .x-mix i:nth-child(3) { background: var(--x-red); }
+      .x-switch { position: relative; display: inline-block; width: 44px; height: 26px; vertical-align: middle; }
+      .x-switch input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+      .x-switch span { position: absolute; inset: 0; border-radius: 13px; background: var(--x-line); pointer-events: none; transition: background var(--dur-quick) var(--ease-out); }
+      .x-switch span::after { content: ""; position: absolute; top: 3px; left: 3px; width: 20px; height: 20px; border-radius: 50%; background: var(--x-muted); transition: transform var(--dur-quick) var(--ease-out); }
+      .x-switch input:checked + span { background: var(--x-teal); }
+      .x-switch input:checked + span::after { transform: translateX(18px); background: #fff; }
+      .x-switch input:focus-visible + span { outline: 2px solid var(--x-red); }
+      .x-table tr.is-off td:not(:last-child) { opacity: 0.45; }
+      @media (max-width: 600px) { .x-task { grid-template-columns: 1fr; } }
+
+      /* Parts orders, kanban, notes */
+      .x-task select[data-s="Shipped"] { border-color: #E8A92C99; }
+      .x-task select[data-s="Delivered"] { border-color: #12B5A699; color: #4FD6C9; }
+      .x-stock { display: inline-flex; align-items: center; gap: 8px; }
+      .x-kanban { display: grid; grid-template-columns: repeat(5, minmax(220px, 1fr)); gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+      .x-col { background: var(--x-panel); border: 1px solid var(--x-line); border-radius: var(--x-r); padding: 12px; display: grid; gap: 8px; align-content: start; min-height: 220px; }
+      .x-col__head { display: flex; justify-content: space-between; align-items: center; padding: 2px 4px 6px; }
+      .x-col__head h2 { font-size: 13px; }
+      .x-col__head span { min-width: 24px; height: 22px; padding: 0 7px; border-radius: 11px; background: var(--x-panel-2); border: 1px solid var(--x-line); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+      .x-kcard { background: var(--x-panel-2); border: 1px solid var(--x-line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; cursor: pointer; }
+      .x-kcard:hover { border-color: var(--x-muted); }
+      .x-kcard__name { background: none; border: 0; padding: 0; text-align: left; font: 600 14px var(--x-head); color: var(--x-text); }
+      textarea.x-input { height: auto; min-height: 110px; padding: 10px 12px; resize: vertical; line-height: 1.45; }
+
+      /* Drawer, modal, toast */
+      .x-drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--x-panel); border-left: 1px solid var(--x-line); z-index: 60; padding: 22px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; box-shadow: -20px 0 60px #0008; }
+      .x-drawer__head { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+      .x-drawer__head h2 { font-size: 20px; }
+      .x-close { width: 40px; height: 40px; padding: 0; flex: none; }
+      .x-dl { display: grid; grid-template-columns: 110px 1fr; gap: 10px 12px; margin: 0; }
+      .x-dl dt { color: var(--x-muted); font-size: 12px; font-weight: 600; }
+      .x-dl dd { margin: 0; }
+      .x-overlay { position: fixed; inset: 0; background: #000a; z-index: 55; }
+      .x-modal { position: fixed; z-index: 60; inset: 0; display: grid; place-items: center; padding: 16px; pointer-events: none; }
+      .x-modal form { pointer-events: auto; width: min(520px, 100%); max-height: 100%; overflow-y: auto; background: var(--x-panel); border: 1px solid var(--x-line); border-radius: var(--x-r); padding: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+      .x-modal .x-full { grid-column: 1 / -1; }
+      .x-modal__foot { display: flex; justify-content: end; gap: 10px; }
+      .x-toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 70; padding: 12px 16px; border-radius: 12px; background: var(--x-teal); color: #06201d; font-weight: 700; box-shadow: var(--hark-shadow); }
+
+      @media (max-width: 1000px) { .x-grid { grid-template-columns: 1fr; } }
+      @media (max-width: 820px) {
+        .x-app { grid-template-columns: 1fr; }
+        .x-side { position: fixed; left: 0; top: 0; width: 260px; transform: translateX(-100%); transition: transform var(--dur-quick) var(--ease-out); }
+        .x-app.is-open .x-side { transform: none; }
+        .x-menu { display: inline-flex; }
+        .x-top { padding: 10px 14px; flex-wrap: wrap; }
+        .x-top .x-search { order: 9; flex-basis: 100%; max-width: none; }
+        .x-view { padding: 16px 14px; }
+        .x-modal form { grid-template-columns: 1fr; }
+      }
+      @media (max-width: 420px) { .x-who { display: none; } }
+    </style>
+  </head>
+  <body>
+    <div class="page" id="top">
+      <!-- Login -->
+      <section class="x-login" id="login" aria-label="Sign in">
+        <img class="x-login__bg" src="team.jpg" alt="" />
+        <form class="x-login__card" id="login-form">
+          <img src="logo_dark.png" alt="Chekd Cars" />
+          <h1>Checked. Trusted. Wow.</h1>
+          <p>Sign in to the Chekd Cars admin console.</p>
+          <label class="x-field">Email<input class="x-input" type="email" name="email" placeholder="you@chekdcars.in" autocomplete="username" /></label>
+          <label class="x-field">Password<input class="x-input" type="password" name="password" placeholder="••••••••" autocomplete="current-password" /></label>
+          <label class="x-field">Role
+            <select class="x-input" name="role"><option>Super Admin</option><option>Outlet Manager</option><option>Chekd Captain</option></select>
+          </label>
+          <button class="x-btn x-btn--primary x-btn--lg" type="submit" id="login-go">Sign in</button>
+          <div class="x-row">
+            <button class="x-btn" type="button" id="login-signup">Create account</button>
+            <button class="x-btn" type="button" id="login-forgot">Forgot password</button>
+          </div>
+          <p class="x-fine" id="login-msg" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <!-- App -->
+      <div class="x-app" id="app" hidden>
+        <aside class="x-side" id="side" aria-label="Main navigation">
+          <img class="x-side__logo" src="logo_dark.png" alt="Chekd Cars" />
+          <nav class="x-nav" id="nav"></nav>
+          <div class="x-side__foot"><b id="who-role">Super Admin</b>Bengaluru HQ</div>
+        </aside>
+        <div class="x-scrim" id="scrim" hidden></div>
+        <div class="x-main">
+          <header class="x-top">
+            <button class="x-btn x-menu" id="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+            <input class="x-input x-search" id="q" type="search" placeholder="Search leads, cars, customers…" aria-label="Search" />
+            <span class="x-spacer"></span>
+            <select class="x-input" id="town" aria-label="Town">
+              <option>All towns</option><option>Bengaluru</option><option>Belagavi</option><option>Hubballi</option><option>Mysuru</option><option>Mangaluru</option>
+            </select>
+            <span class="x-spin" id="busy" role="status" aria-label="Saving" hidden></span>
+            <button class="x-btn x-bell" aria-label="Notifications, 5 new">🔔<span>5</span></button>
+            <span class="x-who" id="who-email"></span>
+            <div class="x-avatar" id="avatar" title="Signed in">SA</div>
+            <button class="x-btn" id="signout">Sign out</button>
+          </header>
+          <main class="x-view" id="view"></main>
+          <div id="banners" hidden>
+            <img data-b="doorstep" src="doorstep.jpg" alt="" />
+            <img data-b="service" src="garage.jpg" alt="" />
+            <img data-b="staff" src="team.jpg" alt="" />
+          </div>
+        </div>
+      </div>
+      <div id="layer"></div>
+    </div>
+
+    <script src="hark.js"></script>
+    <script src="chart.js"></script>
+    <script src="datalabels.js"></script>
+    <script src="hark-charts.js"></script>
+    <script>
+      /* ---------- State (in memory only) ---------- */
+      const S = {
+        role: "Super Admin", town: "All towns", q: "", status: "All",
+        captains: ["Arjun Rao", "Meera Iyer", "Kiran Gowda", "Sneha Shetty"],
+        leads: [
+          { id: 1, name: "Rahul Sharma", phone: "+91 98450 11234", type: "Buy", car: "Hyundai Creta", source: "Website", area: "Whitefield", town: "Bengaluru", status: "New", captain: "Arjun Rao", date: "Today, 9:40 AM" },
+          { id: 2, name: "Priya Nair", phone: "+91 99001 22345", type: "Sell", car: "Maruti Swift", source: "WhatsApp", area: "Koramangala", town: "Bengaluru", status: "Contacted", captain: "Meera Iyer", date: "Today, 8:15 AM" },
+          { id: 3, name: "Vikram Reddy", phone: "+91 97411 33456", type: "Doorstep", car: "Tata Nexon", source: "Meta ads", area: "HSR Layout", town: "Bengaluru", status: "Test drive", captain: "Kiran Gowda", date: "Yesterday" },
+          { id: 4, name: "Ananya Rao", phone: "+91 96860 44567", type: "Service", car: "Honda City", source: "Google ads", area: "Indiranagar", town: "Bengaluru", status: "Won", captain: "Sneha Shetty", date: "Yesterday" },
+          { id: 5, name: "Suresh Kumar", phone: "+91 98804 55678", type: "Buy", car: "Mahindra XUV700", source: "Walk-in", area: "Jayanagar", town: "Bengaluru", status: "Negotiating", captain: "Arjun Rao", date: "2 days ago" },
+          { id: 6, name: "Divya Hegde", phone: "+91 99452 66789", type: "Partner", car: "—", source: "Website", area: "Tilakwadi", town: "Belagavi", status: "New", captain: "Meera Iyer", date: "2 days ago" },
+          { id: 7, name: "Karthik Menon", phone: "+91 97390 77890", type: "Sell", car: "Kia Seltos", source: "Google ads", area: "Koramangala", town: "Bengaluru", status: "Contacted", captain: "Kiran Gowda", date: "3 days ago" },
+          { id: 8, name: "Lakshmi Prasad", phone: "+91 98861 88901", type: "Buy", car: "Tata Nexon", source: "Meta ads", area: "Vidyanagar", town: "Hubballi", status: "Lost", captain: "Sneha Shetty", date: "4 days ago" },
+          { id: 9, name: "Mohammed Irfan", phone: "+91 90190 99012", type: "Doorstep", car: "Hyundai Creta", source: "WhatsApp", area: "Whitefield", town: "Bengaluru", status: "Negotiating", captain: "Arjun Rao", date: "5 days ago" },
+          { id: 10, name: "Pooja Bhat", phone: "+91 96111 10123", type: "Service", car: "Maruti Swift", source: "Walk-in", area: "Kuvempunagar", town: "Mysuru", status: "Won", captain: "Meera Iyer", date: "6 days ago" },
+        ],
+        cars: [
+          { model: "Hyundai Creta SX", year: 2021, km: 32400, fuel: "Diesel", price: 13.9, score: 92, status: "Live" },
+          { model: "Maruti Swift VXi", year: 2020, km: 41200, fuel: "Petrol", price: 5.6, score: 88, status: "Live" },
+          { model: "Tata Nexon XZ+", year: 2022, km: 18900, fuel: "Petrol", price: 9.4, score: 95, status: "Reserved" },
+          { model: "Honda City ZX", year: 2019, km: 56300, fuel: "Petrol", price: 8.7, score: 81, status: "Live" },
+          { model: "Mahindra XUV700 AX7", year: 2022, km: 24100, fuel: "Diesel", price: 21.5, score: 90, status: "Inspection" },
+          { model: "Kia Seltos HTX", year: 2021, km: 38700, fuel: "Diesel", price: 12.8, score: 86, status: "Sold" },
+          { model: "Tata Nexon EV Max", year: 2023, km: 12500, fuel: "Electric", price: 15.2, score: 97, status: "Live" },
+          { model: "Maruti Swift Dzire", year: 2018, km: 72800, fuel: "CNG", price: 4.9, score: 64, status: "Inspection" },
+        ],
+        dType: "All",
+        tasks: [
+          { id: 1, time: "09:00", type: "Home inspection", customer: "Rahul Sharma", area: "Whitefield", car: "Hyundai Creta SX", captain: "Arjun Rao", status: "Done" },
+          { id: 2, time: "10:00", type: "Test drive", customer: "Vikram Reddy", area: "HSR Layout", car: "Tata Nexon XZ+", captain: "Kiran Gowda", status: "Done" },
+          { id: 3, time: "11:30", type: "Pickup for service", customer: "Ananya Rao", area: "Indiranagar", car: "Honda City ZX", captain: "Sneha Shetty", status: "Done" },
+          { id: 4, time: "12:00", type: "Test drive", customer: "Mohammed Irfan", area: "Whitefield", car: "Hyundai Creta SX", captain: "Arjun Rao", status: "On the way" },
+          { id: 5, time: "13:30", type: "Delivery", customer: "Suresh Kumar", area: "Jayanagar", car: "Mahindra XUV700 AX7", captain: "Meera Iyer", status: "On the way" },
+          { id: 6, time: "15:00", type: "Home inspection", customer: "Karthik Menon", area: "Koramangala", car: "Kia Seltos HTX", captain: "Kiran Gowda", status: "Scheduled" },
+          { id: 7, time: "16:30", type: "Pickup for service", customer: "Neha Kulkarni", area: "HSR Layout", car: "Maruti Baleno Zeta", captain: "Sneha Shetty", status: "Scheduled" },
+          { id: 8, time: "18:00", type: "Delivery", customer: "Aditya Joshi", area: "Indiranagar", car: "Tata Nexon EV Max", captain: "Arjun Rao", status: "Scheduled" },
+        ],
+        jobs: [
+          { car: "Honda City ZX", reg: "KA-01-AB-1234", customer: "Ananya Rao", garage: "Chekd Garage Koramangala", job: "Periodic service", est: 8450, stage: 3 },
+          { car: "Maruti Swift VXi", reg: "KA-05-MK-7781", customer: "Pooja Bhat", garage: "Chekd Garage Whitefield", job: "Brake pads + disc skim", est: 6200, stage: 2 },
+          { car: "Hyundai Creta SX", reg: "KA-03-NP-4410", customer: "Rahul Sharma", garage: "Chekd Garage Whitefield", job: "AC repair", est: 12800, stage: 1 },
+          { car: "Tata Nexon XZ+", reg: "KA-51-HC-2096", customer: "Vikram Reddy", garage: "Chekd Garage Koramangala", job: "Clutch overhaul", est: 18500, stage: 0 },
+          { car: "Kia Seltos HTX", reg: "KA-02-JR-5523", customer: "Karthik Menon", garage: "Chekd Garage Koramangala", job: "Denting & painting", est: 24600, stage: 4 },
+          { car: "Mahindra XUV700 AX7", reg: "KA-53-ZT-9087", customer: "Suresh Kumar", garage: "Chekd Garage Whitefield", job: "Wheel alignment + balancing", est: 2400, stage: 5 },
+        ],
+        staffRole: "All",
+        staff: [
+          { name: "Ravi Shankar", role: "Outlet Manager", outlet: "Chekd Hub Bengaluru", phone: "+91 98450 20011", jobs: 18, rating: 4.6, active: true },
+          { name: "Deepa Krishnan", role: "Outlet Manager", outlet: "Chekd Garage Koramangala", phone: "+91 99001 20122", jobs: 15, rating: 4.7, active: true },
+          { name: "Arjun Rao", role: "Chekd Captain", outlet: "Chekd Hub Bengaluru", phone: "+91 97411 20233", jobs: 42, rating: 4.8, active: true },
+          { name: "Meera Iyer", role: "Chekd Captain", outlet: "Chekd Hub Bengaluru", phone: "+91 96860 20344", jobs: 38, rating: 4.9, active: true },
+          { name: "Kiran Gowda", role: "Chekd Captain", outlet: "Chekd Garage Koramangala", phone: "+91 98804 20455", jobs: 35, rating: 4.7, active: true },
+          { name: "Sneha Shetty", role: "Chekd Captain", outlet: "Chekd Garage Whitefield", phone: "+91 99452 20566", jobs: 40, rating: 4.8, active: true },
+          { name: "Manjunath B", role: "Technician", outlet: "Chekd Garage Koramangala", phone: "+91 97390 20677", jobs: 35, rating: 4.5, active: true },
+          { name: "Faisal Ahmed", role: "Technician", outlet: "Chekd Garage Whitefield", phone: "+91 98861 20788", jobs: 32, rating: 4.6, active: true },
+          { name: "Nikhil Jain", role: "Sales", outlet: "Chekd Hub Bengaluru", phone: "+91 90190 20899", jobs: 23, rating: 4.4, active: false },
+          { name: "Kavya Patil", role: "Telecaller", outlet: "Chekd Hub Bengaluru", phone: "+91 96111 20900", jobs: 96, rating: 4.3, active: true },
+        ],
+        pq: "", pType: "All types",
+        parts: [
+          { name: "Brake pads – Swift", sku: "CP-BRK-SW01", brand: "Bosch", fits: "Swift / Dzire", qty: 24, reorder: 10, price: 1850, type: "New" },
+          { name: "Oil filter – i20", sku: "CP-OIL-I201", brand: "Genuine OEM", fits: "i20 / Venue", qty: 6, reorder: 15, price: 320, type: "OEM" },
+          { name: "Clutch plate – City", sku: "CP-CLT-CT01", brand: "Valeo", fits: "City / Amaze", qty: 4, reorder: 5, price: 6400, type: "OEM" },
+          { name: "Wiper blades (pair)", sku: "CP-WPR-UN01", brand: "Bosch", fits: "Universal 14–24 in", qty: 38, reorder: 12, price: 690, type: "New" },
+          { name: "Battery 35Ah", sku: "CP-BAT-35AH", brand: "Exide", fits: "Swift / Alto / WagonR", qty: 3, reorder: 6, price: 4850, type: "New" },
+          { name: "Headlamp – Baleno", sku: "CP-HLP-BL01", brand: "Minda", fits: "Baleno 2019+", qty: 5, reorder: 3, price: 7200, type: "Refurbished" },
+          { name: "Air filter – Creta", sku: "CP-AIR-CR01", brand: "Genuine OEM", fits: "Creta / Seltos", qty: 18, reorder: 8, price: 540, type: "OEM" },
+          { name: "Spark plugs (set of 4) – Nexon", sku: "CP-SPK-NX01", brand: "Bosch", fits: "Nexon / Altroz", qty: 22, reorder: 10, price: 1480, type: "New" },
+          { name: "Shock absorber – XUV700", sku: "CP-SHK-XV01", brand: "Gabriel", fits: "XUV700", qty: 8, reorder: 4, price: 5600, type: "New" },
+          { name: "Alternator – Swift", sku: "CP-ALT-SW01", brand: "Lucas TVS", fits: "Swift / Dzire", qty: 4, reorder: 2, price: 6900, type: "Refurbished" },
+          { name: "Tail lamp – Seltos", sku: "CP-TLP-SL01", brand: "Minda", fits: "Seltos", qty: 6, reorder: 3, price: 4300, type: "Refurbished" },
+          { name: "Cabin AC filter – Nexon", sku: "CP-CAB-NX01", brand: "Genuine OEM", fits: "Nexon", qty: 30, reorder: 10, price: 450, type: "OEM" },
+        ],
+        orders: [
+          { code: "CP-1047", who: "Chekd Garage HSR Layout", items: "Brake pads – Swift ×2, Oil filter – i20 ×4", amt: 4980, status: "Packed" },
+          { code: "CP-1046", who: "Rohan Desai, Indiranagar", items: "Battery 35Ah ×1", amt: 4850, status: "Shipped" },
+          { code: "CP-1045", who: "Sri Ganesh Motors, Belagavi", items: "Clutch plate – City ×1", amt: 6400, status: "Shipped" },
+          { code: "CP-1044", who: "Neha Kulkarni, HSR Layout", items: "Wiper blades ×1, Cabin AC filter – Nexon ×1", amt: 1140, status: "Delivered" },
+          { code: "CP-1043", who: "Chekd Hub Bengaluru", items: "Headlamp – Baleno ×1", amt: 7200, status: "Delivered" },
+        ],
+        outlets: [
+          { name: "Chekd Hub Bengaluru", type: "Hub", town: "Bengaluru", area: "Whitefield", note: "Flagship", manager: "Ravi Shankar", staff: 24, cars: 86, sales: 12.6, jobs: 26, status: "Live" },
+          { name: "Chekd Garage HSR Layout", type: "Garage", town: "Bengaluru", area: "HSR Layout", manager: "Prakash Naik", staff: 11, cars: 14, sales: 5.8, jobs: 41, status: "Live" },
+          { name: "Chekd Point Belagavi", type: "Point", town: "Belagavi", area: "Tilakwadi", note: "Opens Dec 2026", manager: "Santosh Kulkarni", staff: 4, cars: 0, sales: 0, jobs: 0, status: "Opening" },
+          { name: "Chekd Point Hubballi", type: "Point", town: "Hubballi", area: "Gokul Road", manager: "To be hired", staff: 0, cars: 0, sales: 0, jobs: 0, status: "Planned" },
+          { name: "Chekd Point Mysuru", type: "Point", town: "Mysuru", area: "Hunsur Road", manager: "To be hired", staff: 0, cars: 0, sales: 0, jobs: 0, status: "Planned" },
+          { name: "Chekd Point Mangaluru", type: "Point", town: "Mangaluru", area: "Kankanady", manager: "To be hired", staff: 0, cars: 0, sales: 0, jobs: 0, status: "Planned" },
+        ],
+        partners: [
+          { name: "Divya Hegde", town: "Belagavi", type: "Garage", band: "₹25–40L", source: "Website", stage: 0, notes: "Owns a 6,000 sq ft plot on Khanapur Road. Wants a service-first garage." },
+          { name: "Ramesh Patil", town: "Dharwad", type: "Point", band: "₹15–25L", source: "Meta ads", stage: 0, notes: "Runs a used-car consultancy near Jubilee Circle. Asked about the brand fee." },
+          { name: "Shweta Rao", town: "Udupi", type: "Point", band: "₹15–25L", source: "Referral", stage: 0, notes: "Referred by Naveen Shetty. Prefers calls after 6 PM." },
+          { name: "Abdul Rahim", town: "Davanagere", type: "Point", band: "₹15–25L", source: "Meta ads", stage: 1, notes: "Interested. Needs the ROI sheet and site checklist." },
+          { name: "Kavitha Gowda", town: "Shivamogga", type: "Garage", band: "₹25–40L", source: "Website", stage: 1, notes: "Has two trained mechanics already. Asked about Chekd Parts supply terms." },
+          { name: "Naveen Shetty", town: "Mysuru", type: "Point", band: "₹15–25L", source: "Referral", stage: 2, notes: "Site visit booked: Hunsur Road, 1,800 sq ft with road frontage." },
+          { name: "Girish Hiremath", town: "Hubballi", type: "Point", band: "₹15–25L", source: "Website", stage: 2, notes: "Visited the Gokul Road site. Good footfall, parking is tight." },
+          { name: "Santosh Kulkarni", town: "Belagavi", type: "Point", band: "₹15–25L", source: "Referral", stage: 3, notes: "Agreement draft sent. Fit-out starts Sep for the Dec 2026 opening." },
+          { name: "Prakash Naik", town: "Bengaluru", type: "Garage", band: "₹25–40L", source: "Referral", stage: 4, notes: "Runs Chekd Garage HSR Layout. 41 service jobs this month." },
+        ],
+        cType: "All types",
+        customers: [
+          { name: "Rahul Sharma", town: "Bengaluru", phone: "+91 98450 11234", type: "Buyer", cars: ["Hyundai Creta SX"], ltv: 1402800, passport: true, last: "14 Nov",
+            log: [["02 Sep", "Website enquiry · Hyundai Creta"], ["06 Sep", "Test drive · Creta SX, Whitefield"], ["11 Sep", "Bought Hyundai Creta SX · ChekdScore 92"], ["12 Sep", "Chekd Passport issued"], ["14 Nov", "AC repair at Chekd Garage Whitefield"]] },
+          { name: "Priya Nair", town: "Bengaluru", phone: "+91 99001 22345", type: "Seller", cars: ["Maruti Swift"], ltv: 485000, passport: true, last: "10 Nov",
+            log: [["03 Nov", "Sell enquiry on WhatsApp"], ["06 Nov", "Chekd Check at home, Koramangala"], ["08 Nov", "Accepted offer of ₹4.85L"], ["10 Nov", "Sold Maruti Swift to Chekd · paid same day"]] },
+          { name: "Ananya Rao", town: "Bengaluru", phone: "+91 96860 44567", type: "Service", cars: ["Honda City ZX"], ltv: 38450, passport: false, last: "15 Nov",
+            log: [["14 Mar", "Service at Chekd Garage HSR Layout"], ["22 Jul", "Parts order · Wiper blades"], ["15 Nov", "Doorstep pickup · periodic service ₹8,450"]] },
+          { name: "Pooja Bhat", town: "Mysuru", phone: "+91 96111 10123", type: "Service", cars: ["Maruti Swift VXi"], ltv: 21600, passport: true, last: "13 Nov",
+            log: [["18 Jun", "Chekd Check · ChekdScore 88"], ["19 Jun", "Chekd Passport issued"], ["13 Nov", "Brake pads + disc skim · ₹6,200"]] },
+          { name: "Suresh Kumar", town: "Bengaluru", phone: "+91 98804 55678", type: "Buyer", cars: ["Mahindra XUV700 AX7"], ltv: 2152400, passport: true, last: "15 Nov",
+            log: [["28 Oct", "Walk-in at Chekd Hub Bengaluru"], ["30 Oct", "Test drive · XUV700 AX7"], ["09 Nov", "Bought Mahindra XUV700 AX7 · ChekdScore 90"], ["15 Nov", "Wheel alignment at Chekd Garage Whitefield"], ["15 Nov", "Doorstep delivery, Jayanagar"]] },
+          { name: "Basavaraj Angadi", town: "Hubballi", phone: "+91 94481 23456", type: "Parts", cars: [], ltv: 86400, passport: false, last: "07 Nov",
+            log: [["12 Aug", "First parts order · ₹18,200"], ["20 Sep", "Parts order · Clutch plates ×3"], ["07 Nov", "Parts order · Batteries ×4"]] },
+          { name: "Neha Kulkarni", town: "Bengaluru", phone: "+91 99860 34567", type: "Parts", cars: ["Maruti Baleno Zeta"], ltv: 14540, passport: false, last: "12 Nov",
+            log: [["04 Nov", "Parts order CP-1044 · ₹1,140"], ["12 Nov", "Booked doorstep pickup for service"]] },
+          { name: "Aditya Joshi", town: "Bengaluru", phone: "+91 98451 45678", type: "Buyer", cars: ["Tata Nexon EV Max"], ltv: 1520000, passport: true, last: "15 Nov",
+            log: [["20 Oct", "Meta ad enquiry · Nexon EV"], ["25 Oct", "Test drive · Nexon EV Max"], ["02 Nov", "Bought Tata Nexon EV Max · ChekdScore 97"], ["15 Nov", "Doorstep delivery, Indiranagar"]] },
+          { name: "Mahesh Kulkarni", town: "Belagavi", phone: "+91 94480 56789", type: "Parts", cars: [], ltv: 64000, passport: false, last: "05 Nov",
+            log: [["10 Sep", "Garage account opened · Sri Ganesh Motors"], ["15 Oct", "Parts order · Brake pads ×6"], ["05 Nov", "Parts order CP-1045 · Clutch plate – City"]] },
+          { name: "Shruti Patil", town: "Belagavi", phone: "+91 97400 67890", type: "Seller", cars: ["Hyundai i20 Asta"], ltv: 612000, passport: true, last: "28 Oct",
+            log: [["15 Oct", "Sell enquiry on website"], ["18 Oct", "Chekd Check · ChekdScore 89"], ["22 Oct", "Accepted offer of ₹6.12L"], ["28 Oct", "Car collected from Tilakwadi"]] },
+          { name: "Rohan Desai", town: "Bengaluru", phone: "+91 99020 78901", type: "Parts", cars: ["Hyundai Venue"], ltv: 4850, passport: false, last: "08 Nov",
+            log: [["08 Nov", "Parts order CP-1046 · Battery 35Ah"]] },
+          { name: "Manoj Hegde", town: "Mysuru", phone: "+91 98440 89012", type: "Buyer", cars: ["Maruti Swift VXi", "Honda Amaze VX"], ltv: 1218200, passport: true, last: "11 Nov",
+            log: [["04 Feb", "Test drive · Swift VXi"], ["09 Feb", "Bought Maruti Swift VXi"], ["14 May", "Service at Chekd Garage HSR Layout"], ["03 Aug", "Parts order · Oil and air filters"], ["21 Oct", "Test drive · Honda Amaze VX"], ["11 Nov", "Bought Honda Amaze VX · second car"]] },
+        ],
+        rMonth: "Nov",
+        sTab: "Business",
+        set: { company: "Chekd Cars", tagline: "Checked. Trusted. Wow.", gstin: "", wa: "9019088160", doorstep: 299, check: 1499, passport: 499,
+          autoReply: true, nLead: true, nStock: true, nReady: true, nPartner: false },
+        perm: {
+          "Super Admin": ["Dashboard", "Leads", "Inventory", "Doorstep", "Service", "Parts", "Outlets", "Partners", "Staff", "Customers", "Reports", "Settings"],
+          "Outlet Manager": ["Dashboard", "Leads", "Inventory", "Doorstep", "Service", "Parts", "Outlets", "Staff", "Customers", "Reports"],
+          "Chekd Captain": ["Dashboard", "Leads", "Inventory", "Doorstep", "Customers"],
+          Technician: ["Dashboard", "Service", "Parts"],
+        },
+      };
+      /* ---------- Supabase ---------- */
+      const SB_URL = "https://yjxwiibpcuukucwvlkwq.supabase.co", SB_KEY = "sb_publishable_TRVnPURKF2tOgQ8vab4ySQ_bKIvcvL2";
+      // State key -> table. Demo rows live in DEMO and are only written when asked.
+      const TABLES = { outlets: "outlets", leads: "leads", cars: "cars", tasks: "doorstep", jobs: "service", parts: "parts", orders: "part_orders", partners: "partner_leads", staff: "staff", customers: "customers" };
+      const DEMO = {};
+      Object.keys(TABLES).forEach((k) => { DEMO[k] = S[k].map(({ id, ...r }) => r); S[k] = []; });
+      const VIEW_TABLES = { leads: ["leads"], inventory: ["cars"], doorstep: ["tasks"], service: ["jobs"], parts: ["parts", "orders"], outlets: ["outlets"], partners: ["partners"], staff: ["staff"], customers: ["customers"] };
+      const LABELS = { outlets: "outlets", leads: "leads", cars: "cars", tasks: "Doorstep bookings", jobs: "service jobs", parts: "parts", orders: "parts orders", partners: "partner leads", staff: "staff", customers: "customers" };
+      let session = null, refreshTimer = null, busyCount = 0;
+
+      async function sbFetch(path, { method = "GET", body, prefer, auth = true } = {}, retried = false) {
+        const headers = { apikey: SB_KEY, "Content-Type": "application/json", Authorization: `Bearer ${auth && session ? session.access_token : SB_KEY}` };
+        if (prefer) headers.Prefer = prefer;
+        let res;
+        try { res = await fetch(SB_URL + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }); }
+        catch (e) { throw new Error("Network error, check your connection"); }
+        if (res.status === 401 && auth && session && !retried) { await refreshSession(); return sbFetch(path, { method, body, prefer, auth }, true); }
+        const text = await res.text();
+        let data = null; try { data = text ? JSON.parse(text) : null; } catch (e) { data = text; }
+        if (!res.ok) throw new Error((data && (data.msg || data.message || data.error_description || data.error)) || `Request failed (${res.status})`);
+        return data;
+      }
+      function setSession(s) {
+        session = { access_token: s.access_token, refresh_token: s.refresh_token, email: (s.user && s.user.email) || (session && session.email) || "" };
+        clearTimeout(refreshTimer);
+        const secs = Math.max(30, (+s.expires_in || 3600) - 60);
+        refreshTimer = setTimeout(() => refreshSession().catch(() => { toast("Session expired. Sign in again.", true); signOut(true); }), secs * 1000);
+      }
+      async function refreshSession() {
+        if (!session) throw new Error("Not signed in");
+        const s = await sbFetch("/auth/v1/token?grant_type=refresh_token", { method: "POST", body: { refresh_token: session.refresh_token }, auth: false });
+        setSession(s);
+      }
+      const rest = (table, q = "", opt = {}) => sbFetch(`/rest/v1/${table}${q}`, opt);
+      // PostgREST bulk inserts need the same keys on every row
+      const sameKeys = (rows) => { const keys = [...new Set(rows.flatMap(Object.keys))]; return rows.map((r) => Object.fromEntries(keys.map((k) => [k, r[k] === undefined ? null : r[k]]))); };
+
+      function spin(on) { busyCount = Math.max(0, busyCount + (on ? 1 : -1)); $("#busy").hidden = !busyCount; }
+      async function busy(fn) {
+        spin(true);
+        try { await fn(); return true; } catch (err) { toast(err.message, true); return false; } finally { spin(false); }
+      }
+      const add = (key, obj) => busy(async () => { S[key].push(...(await rest(TABLES[key], "", { method: "POST", body: [obj], prefer: "return=representation" }))); });
+      const upd = (key, row, patch) => busy(async () => {
+        const r = await rest(TABLES[key], `?id=eq.${encodeURIComponent(row.id)}`, { method: "PATCH", body: patch, prefer: "return=representation" });
+        Object.assign(row, (r && r[0]) || patch);
+      });
+      async function loadAll() {
+        $("#view").innerHTML = `<div class="x-loading"><span class="x-spin"></span>Loading your workspace…</div>`;
+        const fails = [];
+        await Promise.all(Object.keys(TABLES).map(async (k) => {
+          try { S[k] = (await rest(TABLES[k], "?select=*&order=id.asc")) || []; } catch (e) { S[k] = []; fails.push(`${LABELS[k]}: ${e.message}`); }
+        }));
+        S.customers.forEach((c) => { c.cars = c.cars || []; c.log = c.log || []; });
+        try {
+          const rows = (await rest("settings", "?select=*")) || [];
+          rows.forEach((r) => { if (r.key === "set" && r.value) Object.assign(S.set, r.value); if (r.key === "perm" && r.value) Object.assign(S.perm, r.value); });
+        } catch (e) { fails.push(`settings: ${e.message}`); }
+        if (fails.length) toast(`Couldn't load ${fails.join(" · ")}`, true);
+      }
+      async function loadDemo(keys) {
+        const todo = Object.keys(TABLES).filter((k) => keys.includes(k) && !S[k].length); // outlets come first
+        if (!todo.length) return toast("Those views already have data");
+        const ok = await busy(async () => {
+          for (const k of todo) S[k] = (await rest(TABLES[k], "", { method: "POST", body: sameKeys(DEMO[k]), prefer: "return=representation" })) || [];
+        });
+        if (ok) toast(`Loaded demo ${todo.map((k) => LABELS[k]).join(", ")}`);
+        render();
+      }
+      function emptyCard(el, key) {
+        const keys = (VIEW_TABLES[key] || []).filter((k) => !S[k].length);
+        if (!keys.length || !el.firstElementChild) return;
+        el.firstElementChild.insertAdjacentHTML("afterend", `<div class="x-card x-empty-card"><div><h2>No ${keys.map((k) => LABELS[k]).join(" or ")} yet</h2><p class="x-fine">Add your own, or fill this view with sample rows to try it out.</p></div>
+          <button class="x-btn x-btn--primary" data-demo="${keys.join(",")}">Load demo data</button></div>`);
+        $("[data-demo]", el).onclick = (e) => loadDemo(e.currentTarget.dataset.demo.split(","));
+      }
+
+      const C_TYPES = ["Buyer", "Seller", "Service", "Parts"];
+      const STREAMS = ["Car sales", "Service", "Parts", "Doorstep fees"];
+      const P_TYPES = ["New", "OEM", "Refurbished"];
+      const ORDER_STATUS = ["Packed", "Shipped", "Delivered"];
+      const O_TYPES = ["Hub", "Garage", "Point"];
+      const O_STATUS = ["Live", "Opening", "Planned"];
+      const TOWNS = ["Bengaluru", "Belagavi", "Hubballi", "Mysuru", "Mangaluru"];
+      const P_STAGES = ["Enquiry", "Call done", "Site visit", "Agreement", "Live"];
+      const D_TYPES = ["Test drive", "Pickup for service", "Delivery", "Home inspection"];
+      const D_STATUS = ["Scheduled", "On the way", "Done"];
+      const STAGES = ["Received", "Inspecting", "Awaiting approval", "In progress", "Ready", "Delivered"];
+      const ROLES = ["Outlet Manager", "Chekd Captain", "Technician", "Sales", "Telecaller"];
+      const OUTLETS = ["Chekd Hub Bengaluru", "Chekd Garage Koramangala", "Chekd Garage Whitefield"];
+      const CHECK = { car: "Maruti Swift VXi · 2020 · 41,200 km · KA-04-PR-3318", score: 88, groups: [
+        ["Engine", 27, 2, 1], ["Transmission", 17, 1, 0], ["Brakes", 15, 1, 0], ["Suspension", 18, 2, 0], ["Electricals", 25, 2, 1],
+        ["Body", 28, 4, 0], ["Interior", 24, 2, 0], ["Tyres", 10, 2, 0], ["Documents", 18, 0, 0]] };
+      const NAV = ["Dashboard", "Leads", "Inventory", "Doorstep", "Service", "Parts", "Outlets", "Partners", "Staff", "Customers", "Reports", "Settings"];
+      const LEAD_STATUS = ["New", "Contacted", "Test drive", "Negotiating", "Won", "Lost"];
+      const $ = (s, r = document) => r.querySelector(s);
+      const esc = (v) => String(v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+      const tone = { New: "red", Won: "teal", Live: "teal", Lost: "dim", Sold: "dim", "Test drive": "warm", Negotiating: "warm", Reserved: "warm", Done: "teal", "En route": "warm",
+        "Awaiting approval": "red", "In progress": "warm", Ready: "teal", Delivered: "dim", "Low stock": "red", Opening: "warm", Planned: "dim", Agreement: "warm", "On the way": "warm", Yes: "teal", No: "dim" };
+      const kpi = ([l, v]) => `<div class="x-card x-kpi"><span class="x-kpi__label">${l}</span><span class="x-kpi__fig">${v}</span></div>`;
+      const opts = (a, sel) => a.map((o) => `<option${o === sel ? " selected" : ""}>${esc(o)}</option>`).join("");
+      const inr = (n) => "₹" + (+n || 0).toLocaleString("en-IN");
+      const banner = (key, title, sub, extra = "") => `<header class="x-banner" data-b="${key}"><div><div><h1>${title}</h1><p>${sub}</p></div>${extra}</div></header>`;
+      const mountBanner = (el) => { const b = $(".x-banner", el); b.prepend($(`#banners [data-b="${b.dataset.b}"]`).cloneNode()); };
+      const pill = (s) => `<span class="x-pill ${tone[s] ? "x-pill--" + tone[s] : ""}">${esc(s)}</span>`;
+      const score = (n) => `<span class="x-score ${n >= 85 ? "x-score--hi" : n < 70 ? "x-score--lo" : ""}" title="ChekdScore">${n}</span>`;
+      let charts = [];
+
+      /* ---------- Views: render functions keyed by hash ---------- */
+      const views = {
+        dashboard(el) {
+          const n = (k, f) => S[k].filter(f).length;
+          const kpis = [["Cars listed", n("cars", (c) => c.status !== "Sold")], ["Cars sold", n("cars", (c) => c.status === "Sold")], ["Open leads", n("leads", (l) => l.status !== "Won" && l.status !== "Lost")],
+            ["Doorstep bookings", S.tasks.length], ["Service jobs", n("jobs", (j) => j.stage < STAGES.length - 1)], ["Partner enquiries", S.partners.length]];
+          const empty = Object.keys(TABLES).some((k) => !S[k].length);
+          const tasks = [...S.tasks].sort((a, b) => a.time.localeCompare(b.time)).slice(0, 5);
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Good morning</h1><p>${esc(S.town)} · live counts from your workspace</p></div>${empty ? `<button class="x-btn x-btn--primary" id="demo-all">Load all demo data</button>` : ""}</div>
+            <section class="x-kpis">${kpis.map(kpi).join("")}</section>
+            <div class="x-grid">
+              <div class="x-card"><h2>Cars sold rose from 11 to 23 since June<span class="x-demo">Sample data</span></h2><p>Units sold per month, Jun–Nov</p>
+                <div class="chart__canvas"><canvas id="c-sold" role="img" aria-label="Cars sold: Jun 11, Jul 14, Aug 13, Sep 17, Oct 20, Nov 23"></canvas></div></div>
+              <div class="x-card"><h2>Revenue by stream<span class="x-demo">Sample data</span></h2><p>This month, ₹ lakh · total ₹18.4L</p>
+                <div class="chart__canvas"><canvas id="c-rev" role="img" aria-label="Car sales 10.4L, Service 4.6L, Parts 2.3L, Doorstep fees 1.1L"></canvas></div></div>
+            </div>
+            <div class="x-card"><h2>Today's Doorstep</h2><p>First ${tasks.length} of ${S.tasks.length} tasks across Bengaluru · <a class="link" href="#doorstep">Open Doorstep</a></p>
+              <ul class="x-list">${tasks.length ? "" : `<li><span></span><p class="x-fine">No bookings yet.</p></li>`}${tasks.map((t) => `<li><time>${t.time.replace(/^0/, "")}</time><div>${t.type} · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>${pill(t.status)}</li>`).join("")}</ul></div>`;
+          if (empty) $("#demo-all").onclick = () => loadDemo(Object.keys(TABLES));
+          const sold = Hark.data("sold-data"), R = Hark.data("report-data"), last = R.months.length - 1;
+          const rev = STREAMS.map((n) => ({ stream: n, lakh: R.streams[n][last] }));
+          charts.push(new Chart($("#c-sold"), {
+            type: "line",
+            data: { labels: sold.map((d) => d.month), datasets: [{ label: "Cars sold", data: sold.map((d) => d.sold), fill: true, pointRadius: 3 }] },
+            options: { plugins: { legend: { display: false }, datalabels: Hark.labels.points } },
+          }));
+          charts.push(new Chart($("#c-rev"), {
+            type: "bar",
+            data: { labels: rev.map((d) => d.stream), datasets: [{ label: "Revenue", data: rev.map((d) => d.lakh), backgroundColor: rev.map((d, i) => (i ? "var(--chart-muted)" : "var(--chart-ink)")) }] },
+            options: {
+              indexAxis: "y",
+              scales: { x: { ticks: { callback: (v) => `₹${v}L` } } },
+              plugins: { legend: { display: false }, datalabels: { ...Hark.labels.values, formatter: (v) => `₹${v}L` }, tooltip: { callbacks: { label: (c) => `₹${c.raw}L` } } },
+            },
+          }));
+        },
+
+        leads(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Leads</h1><p>Click a lead to see details and update its status.</p></div></div>
+            <div class="x-tools">
+              <input class="x-input" type="search" id="lead-q" placeholder="Search name, car, area, Captain…" value="${esc(S.q)}" aria-label="Search leads" />
+              <select class="x-input" id="lead-status" aria-label="Filter by status"><option>All</option>${LEAD_STATUS.map((s) => `<option${s === S.status ? " selected" : ""}>${s}</option>`).join("")}</select>
+            </div>
+            <div class="x-card x-tablewrap"><table class="x-table">
+              <thead><tr><th>Name</th><th>Type</th><th>Car</th><th>Source</th><th>Town</th><th>Status</th><th>Captain</th></tr></thead>
+              <tbody id="lead-rows"></tbody></table></div>`;
+          $("#lead-q").oninput = (e) => { S.q = e.target.value; $("#q").value = S.q; leadRows(); };
+          $("#lead-status").onchange = (e) => { S.status = e.target.value; leadRows(); };
+          $("#lead-rows").onclick = (e) => { const tr = e.target.closest("tr[data-id]"); if (tr) openLead(tr.dataset.id); };
+          $("#lead-rows").onkeydown = (e) => { const tr = e.target.closest("tr[data-id]"); if (tr && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); openLead(tr.dataset.id); } };
+          leadRows();
+        },
+
+        inventory(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Inventory</h1><p>ChekdScore is our 0–100 inspection grade.</p></div><button class="x-btn x-btn--primary" id="add-car">+ Add car</button></div>
+            <div class="x-card x-tablewrap"><table class="x-table">
+              <thead><tr><th>Make / model</th><th>Year</th><th>Km</th><th>Fuel</th><th>Price</th><th>ChekdScore</th><th>Status</th></tr></thead>
+              <tbody id="car-rows"></tbody></table></div>`;
+          $("#add-car").onclick = openAddCar;
+          carRows();
+        },
+
+        doorstep(el) {
+          el.innerHTML = `
+            ${banner("doorstep", "Doorstep", "Today's schedule across Bengaluru · 9:00–19:00", `<button class="x-btn x-btn--primary" id="add-task">+ New booking</button>`)}
+            <section class="x-kpis" id="d-sum"></section>
+            <div class="x-chips" role="group" aria-label="Filter by type">${["All", ...D_TYPES].map((t) => `<button class="x-chip" data-t="${t}" aria-pressed="${t === S.dType}">${t}</button>`).join("")}</div>
+            <div class="x-card"><ul class="x-slots" id="d-slots"></ul></div>`;
+          mountBanner(el);
+          $(".x-chips", el).onclick = (e) => {
+            const b = e.target.closest("[data-t]"); if (!b) return;
+            S.dType = b.dataset.t;
+            el.querySelectorAll(".x-chip").forEach((c) => c.setAttribute("aria-pressed", c === b));
+            taskRows();
+          };
+          $("#d-slots").onchange = (e) => {
+            const t = S.tasks.find((x) => String(x.id) === e.target.dataset.id); if (!t) return;
+            upd("tasks", t, { status: e.target.value }).then((ok) => { taskRows(); if (ok) toast(`${t.customer}: ${t.status}`); });
+          };
+          $("#add-task").onclick = () => modal("New booking", `
+            <label class="x-field">Type<select class="x-input" name="type">${opts(D_TYPES)}</select></label>
+            <label class="x-field">Time<input class="x-input" name="time" type="time" min="09:00" max="19:00" step="1800" value="14:00" required /></label>
+            <label class="x-field">Customer<input class="x-input" name="customer" required placeholder="e.g. Rohan Desai" /></label>
+            <label class="x-field">Area<input class="x-input" name="area" required placeholder="e.g. Whitefield" /></label>
+            <label class="x-field">Car<input class="x-input" name="car" required placeholder="e.g. Hyundai Venue" /></label>
+            <label class="x-field">Chekd Captain<select class="x-input" name="captain">${opts(S.captains)}</select></label>`, (f) => {
+            if (f.time.value < "09:00" || f.time.value > "19:00") f.time.value = "19:00";
+            const row = { time: f.time.value, type: f.type.value, customer: f.customer.value.trim(), area: f.area.value.trim(), car: f.car.value.trim(), captain: f.captain.value, status: "Scheduled" };
+            return add("tasks", row).then((ok) => { if (ok) { render(); toast(`Booked ${row.type} at ${row.time}`); } return ok; });
+          });
+          taskRows();
+        },
+
+        service(el) {
+          const g = CHECK.groups, sum = (i) => g.reduce((a, r) => a + r[i], 0);
+          el.innerHTML = `
+            ${banner("service", "Service", "Jobs across Chekd Garages · advance each job as work moves on")}
+            <div class="x-jobs" id="jobs"></div>
+            <div class="x-card x-insp">
+              <div class="x-insp__head"><div><h2>Chekd Check · 200-point inspection</h2><p>${CHECK.car}</p></div>
+                <div class="x-insp__score"><span>ChekdScore</span><b>${CHECK.score}</b></div></div>
+              <section class="x-kpis">${[["Pass", sum(1)], ["Attention", sum(2)], ["Fail", sum(3)], ["Points checked", sum(1) + sum(2) + sum(3)]].map(([l, v]) => `<div class="x-card x-kpi"><span class="x-kpi__label">${l}</span><span class="x-kpi__fig">${v}</span></div>`).join("")}</section>
+              <div class="x-tablewrap"><table class="x-table">
+                <thead><tr><th>Group</th><th>Points</th><th>Pass</th><th>Attention</th><th>Fail</th><th>Result</th></tr></thead>
+                <tbody>${g.map(([n, p, a, f]) => `<tr><td><b>${n}</b></td><td class="x-num">${p + a + f}</td><td class="x-num">${p}</td><td class="x-num">${a}</td><td class="x-num">${f}</td>
+                  <td><span class="x-mix" role="img" aria-label="${p} pass, ${a} attention, ${f} fail"><i style="flex:${p}"></i><i style="flex:${a}"></i><i style="flex:${f}"></i></span></td></tr>`).join("")}</tbody>
+              </table></div>
+            </div>`;
+          mountBanner(el);
+          $("#jobs").onclick = (e) => {
+            const b = e.target.closest("[data-adv]"); if (!b) return;
+            const j = S.jobs[+b.dataset.adv];
+            if (j && j.stage < STAGES.length - 1) { b.disabled = true; upd("jobs", j, { stage: j.stage + 1 }).then((ok) => { jobCards(); if (ok) toast(`${j.reg} → ${STAGES[j.stage]}`); }); }
+          };
+          jobCards();
+        },
+
+        staff(el) {
+          el.innerHTML = `
+            ${banner("staff", "Staff", "Uniform: black polo, red sleeve stripes, chekd cars logo")}
+            <div class="x-tools">
+              <select class="x-input" id="staff-role" aria-label="Filter by role"><option>All</option>${opts(ROLES, S.staffRole)}</select>
+              <span class="x-spacer"></span>
+              <button class="x-btn x-btn--primary" id="add-staff">+ Add staff</button>
+            </div>
+            <div class="x-card x-tablewrap"><table class="x-table">
+              <thead><tr><th>Name</th><th>Role</th><th>Outlet</th><th>Phone</th><th>Jobs this month</th><th>Rating</th><th>Active</th></tr></thead>
+              <tbody id="staff-rows"></tbody></table></div>`;
+          mountBanner(el);
+          $("#staff-role").onchange = (e) => { S.staffRole = e.target.value; staffRows(); };
+          $("#staff-rows").onchange = (e) => {
+            const s = S.staff[+e.target.dataset.i]; if (!s) return;
+            upd("staff", s, { active: e.target.checked }).then((ok) => { staffRows(); if (ok) toast(`${s.name} is now ${s.active ? "active" : "inactive"}`); });
+          };
+          $("#add-staff").onclick = () => modal("Add staff", `
+            <label class="x-field x-full">Name<input class="x-input" name="name" required placeholder="e.g. Anil Kumar" /></label>
+            <label class="x-field">Role<select class="x-input" name="role">${opts(ROLES)}</select></label>
+            <label class="x-field">Outlet<select class="x-input" name="outlet">${opts(OUTLETS)}</select></label>
+            <label class="x-field x-full">Phone<input class="x-input" name="phone" type="tel" required placeholder="+91 98450 00000" /></label>`, (f) => {
+            const row = { name: f.name.value.trim(), role: f.role.value, outlet: f.outlet.value, phone: f.phone.value.trim(), jobs: 0, rating: null, active: true };
+            return add("staff", row).then((ok) => { if (ok) { S.staffRole = "All"; render(); toast(`${row.name} added to staff`); } return ok; });
+          });
+          staffRows();
+        },
+
+        parts(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Chekd Parts</h1><p>New, OEM and refurbished parts for garages and customers.</p></div><button class="x-btn x-btn--primary" id="add-part">+ Add part</button></div>
+            <section class="x-kpis" id="p-kpis"></section>
+            <div class="x-tools">
+              <input class="x-input" type="search" id="part-q" placeholder="Search part, SKU, brand, model…" value="${esc(S.pq)}" aria-label="Search parts" />
+              <select class="x-input" id="part-type" aria-label="Filter by type"><option>All types</option>${opts(P_TYPES, S.pType)}</select>
+            </div>
+            <div class="x-card x-tablewrap"><table class="x-table">
+              <thead><tr><th>Part</th><th>SKU</th><th>Brand</th><th>Fits</th><th>Type</th><th>Stock</th><th>Reorder at</th><th>Price</th><th><span class="x-fine">Action</span></th></tr></thead>
+              <tbody id="part-rows"></tbody></table></div>
+            <div class="x-card"><h2>Recent parts orders</h2><p>Update each order as it moves.</p><div id="p-orders"></div></div>`;
+          $("#part-q").oninput = (e) => { S.pq = e.target.value; partRows(); };
+          $("#part-type").onchange = (e) => { S.pType = e.target.value; partRows(); };
+          $("#part-rows").onclick = (e) => {
+            const b = e.target.closest("[data-restock]"); if (!b) return;
+            const p = S.parts[+b.dataset.restock]; if (!p) return;
+            b.disabled = true;
+            upd("parts", p, { qty: p.qty + 10 }).then((ok) => { partRows(); if (ok) toast(`${p.name}: ${p.qty} in stock`); });
+          };
+          const orderRows = () => { $("#p-orders").innerHTML = S.orders.length ? S.orders.map((o, i) => `
+            <div class="x-task"><div><b>${esc(o.code)}</b> · ${esc(o.who)} · <b>${inr(o.amt)}</b><small>${esc(o.items)}</small></div>
+            <select class="x-input" data-i="${i}" data-s="${o.status}" aria-label="Status for ${esc(o.code)}">${opts(ORDER_STATUS, o.status)}</select></div>`).join("")
+            : `<p class="x-fine">No parts orders yet.</p>`; };
+          orderRows();
+          $("#p-orders").onchange = (e) => {
+            const o = S.orders[+e.target.dataset.i]; if (!o) return;
+            upd("orders", o, { status: e.target.value }).then((ok) => { if ($("#p-orders")) { orderRows(); partRows(); } if (ok) toast(`${o.code}: ${o.status}`); });
+          };
+          $("#add-part").onclick = () => modal("Add part", `
+            <label class="x-field x-full">Part name<input class="x-input" name="name" required placeholder="e.g. Brake disc – Venue" /></label>
+            <label class="x-field">SKU<input class="x-input" name="sku" required placeholder="CP-BRD-VN01" /></label>
+            <label class="x-field">Brand<input class="x-input" name="brand" required placeholder="e.g. Bosch" /></label>
+            <label class="x-field">Fits models<input class="x-input" name="fits" required placeholder="e.g. Venue / i20" /></label>
+            <label class="x-field">Type<select class="x-input" name="type">${opts(P_TYPES)}</select></label>
+            <label class="x-field">Stock qty<input class="x-input" name="qty" type="number" min="0" value="10" required /></label>
+            <label class="x-field">Reorder level<input class="x-input" name="reorder" type="number" min="0" value="5" required /></label>
+            <label class="x-field x-full">Price (₹)<input class="x-input" name="price" type="number" min="0" value="1000" required /></label>`, (f) => {
+            const row = { name: f.name.value.trim(), sku: f.sku.value.trim().toUpperCase(), brand: f.brand.value.trim(), fits: f.fits.value.trim(), qty: +f.qty.value, reorder: +f.reorder.value, price: +f.price.value, type: f.type.value };
+            return add("parts", row).then((ok) => { if (ok) { S.pType = "All types"; S.pq = ""; render(); toast(`${row.name} added to parts`); } return ok; });
+          });
+          partRows();
+        },
+
+        outlets(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Outlets</h1><p id="o-sub"></p></div><button class="x-btn x-btn--primary" id="add-outlet">+ Add outlet</button></div>
+            <div class="x-jobs" id="outlets"></div>`;
+          $("#outlets").onchange = (e) => {
+            const o = S.outlets[+e.target.dataset.i];
+            if (!o) return;
+            upd("outlets", o, { status: e.target.value }).then((ok) => { outletCards(); if (ok) toast(`${o.name}: ${o.status}`); });
+          };
+          $("#add-outlet").onclick = () => modal("Add outlet", `
+            <label class="x-field x-full">Outlet name<input class="x-input" name="name" required placeholder="e.g. Chekd Point Dharwad" /></label>
+            <label class="x-field">Type<select class="x-input" name="type">${opts(O_TYPES, "Point")}</select></label>
+            <label class="x-field">Town<select class="x-input" name="town">${opts(TOWNS, S.town)}</select></label>
+            <label class="x-field">Area<input class="x-input" name="area" required placeholder="e.g. Vidyanagar" /></label>
+            <label class="x-field">Manager<input class="x-input" name="manager" placeholder="To be hired" /></label>
+            <label class="x-field">Staff<input class="x-input" name="staff" type="number" min="0" value="0" /></label>
+            <label class="x-field">Status<select class="x-input" name="status">${opts(O_STATUS, "Planned")}</select></label>`, (f) => {
+            const row = { name: f.name.value.trim(), type: f.type.value, town: f.town.value, area: f.area.value.trim(), note: null, manager: f.manager.value.trim() || "To be hired", staff: +f.staff.value, cars: 0, sales: 0, jobs: 0, status: f.status.value };
+            return add("outlets", row).then((ok) => { if (ok) { render(); toast(`${row.name} added`); } return ok; });
+          });
+          outletCards();
+        },
+
+        partners(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Partners</h1><p>Franchise pipeline across Karnataka. Open a card for notes; Move advances it a stage.</p></div></div>
+            <div class="x-kanban" id="kanban"></div>`;
+          $("#kanban").onclick = (e) => {
+            const m = e.target.closest("[data-move]");
+            if (m) return advance(+m.dataset.move);
+            const c = e.target.closest("[data-p]"); if (c) openPartner(+c.dataset.p);
+          };
+          kanban();
+        },
+
+        customers(el) {
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Customers</h1><p>Buyers, sellers, service and parts customers. Click a row for their history.</p></div></div>
+            <section class="x-kpis">${[["Customers", S.customers.length], ["Own 2+ cars", S.customers.filter((c) => c.cars.length > 1).length],
+              ["Passports issued", S.customers.filter((c) => c.passport).length], ["Lifetime value", inr(S.customers.reduce((a, c) => a + (+c.ltv || 0), 0))]].map(kpi).join("")}</section>
+            <div class="x-tools">
+              <input class="x-input" type="search" id="cust-q" placeholder="Search name, town, phone, car…" value="${esc(S.q)}" aria-label="Search customers" />
+              <select class="x-input" id="cust-type" aria-label="Filter by type"><option>All types</option>${opts(C_TYPES, S.cType)}</select>
+            </div>
+            <div class="x-card x-tablewrap"><table class="x-table">
+              <thead><tr><th>Name</th><th>Town</th><th>Phone</th><th>Type</th><th>Cars</th><th>Lifetime value</th><th>Chekd Passport</th><th>Last visit</th></tr></thead>
+              <tbody id="cust-rows"></tbody></table></div>
+            <p class="x-fine">${S.customers.length} customer${S.customers.length === 1 ? "" : "s"} in your workspace.</p>`;
+          $("#cust-q").oninput = (e) => { S.q = e.target.value; $("#q").value = S.q; custRows(); };
+          $("#cust-type").onchange = (e) => { S.cType = e.target.value; custRows(); };
+          const open = (e) => { const tr = e.target.closest("tr[data-i]"); if (tr) openCustomer(+tr.dataset.i); };
+          $("#cust-rows").onclick = open;
+          $("#cust-rows").onkeydown = (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(e); } };
+          custRows();
+        },
+
+        reports(el) {
+          const R = Hark.data("report-data");
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Reports</h1><p>Leads, funnel and outlets from your workspace${S.town === "All towns" ? "" : " · " + esc(S.town)}.</p></div></div>
+            <section class="x-kpis" id="r-kpis"></section>
+            <div class="x-grid">
+              <div class="x-card"><h2>Revenue grew from ₹11.2L in June to ₹18.4L in November<span class="x-demo">Sample data</span></h2><p>Revenue by stream per month, ₹ lakh</p>
+                <div class="chart__canvas"><canvas id="c-stream" role="img" aria-label="Stacked revenue by stream, Jun to Nov; car sales are the largest stream every month"></canvas></div></div>
+              <div class="x-card"><h2 id="r-src-h"></h2><p>Share of leads by source</p>
+                <div class="chart__canvas"><canvas id="c-src" role="img" aria-label="Leads by source"></canvas></div></div>
+            </div>
+            <div class="x-card"><h2 id="r-fun-h"></h2><p>Lead to sale, with the share kept at each step</p>
+              <div class="chart__canvas"><canvas id="c-fun" role="img" aria-label="Lead-to-sale funnel"></canvas></div></div>
+            <div class="x-card x-tablewrap">
+              <div class="x-title" style="padding:18px 18px 12px"><div><h2>Outlet comparison</h2><p class="x-fine">November figures · ${esc(S.town)}</p></div><button class="x-btn" id="r-csv">Export CSV</button></div>
+              <table class="x-table"><thead><tr><th>Outlet</th><th>Type</th><th>Town</th><th>Manager</th><th>Staff</th><th>Cars in stock</th><th>Revenue (Nov)</th><th>Share of revenue</th><th>Service jobs</th><th>Status</th></tr></thead>
+              <tbody id="r-rows"></tbody></table></div>`;
+          // Outlet table and CSV share one row builder
+          const rows = S.outlets.filter((o) => S.town === "All towns" || o.town === S.town);
+          const total = S.outlets.reduce((a, o) => a + o.sales, 0);
+          const share = (o) => (total ? Math.round((o.sales / total) * 100) : 0) + "%";
+          $("#r-rows").innerHTML = rows.length ? rows.map((o) => `<tr><td><b>${esc(o.name)}</b></td><td>${o.type}</td><td>${o.town}</td><td>${esc(o.manager)}</td>
+            <td class="x-num">${o.staff || "—"}</td><td class="x-num">${o.cars || "—"}</td><td class="x-num"><b>${o.sales ? "₹" + o.sales + "L" : "—"}</b></td>
+            <td class="x-num">${o.sales ? share(o) : "—"}</td><td class="x-num">${o.jobs || "—"}</td><td>${pill(o.status)}</td></tr>`).join("")
+            : `<tr><td colspan="10" class="x-empty">No outlets in ${esc(S.town)} yet.</td></tr>`;
+          $("#r-csv").onclick = () => {
+            const q = (v) => `"${String(v).replace(/"/g, '""')}"`;
+            const csv = [["Outlet", "Type", "Town", "Area", "Manager", "Staff", "Cars in stock", "Revenue Nov (Rs lakh)", "Share of revenue", "Service jobs", "Status"],
+              ...rows.map((o) => [o.name, o.type, o.town, o.area, o.manager, o.staff, o.cars, o.sales, share(o), o.jobs, o.status])].map((r) => r.map(q).join(",")).join("\n");
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+            a.download = "chekd-outlets-nov-2026.csv"; a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+            toast(`Exported ${rows.length} outlets`);
+          };
+          charts.push(new Chart($("#c-stream"), {
+            type: "bar",
+            data: { labels: R.months, datasets: STREAMS.map((n, i) => ({ label: n, data: R.streams[n], backgroundColor: `var(--chart-${i + 1})` })) },
+            options: { scales: { x: { stacked: true }, y: { stacked: true, ticks: { callback: (v) => `₹${v}L` } } },
+              plugins: { tooltip: { callbacks: { label: (c) => `${c.dataset.label}: ₹${c.raw}L` } } } },
+          }));
+          // Leads, sources and funnel are counted from the loaded leads
+          const leads = S.leads.filter((l) => S.town === "All towns" || l.town === S.town);
+          const bySrc = {}; leads.forEach((l) => { bySrc[l.source || "Other"] = (bySrc[l.source || "Other"] || 0) + 1; });
+          const srcs = Object.entries(bySrc).sort((a, b) => b[1] - a[1]);
+          const at = (list) => leads.filter((l) => list.includes(l.status)).length;
+          const f = [leads.length, at(["Contacted", "Test drive", "Negotiating", "Won"]), at(["Test drive", "Negotiating", "Won"]), at(["Won"])];
+          const sold = S.cars.filter((c) => c.status === "Sold").length;
+          $("#r-kpis").innerHTML = [["Leads", f[0]], ["Won", f[3]], ["Lead to win", f[0] ? `${((f[3] / f[0]) * 100).toFixed(1)}%` : "—"], ["Cars sold", sold]].map(kpi).join("");
+          $("#r-src-h").textContent = srcs.length ? `${f[0]} leads, ${srcs[0][1]} from ${srcs[0][0]}` : "No leads yet";
+          $("#r-fun-h").textContent = `${f[0]} leads, ${f[3]} won`;
+          $("#c-src").setAttribute("aria-label", srcs.map(([k, v]) => `${k} ${v}`).join(", ") || "No leads");
+          $("#c-fun").setAttribute("aria-label", `Leads ${f[0]}, contacted ${f[1]}, test drive ${f[2]}, won ${f[3]}`);
+          charts.push(new Chart($("#c-src"), {
+            type: "doughnut",
+            data: { labels: srcs.map((s) => s[0]), datasets: [{ label: "Leads", data: srcs.map((s) => s[1]) }] },
+            options: { plugins: { datalabels: Hark.labels.percent } },
+          }));
+          charts.push(new Chart($("#c-fun"), {
+            type: "bar",
+            data: { labels: ["Leads", "Contacted", "Test drive", "Won"], datasets: [{ label: "People", data: f }] },
+            options: { indexAxis: "y", plugins: { legend: { display: false },
+              datalabels: { ...Hark.labels.values, formatter: (v, c) => (c.dataIndex ? `${v} · ${c.dataset.data[c.dataIndex - 1] ? Math.round((v / c.dataset.data[c.dataIndex - 1]) * 100) : 0}%` : v) } } },
+          }));
+        },
+
+        settings(el) {
+          const TABS = ["Business", "Roles & access", "Pricing", "Notifications"];
+          el.innerHTML = `
+            <div class="x-title"><div><h1>Settings</h1><p>Saved to your workspace when you press Save.</p></div><button class="x-btn x-btn--primary" id="s-save">Save</button></div>
+            <div class="x-chips" role="tablist" aria-label="Settings sections">${TABS.map((t) => `<button class="x-chip" role="tab" data-tab="${t}" aria-selected="${t === S.sTab}">${t}</button>`).join("")}</div>
+            <div class="x-card" role="tabpanel" id="s-panel"></div>`;
+          const field = (label, k, type = "text", extra = "") => `<label class="x-field">${label}<input class="x-input" data-k="${k}" type="${type}" value="${esc(S.set[k])}" ${extra} /></label>`;
+          const toggle = (label, sub, k) => `<li><div>${label}<small>${sub}</small></div><label class="x-switch"><input type="checkbox" data-k="${k}"${S.set[k] ? " checked" : ""} aria-label="${label}" /><span></span></label></li>`;
+          const ROLE_COLS = Object.keys(S.perm);
+          const panes = {
+            Business: () => `<h2>Business</h2><p>How Chekd Cars appears to customers.</p><div class="x-form">
+              ${field("Company name", "company")}${field("Tagline", "tagline")}
+              ${field("GSTIN", "gstin", "text", 'placeholder="29ABCDE1234F1Z5" maxlength="15"')}${field("Support WhatsApp", "wa", "tel")}</div>`,
+            "Roles & access": () => `<h2>Roles & access</h2><p>Which modules each role can open. Super Admin always has full access.</p>
+              <div class="x-tablewrap"><table class="x-table"><thead><tr><th>Module</th>${ROLE_COLS.map((r) => `<th class="x-c">${r}</th>`).join("")}</tr></thead>
+              <tbody>${NAV.map((n) => `<tr><td><b>${n}</b></td>${ROLE_COLS.map((r, j) => `<td class="x-c"><input class="x-check" type="checkbox" data-r="${r}" data-m="${n}"${S.perm[r].includes(n) ? " checked" : ""}${j ? "" : " disabled"} aria-label="${r}: ${n}" /></td>`).join("")}</tr>`).join("")}</tbody></table></div>`,
+            Pricing: () => `<h2>Pricing</h2><p>Fees shown to customers, in ₹.</p><div class="x-form">
+              ${field("Doorstep fee (₹)", "doorstep", "number", 'min="0"')}${field("Chekd Check fee (₹)", "check", "number", 'min="0"')}${field("Passport fee (₹)", "passport", "number", 'min="0"')}</div>
+              <ul class="x-toggles" style="margin-top:14px">${toggle("Franchise enquiry auto-reply", "Sends the partner brochure on WhatsApp within a minute", "autoReply")}</ul>`,
+            Notifications: () => `<h2>Notifications</h2><p>What the bell and WhatsApp alerts tell you about.</p><ul class="x-toggles">
+              ${toggle("New lead", "Any source, assigned or not", "nLead")}${toggle("Low stock", "A part falls to its reorder level", "nStock")}
+              ${toggle("Service ready", "A job reaches Ready", "nReady")}${toggle("Partner moved", "A franchise lead changes stage", "nPartner")}</ul>`,
+          };
+          const show = () => {
+            el.querySelectorAll("[role=tab]").forEach((b) => b.setAttribute("aria-selected", b.dataset.tab === S.sTab));
+            $("#s-panel").innerHTML = panes[S.sTab]();
+            $("#s-panel").setAttribute("aria-label", S.sTab);
+          };
+          $(".x-chips", el).onclick = (e) => { const b = e.target.closest("[data-tab]"); if (b) { S.sTab = b.dataset.tab; show(); } };
+          $("#s-panel").onchange = $("#s-panel").oninput = (e) => {
+            const t = e.target;
+            if (t.dataset.k) S.set[t.dataset.k] = t.type === "checkbox" ? t.checked : t.type === "number" ? +t.value : t.value;
+            if (t.dataset.r && e.type === "change") {
+              const list = S.perm[t.dataset.r];
+              if (t.checked) list.push(t.dataset.m); else list.splice(list.indexOf(t.dataset.m), 1);
+            }
+          };
+          $("#s-save").onclick = async (e) => {
+            const b = e.currentTarget; b.disabled = true;
+            const ok = await busy(() => rest("settings", "?on_conflict=key", { method: "POST", body: [{ key: "set", value: S.set }, { key: "perm", value: S.perm }], prefer: "resolution=merge-duplicates,return=minimal" }));
+            b.disabled = false;
+            if (ok) toast("Settings saved");
+          };
+          show();
+        },
+      };
+
+      function custRows() {
+        if (!$("#cust-rows")) return;
+        const q = S.q.trim().toLowerCase();
+        const rows = S.customers.map((c, i) => [c, i]).filter(([c]) =>
+          (S.cType === "All types" || c.type === S.cType) && (S.town === "All towns" || c.town === S.town) &&
+          (!q || [c.name, c.town, c.phone, c.type, ...c.cars].join(" ").toLowerCase().includes(q)));
+        $("#cust-rows").innerHTML = rows.length ? rows.map(([c, i]) => `
+          <tr class="x-click" data-i="${i}" tabindex="0"><td><b>${esc(c.name)}</b></td><td>${c.town}</td><td class="x-num">${c.phone}</td><td>${c.type}</td>
+          <td>${esc(c.cars[0] || "—")}${c.cars.length > 1 ? `<small>+${c.cars.length - 1} more</small>` : ""}</td>
+          <td class="x-num"><b>${inr(c.ltv)}</b></td><td>${pill(c.passport ? "Yes" : "No")}</td><td>${c.last}</td></tr>`).join("")
+          : `<tr><td colspan="8" class="x-empty">No customers match these filters.</td></tr>`;
+      }
+      function openCustomer(i) {
+        const c = S.customers[i];
+        layer.innerHTML = `<div class="x-overlay" data-close></div>
+          <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Customer details">
+            <div class="x-drawer__head"><div><h2>${esc(c.name)}</h2><p class="x-fine">${c.type} · ${c.town}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <dl class="x-dl"><dt>Phone</dt><dd>${c.phone}</dd><dt>Cars</dt><dd>${esc(c.cars.join(", ") || "—")}</dd><dt>Lifetime value</dt><dd><b>${inr(c.ltv)}</b></dd>
+              <dt>Chekd Passport</dt><dd>${pill(c.passport ? "Yes" : "No")}</dd><dt>Last visit</dt><dd>${c.last}</dd></dl>
+            <h3>Activity</h3>
+            <ol class="x-tl">${[...c.log].reverse().map(([d, t]) => `<li><time>${d}</time>${esc(t)}</li>`).join("")}</ol>
+            <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
+          </aside>`;
+        layer.onclick = (e) => { if (e.target.closest("[data-close]")) closeLayer(); };
+        $(".x-close", layer).focus();
+      }
+
+      function partRows() {
+        const low = (p) => p.qty <= p.reorder;
+        if (!$("#p-kpis")) return;
+        $("#p-kpis").innerHTML = [["SKUs", S.parts.length], ["Low stock", S.parts.filter(low).length], ["Open orders", S.orders.filter((o) => o.status !== "Delivered").length], ["Order value", inr(S.orders.reduce((a, o) => a + (+o.amt || 0), 0))]]
+          .map(([l, v]) => `<div class="x-card x-kpi"><span class="x-kpi__label">${l}</span><span class="x-kpi__fig">${v}</span></div>`).join("");
+        const q = S.pq.trim().toLowerCase();
+        const rows = S.parts.map((p, i) => [p, i]).filter(([p]) => (S.pType === "All types" || p.type === S.pType) &&
+          (!q || [p.name, p.sku, p.brand, p.fits].join(" ").toLowerCase().includes(q)));
+        $("#part-rows").innerHTML = rows.length ? rows.map(([p, i]) => `
+          <tr><td><b>${esc(p.name)}</b></td><td><span class="x-reg">${esc(p.sku)}</span></td><td>${esc(p.brand)}</td><td>${esc(p.fits)}</td><td>${p.type}</td>
+          <td><span class="x-stock"><b class="x-num">${p.qty}</b>${low(p) ? pill("Low stock") : ""}</span></td><td class="x-num">${p.reorder}</td>
+          <td class="x-num"><b>${inr(p.price)}</b></td><td><button class="x-btn" data-restock="${i}" aria-label="Restock ${esc(p.name)} by 10">Restock +10</button></td></tr>`).join("")
+          : `<tr><td colspan="9" class="x-empty">No parts match these filters.</td></tr>`;
+      }
+      function outletCards() {
+        if (!$("#outlets")) return;
+        const dash = (v) => v || "—";
+        const rows = S.outlets.map((o, i) => [o, i]).filter(([o]) => S.town === "All towns" || o.town === S.town);
+        $("#o-sub").textContent = `${S.town} · ${rows.length} outlet${rows.length === 1 ? "" : "s"}, ${rows.filter(([o]) => o.status === "Live").length} live`;
+        $("#outlets").innerHTML = rows.length ? rows.map(([o, i]) => `
+          <article class="x-card x-job">
+            <div class="x-job__head"><div><h2>${esc(o.name)}</h2><p class="x-fine">${o.type} · ${esc(o.area)}, ${o.town}${o.note ? " · " + o.note : ""}</p></div>${pill(o.status)}</div>
+            <dl class="x-dl"><dt>Manager</dt><dd>${esc(o.manager)}</dd><dt>Staff</dt><dd>${dash(o.staff)}</dd><dt>Cars in stock</dt><dd>${dash(o.cars)}</dd>
+              <dt>Revenue (Nov)</dt><dd><b>${o.sales ? "₹" + o.sales + "L" : "—"}</b></dd><dt>Service jobs</dt><dd>${dash(o.jobs)}</dd></dl>
+            <label class="x-field">Set status<select class="x-input" data-i="${i}">${opts(O_STATUS, o.status)}</select></label>
+          </article>`).join("")
+          : `<div class="x-card x-empty">No outlets in ${esc(S.town)} yet.</div>`;
+      }
+      function kanban() {
+        if (!$("#kanban")) return;
+        const last = P_STAGES.length - 1;
+        $("#kanban").innerHTML = P_STAGES.map((s, k) => {
+          const cards = S.partners.map((p, i) => [p, i]).filter(([p]) => p.stage === k);
+          return `<section class="x-col" aria-label="${s}"><div class="x-col__head"><h2>${s}</h2><span aria-label="${cards.length} leads">${cards.length}</span></div>
+            ${cards.map(([p, i]) => `<article class="x-kcard" data-p="${i}">
+              <button class="x-kcard__name" type="button">${esc(p.name)}</button>
+              <p class="x-fine">${esc(p.town)} · ${p.type}<br />${p.band} · ${p.source}</p>
+              <button class="x-btn" data-move="${i}"${k === last ? " disabled" : ""}>${k === last ? "Live ✓" : "Move → " + P_STAGES[k + 1]}</button>
+            </article>`).join("") || `<p class="x-fine">No leads</p>`}</section>`;
+        }).join("");
+      }
+      function advance(i) {
+        const p = S.partners[i];
+        if (!p || p.stage >= P_STAGES.length - 1) return Promise.resolve(false);
+        return upd("partners", p, { stage: p.stage + 1 }).then((ok) => { kanban(); if (ok) toast(`${p.name} → ${P_STAGES[p.stage]}`); return ok; });
+      }
+      function openPartner(i) {
+        const p = S.partners[i], last = p.stage === P_STAGES.length - 1;
+        layer.innerHTML = `<div class="x-overlay" data-close></div>
+          <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Partner lead">
+            <div class="x-drawer__head"><div><h2>${esc(p.name)}</h2><p class="x-fine">Chekd ${p.type} partner · ${esc(p.town)}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <dl class="x-dl"><dt>Stage</dt><dd>${pill(P_STAGES[p.stage])}</dd><dt>Town</dt><dd>${esc(p.town)}</dd><dt>Type</dt><dd>${p.type}</dd>
+              <dt>Investment</dt><dd>${p.band}</dd><dt>Source</dt><dd>${p.source}</dd></dl>
+            <label class="x-field">Notes<textarea class="x-input" id="p-notes">${esc(p.notes)}</textarea></label>
+            <button class="x-btn" id="p-move"${last ? " disabled" : ""}>${last ? "Live ✓" : "Move → " + P_STAGES[p.stage + 1]}</button>
+            <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
+          </aside>`;
+        layer.onclick = (e) => { if (e.target.closest("[data-close]")) closeLayer(); };
+        $("#p-notes").onchange = (e) => { upd("partners", p, { notes: e.target.value }).then((ok) => { if (ok) toast(`Notes saved for ${p.name}`); }); };
+        $("#p-move").onclick = (e) => { e.currentTarget.disabled = true; advance(i).then(() => { if ($("#p-move")) openPartner(i); }); };
+        $(".x-close", layer).focus();
+      }
+
+      function taskSummary() {
+        if (!$("#d-sum")) return;
+        const n = (s) => S.tasks.filter((t) => t.status === s).length;
+        $("#d-sum").innerHTML = [["Today", S.tasks.length], ["On the way", n("On the way")], ["Done", n("Done")]]
+          .map(([l, v]) => `<div class="x-card x-kpi"><span class="x-kpi__label">${l}</span><span class="x-kpi__fig">${v}</span></div>`).join("");
+      }
+      function taskRows() {
+        if (!$("#d-slots")) return;
+        taskSummary();
+        const list = S.tasks.filter((t) => S.dType === "All" || t.type === S.dType).sort((a, b) => a.time.localeCompare(b.time));
+        let html = "";
+        for (let h = 9; h <= 19; h++) {
+          const here = list.filter((t) => parseInt(t.time, 10) === h);
+          html += `<li><time>${h}:00</time><div>${here.length ? here.map((t) => `
+            <div class="x-task"><div><b>${t.time.replace(/^0/, "")} · ${t.type}</b> · ${esc(t.car)}<small>${esc(t.customer)}, ${esc(t.area)} · ${esc(t.captain)}</small></div>
+            <select class="x-input" data-id="${t.id}" data-s="${t.status}" aria-label="Status for ${esc(t.customer)}">${opts(D_STATUS, t.status)}</select></div>`).join("")
+            : `<p class="x-fine">Open</p>`}</div></li>`;
+        }
+        $("#d-slots").innerHTML = html;
+      }
+      function jobCards() {
+        if (!$("#jobs")) return;
+        const last = STAGES.length - 1;
+        $("#jobs").innerHTML = S.jobs.map((j, i) => `
+          <article class="x-card x-job">
+            <div class="x-job__head"><h2>${esc(j.car)}</h2><span class="x-reg">${j.reg}</span></div>
+            <dl class="x-dl"><dt>Customer</dt><dd>${esc(j.customer)}</dd><dt>Garage</dt><dd>${j.garage}</dd><dt>Job</dt><dd>${esc(j.job)}</dd><dt>Estimate</dt><dd><b>${inr(j.est)}</b></dd></dl>
+            <div><div class="x-job__head" style="margin-bottom:8px"><span class="x-fine">Stage ${j.stage + 1} of ${STAGES.length}</span>${pill(STAGES[j.stage])}</div>
+              <div class="x-stage${j.stage === last ? " is-done" : ""}" role="progressbar" aria-valuemin="1" aria-valuemax="${STAGES.length}" aria-valuenow="${j.stage + 1}" aria-valuetext="${STAGES[j.stage]}">${STAGES.map((s, k) => `<span class="${k <= j.stage ? "on" : ""}" title="${s}"></span>`).join("")}</div></div>
+            <button class="x-btn" data-adv="${i}"${j.stage === last ? " disabled" : ""}>${j.stage === last ? "Delivered ✓" : "Advance to " + STAGES[j.stage + 1]}</button>
+          </article>`).join("");
+      }
+      function staffRows() {
+        if (!$("#staff-rows")) return;
+        const rows = S.staff.map((s, i) => [s, i]).filter(([s]) => S.staffRole === "All" || s.role === S.staffRole);
+        $("#staff-rows").innerHTML = rows.length ? rows.map(([s, i]) => `
+          <tr class="${s.active ? "" : "is-off"}"><td><b>${esc(s.name)}</b></td><td>${s.role}</td><td>${s.outlet}</td><td class="x-num">${esc(s.phone)}</td>
+          <td class="x-num">${s.jobs}</td><td class="x-num">${s.rating ? "★ " + (+s.rating).toFixed(1) : "—"}</td>
+          <td><label class="x-switch"><input type="checkbox" data-i="${i}"${s.active ? " checked" : ""} aria-label="${esc(s.name)} active" /><span></span></label></td></tr>`).join("")
+          : `<tr><td colspan="7" class="x-empty">No staff in this role.</td></tr>`;
+      }
+      function modal(label, fields, onSave) {
+        layer.innerHTML = `<div class="x-overlay" data-close></div>
+          <div class="x-modal" role="dialog" aria-modal="true" aria-label="${label}">
+            <form><h2 class="x-full">${label}</h2>${fields}
+              <div class="x-modal__foot x-full"><button type="button" class="x-btn" data-close>Cancel</button><button class="x-btn x-btn--primary">Save</button></div></form>
+          </div>`;
+        layer.onclick = (e) => { if (e.target.closest("[data-close]")) closeLayer(); };
+        const f = $("form", layer);
+        f.elements[0].focus();
+        f.onsubmit = async (e) => {
+          e.preventDefault();
+          const b = $(".x-btn--primary", f); b.disabled = true;
+          const ok = await onSave(f);
+          if (ok === false) b.disabled = false; else closeLayer();
+        };
+      }
+
+      /* ---------- Tables ---------- */
+      function leadRows() {
+        if (!$("#lead-rows")) return;
+        const q = S.q.trim().toLowerCase();
+        const rows = S.leads.filter((l) =>
+          (S.status === "All" || l.status === S.status) &&
+          (S.town === "All towns" || l.town === S.town) &&
+          (!q || [l.name, l.car, l.area, l.town, l.captain, l.type, l.source].join(" ").toLowerCase().includes(q)));
+        $("#lead-rows").innerHTML = rows.length ? rows.map((l) => `
+          <tr class="x-click" data-id="${l.id}" tabindex="0">
+            <td><b>${esc(l.name)}</b><small>${esc(l.area)}</small></td><td>${l.type}</td><td>${esc(l.car)}</td><td>${l.source}</td>
+            <td>${l.town}</td><td>${pill(l.status)}</td><td>${esc(l.captain)}</td></tr>`).join("")
+          : `<tr><td colspan="7" class="x-empty">No leads match these filters.</td></tr>`;
+      }
+      function carRows() {
+        if (!$("#car-rows")) return;
+        const q = S.q.trim().toLowerCase();
+        const rows = S.cars.filter((c) => !q || [c.model, c.fuel, c.status].join(" ").toLowerCase().includes(q));
+        $("#car-rows").innerHTML = rows.length ? rows.map((c) => `
+          <tr><td><b>${esc(c.model)}</b></td><td class="x-num">${c.year}</td><td class="x-num">${(+c.km || 0).toLocaleString("en-IN")}</td><td>${esc(c.fuel)}</td>
+          <td class="x-num"><b>₹${(+c.price || 0).toFixed(2)} L</b></td><td>${score(c.score)}</td><td>${pill(c.status)}</td></tr>`).join("")
+          : `<tr><td colspan="7" class="x-empty">No cars match “${esc(S.q)}”.</td></tr>`;
+      }
+
+      /* ---------- Overlays ---------- */
+      const layer = $("#layer");
+      function closeLayer() { layer.innerHTML = ""; }
+      document.addEventListener("keydown", (e) => { if (e.key === "Escape") { closeLayer(); setDrawer(false); } });
+
+      function openLead(id) {
+        const l = S.leads.find((x) => String(x.id) === String(id)); if (!l) return;
+        layer.innerHTML = `<div class="x-overlay" data-close></div>
+          <aside class="x-drawer" role="dialog" aria-modal="true" aria-label="Lead details">
+            <div class="x-drawer__head"><div><h2>${esc(l.name)}</h2><p class="x-fine">${l.type} lead · ${l.date}</p></div><button class="x-btn x-close" data-close aria-label="Close">✕</button></div>
+            <dl class="x-dl">
+              <dt>Phone</dt><dd>${l.phone}</dd><dt>Car</dt><dd>${esc(l.car)}</dd><dt>Area</dt><dd>${esc(l.area)}, ${l.town}</dd>
+              <dt>Source</dt><dd>${l.source}</dd><dt>Captain</dt><dd>${esc(l.captain)}</dd>
+            </dl>
+            <label class="x-field">Status<select class="x-input" id="lead-set">${LEAD_STATUS.map((s) => `<option${s === l.status ? " selected" : ""}>${s}</option>`).join("")}</select></label>
+            <a class="x-btn x-btn--teal x-btn--lg" href="https://wa.me/919019088160" target="_blank" rel="noopener">Message on WhatsApp</a>
+          </aside>`;
+        layer.onclick = (e) => { if (e.target.closest("[data-close]")) closeLayer(); };
+        $("#lead-set").onchange = (e) => {
+          const sel = e.target; sel.disabled = true;
+          upd("leads", l, { status: sel.value }).then((ok) => { sel.disabled = false; sel.value = l.status; leadRows(); if (ok) toast(`${l.name} moved to ${l.status}`); });
+        };
+        $(".x-close", layer).focus();
+      }
+
+      function openAddCar() {
+        layer.innerHTML = `<div class="x-overlay" data-close></div>
+          <div class="x-modal" role="dialog" aria-modal="true" aria-label="Add car">
+            <form id="car-form">
+              <h2 class="x-full">Add car</h2>
+              <label class="x-field x-full">Make / model<input class="x-input" name="model" required placeholder="e.g. Hyundai Creta SX" /></label>
+              <label class="x-field">Year<input class="x-input" name="year" type="number" min="2000" max="2025" value="2021" required /></label>
+              <label class="x-field">Km driven<input class="x-input" name="km" type="number" min="0" value="30000" required /></label>
+              <label class="x-field">Fuel<select class="x-input" name="fuel"><option>Petrol</option><option>Diesel</option><option>CNG</option><option>Electric</option></select></label>
+              <label class="x-field">Price (₹ lakh)<input class="x-input" name="price" type="number" step="0.01" min="0" value="8.5" required /></label>
+              <label class="x-field">ChekdScore<input class="x-input" name="score" type="number" min="0" max="100" value="85" required /></label>
+              <label class="x-field">Status<select class="x-input" name="status"><option>Inspection</option><option>Live</option><option>Reserved</option><option>Sold</option></select></label>
+              <div class="x-modal__foot x-full"><button type="button" class="x-btn" data-close>Cancel</button><button class="x-btn x-btn--primary">Save car</button></div>
+            </form>
+          </div>`;
+        layer.onclick = (e) => { if (e.target.closest("[data-close]")) closeLayer(); };
+        const f = $("#car-form");
+        f.model.focus();
+        f.onsubmit = async (e) => {
+          e.preventDefault();
+          const b = $(".x-btn--primary", f); b.disabled = true;
+          const row = { model: f.model.value.trim(), year: +f.year.value, km: +f.km.value, fuel: f.fuel.value, price: +f.price.value, score: Math.max(0, Math.min(100, +f.score.value)), status: f.status.value };
+          if (await add("cars", row)) { render(); toast(`${row.model} added to inventory`); } else b.disabled = false;
+        };
+      }
+
+      let toastTimer;
+      function toast(msg, isError = false) {
+        let t = $(".x-toast");
+        if (!t) { t = document.createElement("div"); t.className = "x-toast"; document.body.appendChild(t); }
+        t.setAttribute("role", isError ? "alert" : "status");
+        t.classList.toggle("is-error", isError);
+        t.textContent = msg; t.hidden = false;
+        clearTimeout(toastTimer); toastTimer = setTimeout(() => (t.hidden = true), isError ? 6000 : 2600);
+      }
+
+      /* ---------- Shell ---------- */
+      $("#nav").innerHTML = NAV.map((n) => `<a href="#${n.toLowerCase()}">${n}</a>`).join("");
+      function setDrawer(open) {
+        $("#app").classList.toggle("is-open", open);
+        $("#scrim").hidden = !open;
+        $("#menu").setAttribute("aria-expanded", open);
+      }
+      $("#menu").onclick = () => setDrawer(true);
+      $("#scrim").onclick = () => setDrawer(false);
+
+      function render() {
+        const key = location.hash.slice(1) || "dashboard";
+        const name = NAV.find((n) => n.toLowerCase() === key) || "Dashboard";
+        charts.forEach((c) => c.destroy()); charts = [];
+        closeLayer(); setDrawer(false);
+        document.querySelectorAll("#nav a").forEach((a) => a.toggleAttribute("aria-current", a.getAttribute("href") === "#" + name.toLowerCase()));
+        const el = $("#view");
+        views[name.toLowerCase()](el);
+        emptyCard(el, name.toLowerCase());
+        document.title = `${name} · Chekd Cars Admin`;
+        window.scrollTo(0, 0);
+      }
+      window.addEventListener("hashchange", render);
+
+      $("#q").oninput = (e) => {
+        S.q = e.target.value;
+        const key = location.hash.slice(1);
+        if (key === "leads") { $("#lead-q").value = S.q; leadRows(); }
+        else if (key === "inventory") carRows();
+        else if (key === "parts") { S.pq = S.q; $("#part-q").value = S.pq; partRows(); }
+        else if (key === "customers") { $("#cust-q").value = S.q; custRows(); }
+        else location.hash = "leads";
+      };
+      $("#town").onchange = (e) => { S.town = e.target.value; render(); toast(`Showing ${S.town}`); };
+
+      /* ---------- Auth ---------- */
+      const lf = $("#login-form");
+      const loginMsg = (m) => { $("#login-msg").textContent = m; };
+      async function loginBusy(btn, fn) {
+        const btns = lf.querySelectorAll("button"), label = btn.textContent;
+        btns.forEach((b) => (b.disabled = true));
+        btn.innerHTML = `<span class="x-spin"></span>${esc(label)}`;
+        try { await fn(); } catch (err) { loginMsg(err.message); toast(err.message, true); }
+        finally { btns.forEach((b) => (b.disabled = false)); btn.textContent = label; }
+      }
+      const creds = () => {
+        if (!lf.email.checkValidity() || !lf.email.value) { loginMsg("Enter a valid email address."); toast("Enter a valid email address.", true); lf.email.focus(); return null; }
+        if (lf.password.value.length < 6) { loginMsg("Use a password of at least 6 characters."); toast("Use a password of at least 6 characters.", true); lf.password.focus(); return null; }
+        return { email: lf.email.value.trim(), password: lf.password.value };
+      };
+      async function enterApp() {
+        S.role = lf.role.value;
+        $("#who-role").textContent = S.role;
+        const email = session.email || "";
+        const base = (email.split("@")[0] || S.role).replace(/[^a-z ]/gi, " ").trim() || S.role;
+        $("#avatar").textContent = base.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase() || "CA";
+        $("#avatar").title = `${email} · ${S.role}`;
+        $("#who-email").textContent = email;
+        lf.password.value = ""; loginMsg("");
+        $("#login").hidden = true;
+        $("#app").hidden = false;
+        await loadAll();
+        if (session) render();
+      }
+      lf.onsubmit = (e) => {
+        e.preventDefault();
+        const c = creds(); if (!c) return;
+        loginBusy($("#login-go"), async () => {
+          setSession(await sbFetch("/auth/v1/token?grant_type=password", { method: "POST", body: c, auth: false }));
+          session.email = session.email || c.email;
+          await enterApp();
+        });
+      };
+      $("#login-signup").onclick = (e) => {
+        const c = creds(); if (!c) return;
+        loginBusy(e.currentTarget, async () => {
+          const r = await sbFetch(`/auth/v1/signup?redirect_to=${encodeURIComponent(location.href.split("#")[0])}`, { method: "POST", body: c, auth: false });
+          if (r && r.access_token) { setSession(r); session.email = session.email || c.email; toast("Account created"); await enterApp(); }
+          else loginMsg(`Account created. Check ${c.email} for a confirmation link, then sign in.`);
+        });
+      };
+      $("#login-forgot").onclick = (e) => {
+        if (!lf.email.value || !lf.email.checkValidity()) { loginMsg("Enter your email above first."); toast("Enter your email above first.", true); lf.email.focus(); return; }
+        const email = lf.email.value.trim();
+        loginBusy(e.currentTarget, async () => {
+          await sbFetch(`/auth/v1/recover?redirect_to=${encodeURIComponent(location.href.split("#")[0])}`, { method: "POST", body: { email }, auth: false });
+          loginMsg(`If ${email} has an account, a reset link is on its way.`);
+        });
+      };
+      async function signOut(silent) {
+        const s = session;
+        session = null; clearTimeout(refreshTimer);
+        if (s && !silent) { try { await fetch(SB_URL + "/auth/v1/logout", { method: "POST", headers: { apikey: SB_KEY, Authorization: `Bearer ${s.access_token}` } }); } catch (e) { /* signed out locally anyway */ } }
+        Object.keys(TABLES).forEach((k) => (S[k] = []));
+        charts.forEach((c) => c.destroy()); charts = [];
+        closeLayer(); $("#view").innerHTML = ""; $("#who-email").textContent = "";
+        $("#app").hidden = true; $("#login").hidden = false;
+        if (!silent) toast("Signed out");
+      }
+      $("#signout").onclick = () => signOut(false);
+
+      // Links from confirmation and reset emails land with tokens in the hash
+      (async () => {
+        const h = new URLSearchParams(location.hash.slice(1));
+        if (!h.get("access_token")) {
+          if (h.get("error_description")) { loginMsg(h.get("error_description")); history.replaceState(null, "", location.pathname + location.search); }
+          return;
+        }
+        const type = h.get("type");
+        history.replaceState(null, "", location.pathname + location.search + "#dashboard");
+        try {
+          setSession({ access_token: h.get("access_token"), refresh_token: h.get("refresh_token"), expires_in: h.get("expires_in") });
+          const u = await sbFetch("/auth/v1/user");
+          session.email = (u && u.email) || "";
+          await enterApp();
+          if (type === "recovery" && session) modal("Set a new password", `
+            <label class="x-field x-full">New password<input class="x-input" name="password" type="password" minlength="6" required autocomplete="new-password" /></label>`, (f) =>
+            busy(async () => { await sbFetch("/auth/v1/user", { method: "PUT", body: { password: f.password.value } }); toast("Password updated"); }));
+        } catch (err) { session = null; loginMsg(err.message); }
+      })();
+    </script>
+    <script type="application/json" id="sold-data">
+      [{"month":"Jun","sold":11},{"month":"Jul","sold":14},{"month":"Aug","sold":13},{"month":"Sep","sold":17},{"month":"Oct","sold":20},{"month":"Nov","sold":23}]
+    </script>
+    <script type="application/json" id="report-data">
+      {"months":["Jun","Jul","Aug","Sep","Oct","Nov"],
+       "streams":{"Car sales":[5.9,6.8,6.7,7.9,9.0,10.4],"Service":[3.2,3.4,3.7,4.0,4.3,4.6],"Parts":[1.5,1.7,1.8,2.0,2.1,2.3],"Doorstep fees":[0.6,0.7,0.7,0.9,1.0,1.1]},
+       "funnel":[[180,78,34,11],[205,90,40,14],[214,92,39,13],[250,108,48,17],[285,124,55,20],[320,140,62,23]],
+       "sources":{"Meta ads":112,"Website":78,"Walk-in":52,"Referral":44,"OLX/CarDekho":34}}
+    </script>
+  </body>
+</html>

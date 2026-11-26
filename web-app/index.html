@@ -1,0 +1,1672 @@
+<!doctype html>
+<html lang="en-IN" data-wc="dark" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chekd Cars · Every car, checked. Bengaluru</title>
+    <meta name="description" content="Buy, sell and service pre-owned cars with a verified history. Bikes too. Starting in Bengaluru." />
+    <link rel="icon" type="image/png" href="icon_red.png" />
+    <link rel="apple-touch-icon" href="icon_red.png" />
+    <script>
+      (function () {
+        var t = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.setAttribute("data-wc", t);
+        document.documentElement.setAttribute("data-theme", t);
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Instrument+Serif:ital@1&display=swap"
+    />
+    <link rel="stylesheet" href="hark.css" />
+    <style>
+      html[data-wc="dark"] {
+        --x-bg: #0d1117; --x-ink: #f4f1ea; --x-surf: #161b22; --x-surf-2: #1d232c;
+        --x-mute: #8a93a3; --x-line: rgba(244, 241, 234, 0.12); --x-line-2: rgba(244, 241, 234, 0.24);
+        --x-red-ink: #ff6b57; --x-teal-ink: #3fd0c2; --x-teal-bg: #0f2e2d;
+        color-scheme: dark;
+      }
+      html[data-wc="light"] {
+        --x-bg: #f4f1ea; --x-ink: #0d1117; --x-surf: #ffffff; --x-surf-2: #ebe7dd;
+        --x-mute: #5a6270; --x-line: rgba(13, 17, 23, 0.1); --x-line-2: rgba(13, 17, 23, 0.22);
+        --x-red-ink: #b92f1c; --x-teal-ink: #0b6f66; --x-teal-bg: #d6f1ed;
+        color-scheme: light;
+      }
+      html { --x-red: #e8412c; --x-teal: #12b5a6; --x-midnight: #0d1117; --x-chalk: #f4f1ea;
+        --x-head: "Sora", var(--sans), sans-serif; --x-body: "Manrope", var(--sans), sans-serif;
+        --x-serif: "Instrument Serif", Georgia, serif; --x-ease: cubic-bezier(0.2, 0.7, 0.1, 1); scroll-padding-top: 80px; }
+      body { background: var(--x-bg); color: var(--x-ink); font: 400 16px/1.6 var(--x-body); padding-bottom: 76px; transition: background-color 0.3s, color 0.3s; }
+      @media (min-width: 900px) { body { padding-bottom: 0; } }
+      .x-h { font-family: var(--x-head); font-weight: 700; letter-spacing: -0.035em; line-height: 1.02; }
+      .x-mute { color: var(--x-mute); }
+      .x-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+      /* wordmark */
+      .x-mark { display: inline-flex; align-items: center; min-height: 44px; font: 700 26px/1 var(--x-head); letter-spacing: -0.045em; text-decoration: none; color: var(--x-ink); }
+      .x-mark svg { width: 0.66em; height: 0.66em; margin: 0 0.02em; align-self: center; transform: translateY(0.08em); overflow: visible; }
+      .x-mark .x-ring { stroke: currentColor; }
+      .x-mark .x-lite { font-weight: 500; opacity: 0.55; }
+      .x-mark .x-needle { stroke: var(--x-red); stroke-dasharray: 20; stroke-dashoffset: 20; animation: x-draw 0.9s 0.35s var(--x-ease) forwards; }
+      @keyframes x-draw { to { stroke-dashoffset: 0; } }
+      .x-tagline { font: italic 400 22px/1.2 var(--x-serif); }
+
+      /* top bar */
+      .x-top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 24px; padding: 14px 0; background: var(--x-bg); border-bottom: 1px solid var(--x-line); }
+      .x-top nav { display: none; gap: 4px; margin-left: auto; }
+      .x-top nav a { padding: 10px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: 15px; color: var(--x-mute); transition: color 0.2s; }
+      .x-top nav a:hover { color: var(--x-ink); }
+      .x-iconbtn { margin-left: auto; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--x-line-2); background: transparent; color: var(--x-ink); display: grid; place-items: center; cursor: pointer; }
+      .x-iconbtn svg { width: 18px; height: 18px; }
+      html[data-wc="dark"] .x-moon, html[data-wc="light"] .x-sun { display: none; }
+      @media (min-width: 900px) { .x-top nav { display: flex; } .x-iconbtn { margin-left: 0; } }
+
+      /* bottom tabs */
+      .x-tabs { position: fixed; inset: auto 0 0 0; z-index: 30; display: grid; grid-template-columns: repeat(5, 1fr); background: var(--x-surf); border-top: 1px solid var(--x-line); padding-bottom: env(safe-area-inset-bottom); }
+      .x-tabs a { display: grid; justify-items: center; gap: 3px; padding: 10px 4px 12px; min-height: 60px; text-decoration: none; font: 600 12px/1 var(--x-body); color: var(--x-mute); }
+      .x-tabs a svg { width: 22px; height: 22px; }
+      .x-tabs a.is-on { color: var(--x-ink); }
+      .x-tabs a.is-on svg { color: var(--x-red); }
+      @media (min-width: 900px) { .x-tabs { display: none; } }
+
+      /* buttons and fields */
+      .x-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 24px; border: 0; border-radius: 14px; background: var(--x-red); color: var(--x-midnight); font: 700 16px/1 var(--x-head); letter-spacing: -0.01em; cursor: pointer; text-decoration: none; transition: transform 0.2s var(--x-ease), filter 0.2s; }
+      .x-btn:hover { filter: brightness(1.06); transform: translateY(-1px); }
+      .x-btn:active { transform: translateY(0); }
+      .x-btn--ghost { background: transparent; color: var(--x-ink); border: 1px solid var(--x-line-2); }
+      .x-field { display: grid; gap: 6px; font: 600 13px/1.2 var(--x-body); color: var(--x-mute); }
+      .x-field input, .x-field select { width: 100%; min-height: 50px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--x-line-2); background: var(--x-bg); color: var(--x-ink); font: 500 16px/1 var(--x-body); }
+      .x-field input:focus, .x-field select:focus { outline: 2px solid var(--x-red); outline-offset: 1px; }
+      .x-toggle { display: inline-flex; padding: 4px; border-radius: 12px; background: var(--x-surf-2); gap: 2px; }
+      .x-toggle button { min-height: 44px; min-width: 44px; padding: 0 18px; border: 0; border-radius: 9px; background: transparent; color: var(--x-mute); font: 600 14px/1 var(--x-body); cursor: pointer; }
+      .x-toggle button[aria-pressed="true"] { background: var(--x-surf); color: var(--x-ink); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18); }
+      .x-ok { display: none; align-items: center; gap: 10px; padding: 14px 16px; border-radius: 12px; background: var(--x-teal-bg); color: var(--x-teal-ink); font-weight: 600; }
+      .x-ok.is-on { display: flex; }
+      .x-ok svg { width: 20px; height: 20px; flex: none; }
+
+      /* hero */
+      .x-hero { position: relative; min-height: 640px; border-radius: 28px; overflow: hidden; display: grid; align-content: end; background: var(--x-midnight); color: var(--x-chalk); isolation: isolate; }
+      .x-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+      .x-hero::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(13, 17, 23, 0.94) 0%, rgba(13, 17, 23, 0.6) 45%, rgba(13, 17, 23, 0) 75%), linear-gradient(to right, rgba(13, 17, 23, 0.55), rgba(13, 17, 23, 0) 60%); }
+      .x-hero__in { padding: 28px 20px; display: grid; gap: 28px; }
+      .x-hero h1 { font-size: clamp(48px, 13vw, 116px); margin: 0; }
+      .x-line { display: block; overflow: hidden; padding-bottom: 0.06em; }
+      .x-line > .x-w { display: inline-block; transform: translateY(110%); animation: x-up 0.8s var(--x-ease) forwards; animation-delay: calc(var(--i) * 0.11s + 0.15s); }
+      .x-line em { font-style: normal; color: var(--x-red); }
+      @keyframes x-up { to { transform: none; } }
+      .x-hero__sub { max-width: 30ch; font-size: 18px; color: rgba(244, 241, 234, 0.82); margin-top: 16px; }
+      .x-search { background: var(--x-surf); color: var(--x-ink); border-radius: 20px; padding: 18px; display: grid; gap: 14px; max-width: 420px; }
+      .x-search__row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+      .x-search .x-btn { width: 100%; }
+      .x-credit { position: absolute; top: 18px; right: 20px; font-size: 12px; color: rgba(244, 241, 234, 0.75); }
+      @media (min-width: 900px) {
+        .x-hero { min-height: 720px; }
+        .x-hero__in { grid-template-columns: 1.5fr 1fr; align-items: end; padding: 48px; gap: 48px; }
+        .x-search { justify-self: end; width: 100%; }
+      }
+
+      /* sections */
+      .x-sec { padding: 72px 0 24px; display: grid; gap: 36px; }
+      .x-sec__head { display: grid; gap: 14px; }
+      .x-idx { font: 600 13px/1 var(--x-head); letter-spacing: 0.08em; text-transform: uppercase; color: var(--x-mute); display: flex; gap: 10px; align-items: center; }
+      .x-idx::before { content: ""; width: 28px; height: 2px; background: var(--x-red); }
+      .x-sec h2 { font-size: clamp(36px, 7vw, 64px); margin: 0; max-width: 16ch; }
+      .x-lede { max-width: 52ch; font-size: 17px; color: var(--x-mute); }
+      @media (min-width: 900px) {
+        .x-sec { padding-top: 112px; }
+        .x-sec__head { grid-template-columns: 1fr 2fr; column-gap: 48px; align-items: end; }
+        .x-sec__head .x-idx { grid-row: span 2; align-self: start; padding-top: 14px; }
+      }
+
+      /* promise */
+      .x-promise { display: grid; gap: 0; border-top: 1px solid var(--x-line-2); counter-reset: p; }
+      .x-promise li { list-style: none; display: grid; grid-template-columns: 56px 1fr; gap: 8px 16px; padding: 24px 0; border-bottom: 1px solid var(--x-line); }
+      .x-promise .x-n { font: 600 15px/1.3 var(--x-head); color: var(--x-red-ink); }
+      .x-promise h3 { font: 600 22px/1.2 var(--x-head); letter-spacing: -0.02em; margin: 0; }
+      .x-promise p { grid-column: 2; color: var(--x-mute); max-width: 46ch; }
+      .x-promise { padding: 0; margin: 0; }
+      @media (min-width: 900px) {
+        .x-promise { grid-template-columns: repeat(4, 1fr); border-top: 0; }
+        .x-promise li { grid-template-columns: 1fr; border-bottom: 0; border-top: 2px solid var(--x-ink); padding: 20px 24px 0 0; align-content: start; }
+        .x-promise li:nth-child(3) { border-top-color: var(--x-red); }
+        .x-promise p { grid-column: 1; }
+        .x-promise .x-n { font-size: 44px; letter-spacing: -0.04em; color: var(--x-ink); margin-bottom: 20px; }
+        .x-promise li:nth-child(3) .x-n { color: var(--x-red-ink); }
+      }
+
+      /* buy */
+      .x-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+      .x-chip { min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--x-line-2); background: transparent; color: var(--x-ink); font: 600 15px/1 var(--x-body); cursor: pointer; }
+      .x-chip[aria-pressed="true"] { background: var(--x-ink); color: var(--x-bg); border-color: var(--x-ink); }
+      .x-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+      @media (min-width: 640px) { .x-grid { grid-template-columns: repeat(2, 1fr); } }
+      @media (min-width: 1000px) { .x-grid { grid-template-columns: repeat(3, 1fr); } }
+      .x-card { background: var(--x-surf); border: 1px solid var(--x-line); border-radius: 20px; padding: 18px; display: grid; gap: 14px; transition: transform 0.35s var(--x-ease), box-shadow 0.35s var(--x-ease), border-color 0.35s; }
+      .x-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -20px rgba(0, 0, 0, 0.45); border-color: var(--x-line-2); }
+      .x-card[hidden] { display: none; }
+      .x-card__art { position: relative; aspect-ratio: 16 / 8; border-radius: 14px; background: var(--x-surf-2); display: grid; place-items: center; color: var(--x-ink); }
+      .x-card__art svg { width: 72%; height: auto; }
+      .x-card__art svg * { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      .x-card__art .x-acc { stroke: var(--x-red); }
+      .x-score { position: absolute; top: 10px; right: 10px; display: grid; justify-items: end; font: 700 22px/1 var(--x-head); letter-spacing: -0.03em; }
+      .x-score small { font: 600 12px/1.4 var(--x-body); letter-spacing: 0.06em; text-transform: uppercase; color: var(--x-mute); }
+      .x-badge { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 6px 10px 6px 8px; border-radius: 999px; background: var(--x-teal-bg); color: var(--x-teal-ink); font: 700 12px/1 var(--x-body); }
+      .x-badge svg { width: 14px; height: 14px; }
+      .x-card h3 { font: 600 20px/1.2 var(--x-head); letter-spacing: -0.02em; margin: 0; }
+      .x-specs { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--x-mute); }
+      .x-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 14px; border-top: 1px solid var(--x-line); }
+      .x-price { font: 700 24px/1 var(--x-head); letter-spacing: -0.03em; }
+      .x-textbtn { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--x-red-ink); font: 700 14px/1 var(--x-body); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; }
+
+      .x-emi { display: grid; gap: 24px; background: var(--x-surf); border: 1px solid var(--x-line); border-radius: 20px; padding: 22px; }
+      .x-emi h3 { font: 600 22px/1.2 var(--x-head); letter-spacing: -0.02em; margin: 0; }
+      .x-range { display: grid; gap: 10px; }
+      .x-range label { display: flex; justify-content: space-between; gap: 12px; font-weight: 600; font-size: 14px; }
+      .x-range output { font-family: var(--x-head); }
+      .x-range input { width: 100%; accent-color: var(--x-red); min-height: 32px; }
+      .x-emi__out { display: grid; gap: 6px; align-content: center; padding: 22px; border-radius: 16px; background: var(--x-midnight); color: var(--x-chalk); }
+      .x-emi__out strong { font: 700 clamp(40px, 8vw, 56px)/1 var(--x-head); letter-spacing: -0.04em; }
+      .x-emi__out span { color: #b5bcc8; font-size: 14px; }
+      @media (min-width: 900px) { .x-emi { grid-template-columns: 1.4fr 1fr; padding: 32px; gap: 40px; } .x-emi__ctrls { display: grid; gap: 20px; } }
+      .x-emi__ctrls { display: grid; gap: 20px; }
+
+      /* sell */
+      .x-split { display: grid; gap: 24px; }
+      @media (min-width: 900px) { .x-split { grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; } }
+      .x-steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+      .x-steps li { display: grid; grid-template-columns: 64px 1fr; gap: 4px 12px; padding: 22px 0; border-top: 1px solid var(--x-line); }
+      .x-steps li:last-child { border-bottom: 1px solid var(--x-line); }
+      .x-steps .x-n { grid-row: span 2; font: 700 40px/1 var(--x-head); letter-spacing: -0.05em; color: var(--x-mute); }
+      .x-steps h3 { font: 600 20px/1.25 var(--x-head); letter-spacing: -0.02em; margin: 0; }
+      .x-steps p { color: var(--x-mute); }
+      .x-form { background: var(--x-surf); border: 1px solid var(--x-line); border-radius: 20px; padding: 22px; display: grid; gap: 14px; }
+      .x-form h3 { font: 600 22px/1.2 var(--x-head); letter-spacing: -0.02em; margin: 0; }
+      .x-form .x-btn { width: 100%; }
+
+      /* service */
+      .x-photo { margin: 0; border-radius: 24px; overflow: hidden; position: relative; }
+      .x-photo img { width: 100%; height: 100%; object-fit: cover; aspect-ratio: 4 / 5; }
+      .x-photo figcaption { position: absolute; left: 14px; bottom: 14px; padding: 8px 12px; border-radius: 10px; background: rgba(13, 17, 23, 0.82); color: var(--x-chalk); font-size: 13px; font-weight: 600; }
+      @media (min-width: 900px) { .x-split--photo { grid-template-columns: 1fr 1.1fr; } .x-split--photo-r { grid-template-columns: 1.1fr 1fr; } }
+      .x-prices { list-style: none; margin: 18px 0 0; padding: 0; border-top: 1px solid var(--x-line-2); }
+      .x-prices li { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--x-line); }
+      .x-prices li[hidden] { display: none; }
+      .x-prices b { font: 600 18px/1.3 var(--x-head); letter-spacing: -0.015em; }
+      .x-prices small { display: block; font-size: 14px; color: var(--x-mute); }
+      .x-prices .x-amt { font: 700 22px/1 var(--x-head); letter-spacing: -0.03em; white-space: nowrap; }
+      .x-free { color: var(--x-teal-ink); }
+      .x-pull { margin-top: 22px; font: italic 400 24px/1.3 var(--x-serif); max-width: 34ch; }
+
+      /* franchise */
+      .x-formats { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+      .x-formats li { display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 18px 20px; border-radius: 16px; background: var(--x-surf); border: 1px solid var(--x-line); transition: transform 0.35s var(--x-ease), border-color 0.35s; }
+      .x-formats li:hover { transform: translateY(-3px); border-color: var(--x-line-2); }
+      .x-formats b { font: 600 19px/1.25 var(--x-head); letter-spacing: -0.02em; }
+      .x-formats span { grid-column: 1; color: var(--x-mute); font-size: 14px; }
+      .x-formats em { grid-row: 1 / span 2; grid-column: 2; align-self: center; font: 700 17px/1.2 var(--x-head); font-style: normal; text-align: right; white-space: nowrap; }
+      .x-gets { display: grid; grid-template-columns: 1fr; gap: 0; list-style: none; margin: 0; padding: 0; }
+      .x-gets li { display: flex; gap: 12px; align-items: baseline; padding: 12px 0; border-bottom: 1px solid var(--x-line); font-weight: 500; }
+      .x-gets li::before { content: ""; width: 8px; height: 8px; flex: none; border-radius: 2px; background: var(--x-red); transform: translateY(-1px); }
+      @media (min-width: 640px) { .x-gets { grid-template-columns: 1fr 1fr; column-gap: 24px; } }
+      .x-sub3 { font: 600 13px/1 var(--x-head); letter-spacing: 0.08em; text-transform: uppercase; color: var(--x-mute); margin: 8px 0 4px; }
+      .x-note { font-size: 13px; color: var(--x-mute); }
+      .x-two { display: grid; gap: 14px; }
+      @media (min-width: 640px) { .x-two { grid-template-columns: 1fr 1fr; } }
+
+      /* stats */
+      .x-stats { display: grid; grid-template-columns: 1fr 1fr; border-radius: 28px; background: var(--x-midnight); color: var(--x-chalk); overflow: hidden; }
+      html[data-wc="dark"] .x-stats { background: var(--x-surf); }
+      .x-stat { padding: 28px 20px; border-top: 1px solid rgba(244, 241, 234, 0.12); display: grid; gap: 8px; align-content: start; }
+      .x-stat:nth-child(odd) { border-right: 1px solid rgba(244, 241, 234, 0.12); }
+      .x-stat:nth-child(-n + 2) { border-top: 0; }
+      .x-stat strong { font: 700 clamp(40px, 9vw, 76px)/1 var(--x-head); letter-spacing: -0.05em; }
+      .x-stat strong i { font-style: normal; color: #ff6b57; }
+      .x-stat span { font-size: 15px; color: #b5bcc8; }
+      @media (min-width: 900px) {
+        .x-stats { grid-template-columns: repeat(4, 1fr); }
+        .x-stat { padding: 40px 28px; border-top: 0; border-right: 1px solid rgba(244, 241, 234, 0.12); }
+        .x-stat:last-child { border-right: 0; }
+      }
+
+      /* footer */
+      .x-foot { margin-top: 96px; padding: 40px 0 24px; border-top: 1px solid var(--x-line-2); display: grid; gap: 28px; }
+      .x-foot .x-mark { font-size: clamp(56px, 14vw, 140px); }
+      .x-foot__row { display: grid; gap: 16px; }
+      .x-foot a:not(.x-mark):not(.x-btn) { color: var(--x-ink); font-weight: 600; text-underline-offset: 4px; display: inline-flex; align-items: center; min-height: 44px; }
+      .x-foot__links { display: flex; flex-wrap: wrap; gap: 10px; }
+      @media (min-width: 900px) { .x-foot__row { grid-template-columns: 1.4fr 1fr 1fr; align-items: end; } }
+
+      /* doorstep */
+      .x-perks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--x-line-2); }
+      .x-perks li { display: grid; grid-template-columns: 40px 1fr; gap: 4px 12px; padding: 20px 0; border-bottom: 1px solid var(--x-line); }
+      .x-perks li > svg { grid-row: span 2; width: 26px; height: 26px; color: var(--x-red-ink); margin-top: 2px; }
+      .x-perks h3 { font: 600 19px/1.25 var(--x-head); letter-spacing: -0.02em; margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+      .x-perks p { color: var(--x-mute); max-width: 46ch; }
+      .x-from { font: 700 13px/1 var(--x-body); padding: 6px 10px; border-radius: 999px; background: var(--x-teal-bg); color: var(--x-teal-ink); letter-spacing: 0; }
+      .x-pick { display: grid; gap: 8px; font: 600 13px/1.2 var(--x-body); color: var(--x-mute); border: 0; padding: 0; margin: 0; }
+      .x-pick legend { padding: 0; margin-bottom: 8px; }
+      .x-pick .x-chip { padding: 0 14px; font-size: 14px; }
+      .x-err { display: none; color: var(--x-red-ink); font-weight: 600; font-size: 14px; }
+      .x-err.is-on { display: block; }
+      @media (min-width: 900px) { .x-split--door { grid-template-columns: 1fr 1fr; } }
+
+      /* towns */
+      .x-towns { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+      @media (min-width: 900px) { .x-towns { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+      .x-town { background: var(--x-surf); border: 1px solid var(--x-line); border-radius: 20px; padding: 18px; display: grid; gap: 12px; align-content: start; transition: transform 0.35s var(--x-ease), border-color 0.35s; }
+      .x-town:hover { transform: translateY(-3px); border-color: var(--x-line-2); }
+      .x-town h3 { font: 600 clamp(20px, 3.4vw, 26px)/1.1 var(--x-head); letter-spacing: -0.03em; margin: 0; }
+      .x-town p { font-size: 14px; color: var(--x-mute); }
+      .x-town--on { border-color: var(--x-teal); }
+      .x-status { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--x-line-2); font: 700 12px/1 var(--x-body); color: var(--x-mute); }
+      .x-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; border: 1.5px solid currentColor; }
+      .x-status--on { border-color: transparent; background: var(--x-teal-bg); color: var(--x-teal-ink); }
+      .x-status--on::before { background: currentColor; }
+      .x-local { font: italic 400 24px/1.3 var(--x-serif); max-width: 34ch; }
+      .x-inline { display: grid; gap: 14px; align-items: end; }
+      @media (min-width: 900px) { .x-inline { grid-template-columns: 1fr 1fr auto; } }
+
+      /* partner thank-you */
+      .x-thanks { background: var(--x-surf); border: 1px solid var(--x-teal); border-radius: 24px; padding: 24px; display: grid; gap: 20px; }
+      .x-thanks[hidden] { display: none; }
+      .x-thanks.is-in { animation: x-open 0.8s var(--x-ease) both; }
+      .x-thanks.is-in .x-formats li { animation: x-rise 0.6s var(--x-ease) both; }
+      .x-thanks.is-in .x-formats li:nth-child(2) { animation-delay: 0.1s; }
+      .x-thanks.is-in .x-formats li:nth-child(3) { animation-delay: 0.2s; }
+      .x-thanks.is-in .x-formats li:nth-child(4) { animation-delay: 0.3s; }
+      .x-thanks h3 { font: 700 clamp(28px, 5vw, 40px)/1.05 var(--x-head); letter-spacing: -0.035em; margin: 0; }
+      .x-thanks .x-formats li { grid-template-columns: 1fr; background: var(--x-bg); }
+      @media (min-width: 640px) { .x-thanks .x-formats { grid-template-columns: 1fr 1fr; } }
+      @keyframes x-open { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+      @keyframes x-rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+      .x-gets--one { grid-template-columns: 1fr !important; }
+      .x-gets--one li { font: 600 18px/1.35 var(--x-head); letter-spacing: -0.015em; padding: 16px 0; }
+
+      /* cart in the top bar */
+      .x-cart { position: relative; margin-left: auto; width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--x-line-2); color: var(--x-ink); display: grid; place-items: center; text-decoration: none; }
+      .x-cart svg { width: 19px; height: 19px; }
+      .x-cart + .x-iconbtn { margin-left: 0; }
+      .x-cart__n { position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 999px; background: var(--x-red); color: var(--x-midnight); font: 700 12px/20px var(--x-body); text-align: center; transform: scale(0); transition: transform 0.3s var(--x-ease); }
+      .x-cart.has-items .x-cart__n { transform: scale(1); }
+      .x-cart.is-bump .x-cart__n { animation: x-bump 0.4s var(--x-ease); }
+      @keyframes x-bump { 50% { transform: scale(1.35); } }
+      @media (min-width: 900px) { .x-cart { margin-left: 0; } }
+
+      /* parts */
+      .x-psearch { display: grid; gap: 12px; align-items: end; background: var(--x-surf); border: 1px solid var(--x-line); border-radius: 20px; padding: 18px; }
+      @media (min-width: 900px) { .x-psearch { grid-template-columns: 1fr 1fr auto; padding: 22px; } }
+      .x-part { align-content: start; }
+      .x-part .x-card__foot { margin-top: auto; }
+      .x-fits { font-size: 14px; color: var(--x-mute); }
+      .x-cert { display: inline-flex; align-items: center; gap: 6px; width: fit-content; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--x-line-2); font: 700 12px/1 var(--x-body); color: var(--x-ink); }
+      .x-cert svg { width: 14px; height: 14px; }
+      .x-add { min-height: 44px; padding: 0 20px; border-radius: 12px; border: 1px solid var(--x-line-2); background: transparent; color: var(--x-ink); font: 700 14px/1 var(--x-body); cursor: pointer; transition: background-color 0.2s, color 0.2s; }
+      .x-add:hover { border-color: var(--x-ink); }
+      .x-add.is-added { background: var(--x-ink); color: var(--x-bg); border-color: var(--x-ink); }
+      .x-empty { padding: 28px 20px; border-radius: 20px; border: 1px dashed var(--x-line-2); color: var(--x-mute); text-align: center; }
+      .x-empty[hidden] { display: none; }
+      .x-free-line { display: flex; gap: 10px; align-items: center; font-weight: 600; }
+      .x-free-line svg { width: 20px; height: 20px; flex: none; color: var(--x-teal-ink); }
+
+      /* passport */
+      .x-pass { background: var(--x-midnight); color: var(--x-chalk); border-radius: 24px; padding: 24px; display: grid; gap: 22px; box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.55); }
+      html[data-wc="dark"] .x-pass { background: var(--x-surf); border: 1px solid var(--x-line-2); }
+      .x-pass__top { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+      .x-pass__label { font: 600 12px/1 var(--x-head); letter-spacing: 0.1em; text-transform: uppercase; color: #ff6b57; display: flex; gap: 8px; align-items: center; }
+      .x-pass__label svg { width: 16px; height: 16px; }
+      .x-pass h3 { font: 600 24px/1.15 var(--x-head); letter-spacing: -0.025em; margin: 10px 0 6px; }
+      .x-plate { display: inline-block; padding: 5px 10px; border-radius: 6px; border: 1px solid rgba(244, 241, 234, 0.35); font: 600 14px/1 var(--x-head); letter-spacing: 0.08em; }
+      .x-wscore { --v: 88; flex: none; width: 92px; height: 92px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--x-teal) calc(var(--v) * 1%), rgba(244, 241, 234, 0.12) 0); }
+      .x-wscore span { width: 76px; height: 76px; border-radius: 50%; background: var(--x-midnight); display: grid; place-items: center; align-content: center; font: 700 30px/1 var(--x-head); letter-spacing: -0.04em; }
+      html[data-wc="dark"] .x-wscore span { background: var(--x-surf); }
+      .x-wscore small { font: 600 12px/1.3 var(--x-body); letter-spacing: 0.04em; color: #b5bcc8; }
+      .x-ptl { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid rgba(244, 241, 234, 0.12); }
+      .x-ptl li { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; padding: 14px 0 14px 26px; border-bottom: 1px solid rgba(244, 241, 234, 0.12); }
+      .x-ptl li::before { content: ""; position: absolute; left: 2px; top: 20px; width: 10px; height: 10px; border-radius: 50%; background: var(--x-teal); }
+      .x-ptl li.is-due::before { background: transparent; border: 2px solid #ff6b57; }
+      .x-ptl b { font: 600 16px/1.3 var(--x-head); letter-spacing: -0.01em; }
+      .x-ptl time { font-size: 14px; color: #b5bcc8; white-space: nowrap; }
+      .x-ptl .is-due time { color: #ff6b57; font-weight: 700; }
+      .x-pass__foot { font-size: 13px; color: #b5bcc8; }
+      .x-pform[hidden] { display: none; }
+      .x-pform.is-in { animation: x-open 0.6s var(--x-ease) both; }
+      .x-pform__row { display: grid; gap: 14px; align-items: end; }
+      @media (min-width: 900px) { .x-pform__row { grid-template-columns: 1fr 1fr 1fr auto; } }
+      .x-passcta { display: grid; gap: 16px; }
+
+      /* cinematic hero */
+      .x-hero > img { animation: x-kb 24s ease-in-out infinite alternate; transform-origin: 60% 45%; }
+      @keyframes x-kb { from { transform: scale(1); } to { transform: scale(1.14) translate(-1.5%, -1%); } }
+      .x-hero .x-tagline { position: relative; display: inline-block; margin-top: 18px; color: var(--x-chalk); }
+      .x-sweep::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 3px; border-radius: 3px; background: var(--x-red); transform: scaleX(0); transform-origin: left; animation: x-sweep 1s 0.9s var(--x-ease) forwards; }
+      @keyframes x-sweep { to { transform: scaleX(1); } }
+      .x-hero__ctas { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+      .x-hero__ctas .x-btn--ghost { color: var(--x-chalk); border-color: rgba(244, 241, 234, 0.4); background: rgba(13, 17, 23, 0.3); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+      .x-btn:not(.x-btn--ghost) { box-shadow: 0 8px 26px -10px rgba(232, 65, 44, 0.75); }
+      .x-btn:not(.x-btn--ghost):hover { box-shadow: 0 10px 34px -6px rgba(232, 65, 44, 0.9); }
+      .x-glow { animation: x-glow 2.8s ease-in-out infinite; }
+      @keyframes x-glow { 50% { box-shadow: 0 0 0 6px rgba(232, 65, 44, 0.18), 0 12px 38px -6px rgba(232, 65, 44, 0.95); } }
+      .x-search { background: rgba(13, 17, 23, 0.42); color: var(--x-chalk); border: 1px solid rgba(244, 241, 234, 0.18); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); color-scheme: dark; }
+      .x-search .x-field { color: rgba(244, 241, 234, 0.78); }
+      .x-search .x-field select { background: rgba(13, 17, 23, 0.55); color: var(--x-chalk); border-color: rgba(244, 241, 234, 0.22); }
+      #x-search .x-toggle { background-color: #1d232c; }
+      #x-search .x-toggle button { background-color: #1d232c; color: #d3d7de; }
+      #x-search .x-toggle button[aria-pressed="true"] { background-color: #f4f1ea; color: #0d1117; -webkit-text-fill-color: #0d1117; }
+
+      /* marquee */
+      .x-marquee { margin-top: 20px; overflow: hidden; border-block: 1px solid var(--x-line); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+      .x-marquee__track { display: flex; width: max-content; animation: x-marq 30s linear infinite; }
+      .x-marquee:hover .x-marquee__track { animation-play-state: paused; }
+      .x-marquee ul { display: flex; list-style: none; margin: 0; padding: 0; }
+      .x-marquee li { display: flex; align-items: center; gap: 28px; padding: 18px 28px 18px 0; font: 600 clamp(18px, 2.6vw, 24px)/1 var(--x-head); letter-spacing: -0.02em; white-space: nowrap; }
+      .x-marquee li::after { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--x-red); }
+      @keyframes x-marq { to { transform: translateX(-50%); } }
+
+      /* trust counters */
+      .x-stats--trust { margin-top: 20px; background: var(--x-surf) !important; color: var(--x-ink); border: 1px solid var(--x-line); }
+      .x-stats--trust .x-stat { border-color: var(--x-line) !important; padding: 22px 20px; }
+      .x-stats--trust .x-stat strong { font-size: clamp(34px, 6vw, 52px); }
+      .x-stats--trust .x-stat strong i { color: var(--x-red-ink); }
+      .x-stats--trust .x-stat span { color: var(--x-mute); }
+
+      /* scroll progress and header */
+      .x-progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 50; pointer-events: none; }
+      .x-progress span { display: block; height: 100%; background: var(--x-red); transform: scaleX(var(--x-p, 0)); transform-origin: left; }
+      .x-top { transition: padding 0.3s var(--x-ease), background-color 0.3s, box-shadow 0.3s; }
+      .x-top.is-small { padding: 6px 0; background: color-mix(in srgb, var(--x-bg) 74%, transparent); backdrop-filter: blur(16px) saturate(1.4); -webkit-backdrop-filter: blur(16px) saturate(1.4); box-shadow: 0 10px 30px -24px rgba(0, 0, 0, 0.6); }
+      .x-top .x-mark { transition: font-size 0.3s var(--x-ease); }
+      .x-top.is-small .x-mark { font-size: 22px; }
+      .x-top nav a { position: relative; }
+      .x-top nav a.is-on { color: var(--x-ink); background: var(--x-surf-2); }
+      .x-top nav a.is-on::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 2px; border-radius: 2px; background: var(--x-red); }
+
+      /* buy tools, tilt, compare */
+      .x-tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 14px; }
+      .x-sort { min-width: 210px; }
+      .x-found { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; }
+      .x-card { transform-style: preserve-3d; will-change: transform; }
+      .x-card__art { overflow: hidden; }
+      .x-card__art svg { transition: transform 0.5s var(--x-ease); }
+      .x-card:hover .x-card__art svg { transform: scale(1.1); }
+      .x-cmp { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 14px; border-radius: 999px; border: 1px dashed var(--x-line-2); background: transparent; color: var(--x-ink); font: 600 14px/1 var(--x-body); cursor: pointer; }
+      .x-cmp[aria-pressed="true"] { border-style: solid; border-color: var(--x-red); color: var(--x-red-ink); }
+      .x-cmp:disabled { opacity: 0.45; cursor: not-allowed; }
+      .x-drawer { position: fixed; left: 12px; right: 12px; bottom: calc(68px + env(safe-area-inset-bottom)); z-index: 35; max-width: 980px; margin: 0 auto; padding: 14px 16px; border-radius: 20px; border: 1px solid var(--x-line-2); background: color-mix(in srgb, var(--x-surf) 86%, transparent); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6); display: grid; gap: 12px; max-height: 70vh; overflow: auto; animation: x-open 0.4s var(--x-ease) both; }
+      .x-drawer[hidden] { display: none; }
+      .x-drawer__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+      .x-drawer__bar p { font-weight: 600; }
+      .x-drawer__acts { display: flex; gap: 8px; align-items: center; }
+      .x-drawer table { width: 100%; border-collapse: collapse; font-size: 14px; }
+      .x-drawer th, .x-drawer td { text-align: left; padding: 10px 8px; border-top: 1px solid var(--x-line); vertical-align: top; }
+      .x-drawer thead th { font: 600 15px/1.25 var(--x-head); border-top: 0; }
+      .x-drawer tbody th { color: var(--x-mute); font-weight: 600; white-space: nowrap; }
+      @media (min-width: 900px) { .x-drawer { bottom: 20px; } }
+
+      /* sell estimate */
+      .x-est .x-emi__out strong { font-size: clamp(30px, 6vw, 46px); }
+      .x-est .x-field select { background: var(--x-bg); }
+
+      /* doorstep timeline */
+      .x-tl { position: relative; border-top: 0; }
+      .x-tl::before, .x-tl::after { content: ""; position: absolute; left: 12px; top: 30px; bottom: 30px; width: 2px; border-radius: 2px; background: var(--x-line-2); }
+      .x-tl::after { background: var(--x-red); transform: scaleY(var(--x-p, 0)); transform-origin: top; }
+      .x-tl li { position: relative; z-index: 1; border-bottom: 0; }
+      .x-tl li > svg { box-sizing: content-box; padding: 4px; margin: -2px 0 0 -4px; border-radius: 50%; background: var(--x-bg); color: var(--x-mute); transition: color 0.4s, transform 0.4s var(--x-ease); }
+      .x-tl li.is-lit > svg { color: var(--x-red-ink); transform: scale(1.08); }
+
+      /* towns pulse */
+      .x-status--on::before { animation: x-pulse 1.8s ease-out infinite; }
+      @keyframes x-pulse { 0% { box-shadow: 0 0 0 0 rgba(18, 181, 166, 0.65); } 100% { box-shadow: 0 0 0 9px rgba(18, 181, 166, 0); } }
+      .x-status:not(.x-status--on)::before { animation: x-breathe 2.4s ease-in-out infinite; }
+      @keyframes x-breathe { 50% { opacity: 0.35; } }
+
+      /* floating buttons */
+      .x-float { position: fixed; right: 16px; bottom: calc(76px + env(safe-area-inset-bottom) + var(--x-dh, 0px)); z-index: 36; display: grid; gap: 10px; justify-items: center; transition: bottom 0.3s var(--x-ease); }
+      @media (min-width: 900px) { .x-float { right: 24px; bottom: calc(24px + var(--x-dh, 0px)); } }
+      .x-fab { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; text-decoration: none; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.55); }
+      .x-fab svg { width: 26px; height: 26px; }
+      .x-fab--wa { position: relative; background: #25d366; color: #0d1117; }
+      .x-fab--wa::before { content: ""; position: absolute; inset: 0; border-radius: 50%; background: #25d366; z-index: -1; animation: x-ring 2.2s ease-out infinite; }
+      @keyframes x-ring { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(1.7); opacity: 0; } }
+      .x-fab--top { width: 46px; height: 46px; background: var(--x-surf); color: var(--x-ink); border: 1px solid var(--x-line-2); opacity: 0; transform: translateY(10px); pointer-events: none; transition: opacity 0.3s, transform 0.3s var(--x-ease); }
+      .x-fab--top svg { width: 20px; height: 20px; }
+      .x-fab--top.is-on { opacity: 1; transform: none; pointer-events: auto; }
+
+      /* focus */
+      a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--x-red); outline-offset: 3px; border-radius: 10px; }
+      .x-fab:focus-visible { border-radius: 50%; }
+
+      .x-reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s var(--x-ease), transform 0.7s var(--x-ease); }
+      .x-reveal.is-in { opacity: 1; transform: none; }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation-duration: 0.001s !important; animation-delay: 0s !important; transition-duration: 0.001s !important; }
+        .x-reveal { opacity: 1; transform: none; }
+        .x-card:hover, .x-formats li:hover, .x-btn:hover { transform: none; }
+        .x-hero > img, .x-marquee__track, .x-glow, .x-status::before, .x-fab--wa::before { animation: none !important; }
+        .x-marquee__track { width: auto; flex-wrap: wrap; }
+        .x-marquee ul[aria-hidden] { display: none; }
+        .x-tl::after { transform: none; }
+        .x-card:hover .x-card__art svg { transform: none; }
+      }
+
+      /* ===== premium layer ===== */
+      html[data-wc="dark"] { --x-glass: rgba(22, 27, 34, 0.62); --x-glass-2: rgba(29, 35, 44, 0.72); --x-glow-a: rgba(232, 65, 44, 0.16); --x-glow-b: rgba(18, 181, 166, 0.12); --x-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8); }
+      html[data-wc="light"] { --x-glass: rgba(255, 255, 255, 0.72); --x-glass-2: rgba(255, 255, 255, 0.86); --x-glow-a: rgba(232, 65, 44, 0.1); --x-glow-b: rgba(18, 181, 166, 0.1); --x-shadow: 0 24px 50px -30px rgba(13, 17, 23, 0.35); }
+      body { background-image: radial-gradient(900px 600px at 85% -10%, var(--x-glow-a), transparent 60%), radial-gradient(800px 600px at -10% 40%, var(--x-glow-b), transparent 60%); background-attachment: fixed; }
+      main { display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; }
+      .x-glassy, .x-card, .x-form, .x-emi, .x-psearch, .x-thanks, .x-formats li, .x-drawer { background: var(--x-glass); border: 1px solid var(--x-line); backdrop-filter: blur(16px) saturate(1.3); -webkit-backdrop-filter: blur(16px) saturate(1.3); box-shadow: var(--x-shadow); }
+      .x-thanks { border-color: var(--x-teal); }
+
+      /* glass pill navbar */
+      .x-top { top: 12px; margin-top: 4px; padding: 6px 8px 6px 20px; gap: 12px; border-radius: 999px; border: 1px solid var(--x-line); background: var(--x-glass); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4); box-shadow: var(--x-shadow); }
+      .x-top.is-small { padding: 4px 6px 4px 18px; background: var(--x-glass-2); }
+      .x-top nav a { font-size: 14px; padding: 10px 12px; }
+      .x-top nav a.is-on::after { left: 12px; right: 12px; }
+
+      /* hero aurora + capsule */
+      .x-hero { border-radius: 32px; margin-top: 8px; }
+      .x-aurora { position: absolute; inset: -20% -10% auto -10%; height: 90%; z-index: -1; pointer-events: none; filter: blur(60px); opacity: 0.75; mix-blend-mode: screen; }
+      .x-aurora i { position: absolute; border-radius: 50%; animation: x-aur 14s ease-in-out infinite alternate; }
+      .x-aurora i:nth-child(1) { width: 46%; height: 60%; left: 4%; top: 10%; background: radial-gradient(circle, rgba(232, 65, 44, 0.75), transparent 65%); }
+      .x-aurora i:nth-child(2) { width: 40%; height: 55%; left: 38%; top: 0; background: radial-gradient(circle, rgba(18, 181, 166, 0.6), transparent 65%); animation-duration: 18s; animation-delay: -4s; }
+      .x-aurora i:nth-child(3) { width: 36%; height: 50%; right: 4%; top: 18%; background: radial-gradient(circle, rgba(124, 92, 255, 0.5), transparent 65%); animation-duration: 22s; animation-delay: -9s; }
+      @keyframes x-aur { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(8%, 6%) scale(1.15); } 100% { transform: translate(-6%, 10%) scale(0.95); } }
+      .x-search { border-radius: 28px; padding: 20px; box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(244, 241, 234, 0.14); }
+      #x-search .x-toggle { width: 100%; display: grid; grid-template-columns: 1fr 1fr; border-radius: 999px; padding: 4px; border: 1px solid rgba(244, 241, 234, 0.2); }
+      #x-search .x-toggle button { border-radius: 999px; font-weight: 700; font-size: 15px; }
+      #x-search .x-field select { border-radius: 999px; padding: 0 16px; }
+      #x-search .x-btn { border-radius: 999px; }
+
+      /* frosted bottom tabs with raised centre */
+      .x-tabs { left: 10px; right: 10px; bottom: calc(10px + env(safe-area-inset-bottom)); padding: 0 4px; border-radius: 24px; border: 1px solid var(--x-line); background: var(--x-glass-2); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); box-shadow: var(--x-shadow); overflow: visible; }
+      .x-tabs a { min-height: 58px; padding: 9px 2px 10px; }
+      .x-tabs__fab { position: relative; }
+      .x-tabs .x-tabs__orb { width: 56px; height: 56px; margin-top: -28px; border-radius: 50%; display: grid; place-items: center; background: var(--x-red); color: var(--x-midnight); box-shadow: 0 10px 26px -8px rgba(232, 65, 44, 0.9), 0 0 0 5px var(--x-bg); transition: transform 0.3s var(--x-ease); }
+      .x-tabs .x-tabs__fab svg, .x-tabs a.is-on .x-tabs__orb svg { color: var(--x-midnight); width: 24px; height: 24px; }
+      .x-tabs__fab:active .x-tabs__orb { transform: scale(0.94); }
+      body { padding-bottom: 96px; }
+      @media (min-width: 900px) { body { padding-bottom: 0; } }
+      .x-float { bottom: calc(96px + env(safe-area-inset-bottom) + var(--x-dh, 0px)); }
+      .x-drawer { bottom: calc(86px + env(safe-area-inset-bottom)); }
+      @media (min-width: 900px) { .x-float { bottom: calc(24px + var(--x-dh, 0px)); } .x-drawer { bottom: 20px; } }
+
+      /* cursor spotlight */
+      .x-spot { position: relative; }
+      .x-spot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 50%), rgba(232, 65, 44, 0.16), transparent 60%); opacity: 0; transition: opacity 0.3s; }
+      .x-spot:hover::after { opacity: 1; }
+
+      /* bento promises */
+      .x-promise.x-bento { display: grid; gap: 12px; border: 0; grid-template-columns: 1fr; }
+      .x-promise.x-bento li { grid-template-columns: 1fr; align-content: space-between; gap: 10px; min-height: 180px; padding: 24px; border: 1px solid var(--x-line); border-radius: 24px; background: var(--x-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: var(--x-shadow); overflow: hidden; }
+      .x-promise.x-bento p { grid-column: 1; }
+      .x-promise.x-bento .x-n { font: 700 48px/1 var(--x-head); letter-spacing: -0.05em; color: var(--x-red-ink); margin: 0; }
+      .x-promise.x-bento li:first-child { background: linear-gradient(140deg, rgba(232, 65, 44, 0.22), transparent 60%), var(--x-glass); }
+      .x-promise.x-bento li:first-child h3 { font-size: clamp(26px, 3.4vw, 38px); }
+      @media (min-width: 640px) { .x-promise.x-bento { grid-template-columns: 1fr 1fr; } .x-promise.x-bento li:first-child { grid-column: span 2; } }
+      @media (min-width: 900px) {
+        .x-promise.x-bento { grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: auto auto; }
+        .x-promise.x-bento li:first-child { grid-column: 1; grid-row: span 2; min-height: 380px; }
+        .x-promise.x-bento li:nth-child(4) { grid-column: span 2; }
+        .x-promise.x-bento li, .x-promise.x-bento li:nth-child(3) { border-top: 1px solid var(--x-line); padding: 26px; }
+        .x-promise.x-bento li .x-n, .x-promise.x-bento li:nth-child(3) .x-n { color: var(--x-red-ink); font-size: 48px; margin: 0; }
+      }
+
+      /* bento service prices */
+      .x-prices { display: grid; gap: 10px; border-top: 0; margin-top: 20px; }
+      @media (min-width: 640px) { .x-prices { grid-template-columns: 1fr 1fr; } }
+      .x-prices li { flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 14px; padding: 20px; border: 1px solid var(--x-line); border-radius: 20px; background: var(--x-glass); }
+      .x-prices .x-amt { font-size: 28px; }
+      .x-photo { border-radius: 28px; box-shadow: var(--x-shadow); }
+
+      /* buy carousel */
+      .x-grid.x-snap { display: grid; grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(330px, 84%); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 10px 4px 22px; margin: -10px -4px 0; scrollbar-width: thin; scrollbar-color: var(--x-line-2) transparent; overscroll-behavior-x: contain; }
+      .x-snap > * { scroll-snap-align: start; }
+      .x-snapnav { display: flex; gap: 8px; }
+      .x-snapnav button { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--x-line-2); background: var(--x-glass); color: var(--x-ink); font: 600 20px/1 var(--x-head); cursor: pointer; display: grid; place-items: center; }
+      .x-snapnav button:hover { border-color: var(--x-ink); }
+      .x-snapnav button:disabled { opacity: 0.4; cursor: default; }
+      .x-grid.x-snap { scroll-behavior: auto; }
+      .x-emi__out { background-color: #0d1117 !important; }
+      .x-pass { background-color: #0d1117 !important; }
+      .x-est__tag { background-color: #262c36 !important; color: #e6e8ec !important; }
+      .x-pass__chip { background-color: #1a2029 !important; }
+      .x-pass__chip b { color: #f4f1ea; }
+      .x-pass__chip span { color: #c3c9d3; }
+      .x-pass .x-flipbtn, .x-pass .x-flipbtn:hover { background: #f4f1ea; color: #0d1117; -webkit-text-fill-color: #0d1117; border-color: #f4f1ea; }
+      .x-pass .x-flipbtn:hover { background: #ffffff; }
+      .x-chip { transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+      .x-chip:hover { border-color: var(--x-ink); }
+      .x-card { border-radius: 24px; }
+      .x-card__art { border-radius: 16px; background: radial-gradient(circle at 30% 20%, rgba(232, 65, 44, 0.16), transparent 60%), var(--x-surf-2); }
+      .x-emi { border-radius: 28px; }
+      .x-emi__out { border-radius: 20px; background: radial-gradient(circle at 80% 0%, rgba(232, 65, 44, 0.35), transparent 60%), var(--x-midnight); border: 1px solid rgba(244, 241, 234, 0.1); }
+
+      /* doorstep 4-step line */
+      .x-flow { --n: 4; list-style: none; margin: 0; padding: 0; position: relative; display: grid; gap: 22px; counter-reset: f; }
+      .x-flow::before, .x-flow::after { content: ""; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: var(--x-line-2); border-radius: 2px; }
+      .x-flow::after { background: linear-gradient(var(--x-red), var(--x-teal)); transform: scaleY(0); transform-origin: top; transition: transform 1.6s var(--x-ease); }
+      .x-flow.is-on::after { transform: scaleY(1); }
+      .x-flow li { position: relative; z-index: 1; display: grid; grid-template-columns: 44px 1fr; gap: 2px 14px; }
+      .x-flow__dot { grid-row: span 2; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; font: 700 16px/1 var(--x-head); background: var(--x-bg); border: 2px solid var(--x-line-2); color: var(--x-mute); transition: background-color 0.4s, border-color 0.4s, color 0.4s, transform 0.4s var(--x-ease); transition-delay: calc(var(--i) * 0.4s); }
+      .x-flow.is-on .x-flow__dot { background: var(--x-red); border-color: var(--x-red); color: var(--x-midnight); transform: scale(1.06); box-shadow: 0 0 0 6px rgba(232, 65, 44, 0.16); }
+      .x-flow h3 { font: 600 18px/1.25 var(--x-head); letter-spacing: -0.02em; margin: 0; padding-top: 4px; }
+      .x-flow p { color: var(--x-mute); font-size: 15px; }
+      @media (min-width: 900px) {
+        .x-flow { grid-template-columns: repeat(4, 1fr); gap: 24px; }
+        .x-flow::before, .x-flow::after { left: 22px; right: calc(25% - 2px); top: 21px; bottom: auto; width: auto; height: 2px; }
+        .x-flow::after { background: linear-gradient(90deg, var(--x-red), var(--x-teal)); transform: scaleX(0); transform-origin: left; }
+        .x-flow.is-on::after { transform: scaleX(1); }
+        .x-flow li { grid-template-columns: 1fr; gap: 10px; }
+        .x-flow__dot { grid-row: auto; }
+      }
+      .x-perks li > svg { color: var(--x-red-ink); }
+
+      /* sell estimate */
+      .x-est__fig { display: block; transition: transform 0.3s var(--x-ease); }
+      .x-est__fig.is-pop { animation: x-pop 0.45s var(--x-ease); }
+      @keyframes x-pop { 40% { transform: scale(1.04); color: #ff8d7c; } }
+      .x-est__tag { display: inline-flex; width: fit-content; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(244, 241, 234, 0.1); color: #d3d7de !important; font-weight: 600; font-size: 13px !important; }
+      .x-est__tag::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--x-teal); }
+
+      /* passport flip */
+      .x-flip { perspective: 1400px; }
+      .x-flip__in { display: grid; transition: transform 0.9s var(--x-ease); transform-style: preserve-3d; }
+      .x-flip.is-flipped .x-flip__in { transform: rotateY(180deg); }
+      .x-flip__face { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; position: relative; overflow: hidden; align-content: start; }
+      .x-flip__back { transform: rotateY(180deg); }
+      .x-flip__face::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.08) 45%, rgba(18, 181, 166, 0.1) 55%, transparent 70%); }
+      .x-pass { border-radius: 28px; background: radial-gradient(circle at 100% 0%, rgba(232, 65, 44, 0.28), transparent 50%), radial-gradient(circle at 0% 100%, rgba(18, 181, 166, 0.2), transparent 50%), var(--x-midnight) !important; color: var(--x-chalk); border: 1px solid rgba(244, 241, 234, 0.16); min-height: 360px; }
+      .x-pass .x-wscore span { background: var(--x-midnight) !important; }
+      .x-flipbtn { justify-self: start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(244, 241, 234, 0.3); background: rgba(244, 241, 234, 0.08); color: var(--x-chalk); font: 700 14px/1 var(--x-body); cursor: pointer; }
+      .x-flipbtn:hover { background: rgba(244, 241, 234, 0.16); }
+      .x-pass__chip { display: grid; gap: 6px; padding: 16px; border-radius: 16px; background: rgba(244, 241, 234, 0.06); border: 1px solid rgba(244, 241, 234, 0.12); }
+      .x-pass__chip b { font: 600 15px/1.3 var(--x-head); }
+      .x-pass__chip span { font-size: 13px; color: #b5bcc8; }
+
+      /* towns dot grid */
+      .x-townwrap { display: grid; gap: 24px; }
+      @media (min-width: 900px) { .x-townwrap { grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; } }
+      .x-dotmap { position: relative; aspect-ratio: 9 / 10; max-height: 520px; width: 100%; border-radius: 28px; border: 1px solid var(--x-line); background: radial-gradient(circle, var(--x-line-2) 1.3px, transparent 1.8px) 0 0 / 18px 18px, radial-gradient(circle at 75% 70%, rgba(18, 181, 166, 0.14), transparent 50%), var(--x-glass); overflow: hidden; box-shadow: var(--x-shadow); }
+      .x-pin { position: absolute; left: var(--x); top: var(--y); display: flex; align-items: center; gap: 8px; transform: translate(-7px, -50%); font: 600 13px/1 var(--x-head); color: var(--x-mute); white-space: nowrap; }
+      .x-pin i { position: relative; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--x-mute); background: var(--x-bg); flex: none; }
+      .x-pin i::after { content: ""; position: absolute; inset: -2px; border-radius: 50%; border: 2px solid currentColor; animation: x-ping 2.4s ease-out infinite; opacity: 0; }
+      .x-pin--l { flex-direction: row-reverse; transform: translate(calc(-100% + 7px), -50%); }
+      .x-pin--on { color: var(--x-ink); font-size: 15px; }
+      .x-pin--on i { width: 18px; height: 18px; background: var(--x-teal); border-color: var(--x-teal); color: var(--x-teal); }
+      .x-pin--on i::after { animation-duration: 1.8s; }
+      @keyframes x-ping { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
+      .x-towns { display: flex; flex-wrap: wrap; gap: 8px; grid-template-columns: none; }
+      .x-town { display: inline-flex; align-items: center; gap: 10px; padding: 8px 16px 8px 8px; border-radius: 999px; background: var(--x-glass); }
+      .x-town h3 { font: 600 16px/1 var(--x-head); }
+      .x-town p { font-size: 13px; }
+      .x-town:hover { transform: translateY(-2px); }
+      .x-townside { display: grid; gap: 24px; align-content: center; }
+
+      /* partner glass form, floating labels */
+      .x-fl { position: relative; display: block; }
+      .x-fl input, .x-fl select { width: 100%; min-height: 60px; padding: 24px 16px 8px; border-radius: 16px; border: 1px solid var(--x-line-2); background: var(--x-glass-2); color: var(--x-ink); font: 500 16px/1.2 var(--x-body); -webkit-appearance: none; appearance: none; transition: border-color 0.2s, box-shadow 0.2s; }
+      .x-fl select { background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 22px) 28px, calc(100% - 16px) 28px; background-size: 6px 6px; background-repeat: no-repeat; }
+      .x-fl span { position: absolute; left: 17px; top: 20px; font: 500 16px/1.2 var(--x-body); color: var(--x-mute); pointer-events: none; transform-origin: left top; transition: transform 0.2s var(--x-ease), color 0.2s; }
+      .x-fl input:focus, .x-fl select:focus { outline: none; border-color: var(--x-red); box-shadow: 0 0 0 4px rgba(232, 65, 44, 0.18); }
+      .x-fl input:focus + span, .x-fl input:not(:placeholder-shown) + span, .x-fl select + span { transform: translateY(-11px) scale(0.76); color: var(--x-red-ink); font-weight: 700; }
+      .x-fl select + span { color: var(--x-mute); }
+      .x-glassform { position: relative; border-radius: 28px; padding: 26px; overflow: hidden; }
+      .x-glassform::before { content: ""; position: absolute; inset: -40% -20% auto auto; width: 70%; height: 80%; background: radial-gradient(circle, rgba(232, 65, 44, 0.22), transparent 65%); pointer-events: none; z-index: -1; }
+      .x-glassform { isolation: isolate; }
+      .x-lock { display: flex; gap: 8px; align-items: center; font-size: 14px; color: var(--x-mute); }
+      .x-lock svg { width: 16px; height: 16px; flex: none; }
+      .x-sent { display: grid; justify-items: center; text-align: center; gap: 12px; padding: 24px 8px; }
+      .x-sent[hidden] { display: none; }
+      .x-sent svg { width: 72px; height: 72px; }
+      .x-sent circle { stroke: var(--x-teal); stroke-dasharray: 170; stroke-dashoffset: 170; animation: x-dash 0.7s var(--x-ease) forwards; }
+      .x-sent path { stroke: var(--x-teal); stroke-dasharray: 40; stroke-dashoffset: 40; animation: x-dash 0.5s 0.5s var(--x-ease) forwards; }
+      @keyframes x-dash { to { stroke-dashoffset: 0; } }
+      .x-sent b { font: 700 24px/1.15 var(--x-head); letter-spacing: -0.03em; }
+      .x-sent p { color: var(--x-mute); }
+      .x-glassform.is-sent > :not(.x-sent):not(h3) { display: none; }
+
+      /* footer outline wordmark */
+      .x-outline { display: block; width: fit-content; max-width: 100%; font: 700 clamp(64px, 17vw, 220px)/0.9 var(--x-head); letter-spacing: -0.06em; color: transparent; -webkit-text-stroke: 1.5px var(--x-line-2); text-decoration: none; transition: -webkit-text-stroke-color 0.4s, color 0.6s; background: linear-gradient(90deg, var(--x-red), var(--x-teal)); -webkit-background-clip: text; background-clip: text; background-size: 0% 100%; background-repeat: no-repeat; }
+      .x-outline:hover { background-size: 100% 100%; -webkit-text-stroke-color: transparent; transition: background-size 0.8s var(--x-ease), -webkit-text-stroke-color 0.4s; }
+      .x-foot { border-top: 1px solid var(--x-line); }
+      .x-foot .x-tagline { font-size: clamp(26px, 4vw, 36px); }
+
+      @media (prefers-reduced-motion: reduce) {
+        .x-aurora i, .x-pin i::after, .x-sent circle, .x-sent path { animation: none !important; }
+        .x-sent circle, .x-sent path { stroke-dashoffset: 0; }
+        .x-flow::after { transform: none !important; }
+        .x-flow__dot { transition-delay: 0s !important; }
+        .x-spot::after { display: none; }
+        .x-town:hover { transform: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <symbol id="x-car" viewBox="0 0 120 56">
+        <path d="M21 44H13q-3 0-3-3v-8q0-4 5-5l14-4 13-11h31l15 11 15 3q7 2 7 7v7q0 3-3 3h-8" />
+        <path d="M37 44h46M44 16l-9 8h53l-11-8z" /><circle cx="29" cy="44" r="8" /><circle cx="91" cy="44" r="8" />
+        <path class="x-acc" d="M60 16v8" />
+      </symbol>
+      <symbol id="x-moto" viewBox="0 0 120 56">
+        <circle cx="26" cy="40" r="12" /><circle cx="94" cy="40" r="12" />
+        <path d="M26 40l20-16h26l22 16M46 24l-6-6H28M72 24l8-14h10M50 24q10-10 22 0" />
+        <path class="x-acc" d="M54 40h16" />
+      </symbol>
+      <symbol id="x-scoot" viewBox="0 0 120 56">
+        <circle cx="28" cy="44" r="9" /><circle cx="92" cy="44" r="9" />
+        <path d="M37 44h32q12 0 15-14l5-18h9M44 30h24M34 44q-2-12 10-14M80 12h12" />
+        <path class="x-acc" d="M50 30v-6h12v6" />
+      </symbol>
+      <symbol id="x-check" viewBox="0 0 16 16"><path d="M8 1.5l5.5 2v4.2c0 3.3-2.3 5.8-5.5 6.8-3.2-1-5.5-3.5-5.5-6.8V3.5z" fill="currentColor" opacity=".22" /><path d="M5.3 8.2l1.9 1.9 3.6-3.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></symbol>
+    </svg>
+
+    <div class="x-progress" aria-hidden="true"><span id="x-progress"></span></div>
+    <div class="page" id="top">
+      <header class="x-top">
+        <a class="x-mark" href="#top" aria-label="Chekd Cars, home">chekd<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path class="x-ring" d="M6 18A8.5 8.5 0 1 1 18 18" stroke-width="3.4" stroke-linecap="round" /><path class="x-needle" d="M8.4 12.4l2.7 2.8 5.2-6" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" /></svg><span class="x-lite">cars</span></a>
+        <nav aria-label="Main">
+          <a href="#buy">Buy</a><a href="#sell">Sell</a><a href="#doorstep">Doorstep</a><a href="#service">Service</a><a href="#parts">Parts</a><a href="#passport">Passport</a><a href="#partner">Partner</a>
+        </nav>
+        <a class="x-cart" id="x-cart" href="#parts" aria-label="Parts cart, 0 items">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h2.5l2.2 11h10.6l2-8H6.6" /><circle cx="9" cy="19.5" r="1.4" /><circle cx="17" cy="19.5" r="1.4" /></svg>
+          <span class="x-cart__n" id="x-cart-n" aria-hidden="true">0</span>
+        </a>
+        <button class="x-iconbtn" id="x-theme" type="button" aria-label="Switch to light theme">
+          <svg class="x-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+          <svg class="x-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" /></svg>
+        </button>
+      </header>
+
+      <main>
+        <section class="x-hero" aria-labelledby="x-h1">
+          <img src="hero.jpg" alt="A hatchback and a motorcycle on a rain-washed Bengaluru street at golden hour" />
+          <div class="x-aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="x-hero__in">
+            <div>
+              <h1 class="x-h" id="x-h1"><span class="x-line"><span class="x-w" style="--i: 0">Every</span> <span class="x-w" style="--i: 1">car,</span></span><span class="x-line"><span class="x-w" style="--i: 2"><em>checked.</em></span></span></h1>
+              <p class="x-tagline x-sweep">Checked. Trusted. Wow.</p>
+              <p class="x-hero__sub">Buy, sell and service pre-owned cars with a verified history. Bikes too. Starting in Bengaluru.</p>
+              <div class="x-hero__ctas">
+                <a class="x-btn x-glow" href="#buy">Browse cars</a>
+                <a class="x-btn x-btn--ghost" href="#sell">Sell my car</a>
+              </div>
+            </div>
+            <form class="x-search" id="x-search" aria-label="Quick search">
+              <div class="x-toggle" role="group" aria-label="Vehicle type">
+                <button type="button" aria-pressed="true" data-kind="car">Cars</button>
+                <button type="button" aria-pressed="false" data-kind="bike">Bikes</button>
+              </div>
+              <div class="x-search__row">
+                <label class="x-field">Brand
+                  <select name="brand"><option value="">Any brand</option><option>Maruti</option><option>Hyundai</option><option>Tata</option><option>Honda</option><option>Mahindra</option><option>Royal Enfield</option><option>Ather</option></select>
+                </label>
+                <label class="x-field">Budget
+                  <select name="budget">
+                    <option value="">Any budget</option>
+                    <option value="0-100000">Under ₹1 lakh</option>
+                    <option value="100000-500000">₹1 to 5 lakh</option>
+                    <option value="500000-1000000">₹5 to 10 lakh</option>
+                    <option value="1000000-99999999">Above ₹10 lakh</option>
+                  </select>
+                </label>
+                <label class="x-field">Fuel
+                  <select name="fuel"><option value="">Any fuel</option><option>Petrol</option><option>Diesel</option><option value="EV">Electric</option></select>
+                </label>
+                <label class="x-field">Town
+                  <select name="town"><option value="">Any town</option><option>Bengaluru</option><option>Hubballi</option><option>Mysuru</option><option>Belagavi</option></select>
+                </label>
+              </div>
+              <button class="x-btn x-glow" type="submit">Find my car</button>
+            </form>
+          </div>
+        </section>
+
+        <div class="x-marquee" role="region" aria-label="The Chekd Promise">
+          <div class="x-marquee__track">
+            <ul><li>7-day money-back</li><li>1-year warranty</li><li>Odometer guarantee</li><li>RC transfer, done</li><li>7-day money-back</li><li>1-year warranty</li><li>Odometer guarantee</li><li>RC transfer, done</li></ul>
+            <ul aria-hidden="true"><li>7-day money-back</li><li>1-year warranty</li><li>Odometer guarantee</li><li>RC transfer, done</li><li>7-day money-back</li><li>1-year warranty</li><li>Odometer guarantee</li><li>RC transfer, done</li></ul>
+          </div>
+        </div>
+
+        <div class="x-stats x-stats--trust x-count" aria-label="Chekd Cars at a glance">
+          <div class="x-stat"><strong><span data-to="200">200</span></strong><span>Point inspection on every car</span></div>
+          <div class="x-stat"><strong><span data-to="7">7</span><i>-day</i></strong><span>Money-back</span></div>
+          <div class="x-stat"><strong><span data-to="1">1</span><i>-year</i></strong><span>Engine and gearbox warranty</span></div>
+          <div class="x-stat"><strong><span data-to="30">30</span><i> min</i></strong><span>To sell your car</span></div>
+        </div>
+
+        <section class="x-sec" id="promise">
+          <div class="x-sec__head">
+            <p class="x-idx">The Chekd Promise</p>
+            <h2 class="x-h">Four promises on every vehicle we sell.</h2>
+            <p class="x-lede">Written into your purchase papers, not buried in them.</p>
+          </div>
+          <ol class="x-promise x-bento x-reveal">
+            <li><span class="x-n">01</span><h3>7-day money-back</h3><p>Not right for you? Return it within a week for a full refund.</p></li>
+            <li><span class="x-n">02</span><h3>1-year warranty</h3><p>Engine and gearbox covered for a full year from handover.</p></li>
+            <li><span class="x-n">03</span><h3>Odometer guarantee</h3><p>If a Chekd Cars-verified reading is proven tampered, we pay double the difference.</p></li>
+            <li><span class="x-n">04</span><h3>RC transfer, done</h3><p>We handle the registration transfer for you, start to finish.</p></li>
+          </ol>
+        </section>
+
+        <section class="x-sec" id="buy">
+          <div class="x-sec__head">
+            <p class="x-idx">Buy</p>
+            <h2 class="x-h">Checked cars, ready to drive.</h2>
+            <p class="x-lede">Every listing carries a Chekd Passport: inspection, service history and a ChekdScore out of 100. Looking for a bike? We have those too.</p>
+          </div>
+          <div class="x-tools">
+            <div class="x-chips" id="x-filter" role="group" aria-label="Filter listings">
+              <button class="x-chip" type="button" aria-pressed="false" data-filter="all">All</button>
+              <button class="x-chip" type="button" aria-pressed="true" data-filter="car">Cars</button>
+              <button class="x-chip" type="button" aria-pressed="false" data-filter="bike">Bikes</button>
+              <button class="x-chip" type="button" aria-pressed="false" data-filter="ev">EV</button>
+            </div>
+            <label class="x-field x-sort">Sort by
+              <select id="x-sort">
+                <option value="">Recommended</option>
+                <option value="price-asc">Price, low to high</option>
+                <option value="price-desc">Price, high to low</option>
+                <option value="score">ChekdScore, highest</option>
+                <option value="year">Newest first</option>
+                <option value="km">Fewest km</option>
+              </select>
+            </label>
+            <div class="x-snapnav" aria-label="Scroll listings">
+              <button type="button" id="x-prev" aria-label="Previous listings">‹</button>
+              <button type="button" id="x-next" aria-label="Next listings">›</button>
+            </div>
+          </div>
+          <div class="x-found"><p class="x-note" id="x-count" role="status">6 listings shown</p><button class="x-textbtn" type="button" id="x-clear" hidden>Clear search</button></div>
+          <p class="x-empty" id="x-bempty" hidden>No listings match that search yet. Try another budget or town, or <a href="https://wa.me/919019088160" target="_blank" rel="noopener" style="color: var(--x-ink); font-weight: 700">WhatsApp us</a> what you want.</p>
+          <div class="x-grid x-snap" id="x-grid" tabindex="0" aria-label="Listings, scroll sideways">
+            <article class="x-card" data-type="car" data-price="585000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">92<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Maruti Swift VXi</h3>
+              <ul class="x-specs"><li>2021</li><li>28,400 km</li><li>Petrol</li><li>Bengaluru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹5,85,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="car" data-price="1140000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">88<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Hyundai Creta SX</h3>
+              <ul class="x-specs"><li>2020</li><li>46,100 km</li><li>Diesel</li><li>Bengaluru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹11,40,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="car" data-ev data-price="1225000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">90<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Tata Nexon EV Max</h3>
+              <ul class="x-specs"><li>2022</li><li>31,000 km</li><li>EV, battery 94%</li><li>Hubballi</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹12,25,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="car" data-price="810000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">84<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Honda City ZX</h3>
+              <ul class="x-specs"><li>2019</li><li>52,300 km</li><li>Petrol</li><li>Mysuru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹8,10,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="car" data-price="1690000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">91<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Mahindra XUV700 AX5</h3>
+              <ul class="x-specs"><li>2022</li><li>38,900 km</li><li>Diesel</li><li>Bengaluru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹16,90,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="car" data-price="635000">
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-car" /></svg><p class="x-score">87<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Maruti Baleno Zeta</h3>
+              <ul class="x-specs"><li>2020</li><li>41,200 km</li><li>Petrol</li><li>Belagavi</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹6,35,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="bike" data-price="149000" hidden>
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-moto" /></svg><p class="x-score">91<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Royal Enfield Classic 350</h3>
+              <ul class="x-specs"><li>2021</li><li>14,200 km</li><li>Bengaluru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹1,49,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+            <article class="x-card" data-type="bike" data-ev data-price="108000" hidden>
+              <div class="x-card__art"><svg aria-hidden="true"><use href="#x-scoot" /></svg><p class="x-score">93<small>ChekdScore</small></p></div>
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Passport verified</span>
+              <h3>Ather 450X</h3>
+              <ul class="x-specs"><li>2023</li><li>7,600 km</li><li>EV, battery 97%</li><li>Bengaluru</li></ul>
+              <div class="x-card__foot"><p class="x-price">₹1,08,000</p><button class="x-textbtn" type="button">See EMI</button></div>
+            </article>
+          </div>
+
+          <div class="x-drawer" id="x-drawer" role="region" aria-label="Compare listings" hidden>
+            <div class="x-drawer__bar">
+              <p><span id="x-cmp-n">0</span> of 3 picked <span class="x-mute" id="x-cmp-names"></span></p>
+              <div class="x-drawer__acts">
+                <button class="x-textbtn" type="button" id="x-cmp-clear">Clear</button>
+                <button class="x-btn" type="button" id="x-cmp-open" aria-expanded="false" aria-controls="x-cmp-table">Compare</button>
+              </div>
+            </div>
+            <div id="x-cmp-table" hidden></div>
+          </div>
+
+          <div class="x-emi x-reveal" id="emi">
+            <div class="x-emi__ctrls">
+              <h3>What it costs each month</h3>
+              <div class="x-range"><label for="e-price">Vehicle price <output id="o-price" for="e-price"></output></label><input type="range" id="e-price" min="50000" max="1500000" step="5000" value="585000" /></div>
+              <div class="x-range"><label for="e-down">Down payment <output id="o-down" for="e-down"></output></label><input type="range" id="e-down" min="0" max="585000" step="5000" value="100000" /></div>
+              <div class="x-range"><label for="e-ten">Tenure <output id="o-ten" for="e-ten"></output></label><input type="range" id="e-ten" min="12" max="84" step="6" value="36" /></div>
+            </div>
+            <div class="x-emi__out" aria-live="polite">
+              <span>Monthly EMI</span>
+              <strong id="o-emi">₹0</strong>
+              <span id="o-emi-note">At 13.5% p.a.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="doorstep">
+          <div class="x-sec__head">
+            <p class="x-idx">Chekd Doorstep</p>
+            <h2 class="x-h">We come to you.</h2>
+            <p class="x-lede">On-demand pickup and delivery for buying, selling and servicing your car.</p>
+          </div>
+          <ol class="x-flow" id="x-flow" aria-label="How a doorstep visit works">
+            <li style="--i: 0"><span class="x-flow__dot">1</span><h3>Pick a service</h3><p>Test drive, pickup, Chekd Check, delivery or help.</p></li>
+            <li style="--i: 1"><span class="x-flow__dot">2</span><h3>Choose a slot</h3><p>Any day this week, in a two-hour window.</p></li>
+            <li style="--i: 2"><span class="x-flow__dot">3</span><h3>Your Chekd Captain arrives</h3><p>At your home or office, on time.</p></li>
+            <li style="--i: 3"><span class="x-flow__dot">4</span><h3>Done, and logged</h3><p>Every visit is added to your Chekd Passport.</p></li>
+          </ol>
+          <figure class="x-photo x-reveal"><img src="doorstep.jpg" alt="A uniformed Chekd executive handing car keys to a couple at their apartment" loading="lazy" style="aspect-ratio: 21 / 9; object-position: 50% 30%" /><figcaption>Chekd Doorstep · keys handed over at home</figcaption></figure>
+          <div class="x-split x-split--door">
+            <ul class="x-perks x-reveal">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 16H3v-4l2-1 3-4h8l3 4 2 1v4h-2M8 16h8" /><circle cx="6.5" cy="16.5" r="2" /><circle cx="17.5" cy="16.5" r="2" /></svg><h3>Doorstep test drive</h3><p>The car comes to your home or office.</p></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5zM14.5 6.5L18 3l3 3-3.5 3.5" /></svg><h3>Free pickup and drop for service</h3><p>For every service, within 15 km of a Chekd Garage.</p></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.5V4h8.5L21 13.5 13.5 21z" /><circle cx="7.5" cy="8.5" r="1.4" /></svg><h3>Doorstep Chekd Check</h3><p>Selling? We inspect at your door and make an instant offer.</p></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10l9-6 9 6M5 9v11h14V9" /><path d="M9 14l2 2 4-4" /></svg><h3>Home delivery</h3><p>Your car arrives with RC transfer and insurance done.</p></li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L5 13h6l-1 9 8-11h-6z" /></svg><h3>On-demand help <span class="x-from">From ₹299</span></h3><p>Battery jump-start, flat tyre and minor repairs at your location.</p></li>
+            </ul>
+            <form class="x-form" id="x-book" novalidate>
+              <h3>Book a doorstep visit</h3>
+              <label class="x-field">Service
+                <select name="service" required>
+                  <option>Doorstep test drive</option>
+                  <option>Service pickup and drop</option>
+                  <option>Chekd Check and offer</option>
+                  <option>Home delivery</option>
+                  <option>On-demand help</option>
+                </select>
+              </label>
+              <label class="x-field">Address<input name="address" required autocomplete="street-address" placeholder="House, street, area" /></label>
+              <fieldset class="x-pick">
+                <legend>Date</legend>
+                <div class="x-chips" id="x-days">
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="0">Today</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="1">Tomorrow</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="2">Day 3</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="3">Day 4</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="4">Day 5</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="5">Day 6</button>
+                  <button class="x-chip" type="button" aria-pressed="false" data-off="6">Day 7</button>
+                </div>
+              </fieldset>
+              <fieldset class="x-pick">
+                <legend>Time</legend>
+                <div class="x-chips" id="x-slots">
+                  <button class="x-chip" type="button" aria-pressed="false">9-11 am</button>
+                  <button class="x-chip" type="button" aria-pressed="false">11-1</button>
+                  <button class="x-chip" type="button" aria-pressed="false">2-4</button>
+                  <button class="x-chip" type="button" aria-pressed="false">4-6</button>
+                </div>
+              </fieldset>
+              <p class="x-err" id="x-book-err" role="alert">Pick a date and a time slot.</p>
+              <button class="x-btn" type="submit">Book now</button>
+              <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Booked. Your Chekd Captain will call to confirm.</span></p>
+            </form>
+          </div>
+        </section>
+
+        <section class="x-sec" id="sell">
+          <div class="x-sec__head">
+            <p class="x-idx">Sell</p>
+            <h2 class="x-h">Sell in 30 minutes.</h2>
+            <p class="x-lede">Car or bike, we come to you, check it, and pay the same day.</p>
+          </div>
+          <div class="x-split">
+            <ol class="x-steps x-reveal">
+              <li><span class="x-n">01</span><h3>Share details</h3><p>Registration number, kilometres and city. That's all we need to start.</p></li>
+              <li><span class="x-n">02</span><h3>Free Chekd Check at home</h3><p>A Chekd Cars inspector checks your vehicle at your door, at no cost.</p></li>
+              <li><span class="x-n">03</span><h3>Instant offer, same-day payment</h3><p>Accept the offer and the money reaches your account the same day.</p></li>
+            </ol>
+            <form class="x-form x-js-form" novalidate>
+              <h3>Get your offer</h3>
+              <label class="x-field">Registration number<input name="reg" required placeholder="KA 01 AB 1234" autocomplete="off" style="text-transform: uppercase" /></label>
+              <div class="x-two">
+                <label class="x-field">Kilometres<input name="km" required inputmode="numeric" pattern="[0-9,]+" placeholder="32,000" /></label>
+                <label class="x-field">City<select name="city"><option>Bengaluru</option><option>Hubballi</option><option>Belagavi</option><option>Mysuru</option></select></label>
+              </div>
+              <button class="x-btn" type="submit">Get my offer</button>
+              <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Done. We'll WhatsApp you an offer within 30 minutes.</span></p>
+            </form>
+          </div>
+          <div class="x-emi x-est" id="x-est">
+            <div class="x-emi__ctrls">
+              <h3>What could your vehicle fetch?</h3>
+              <label class="x-field">Vehicle type
+                <select id="s-seg">
+                  <option value="700000">Hatchback</option>
+                  <option value="1100000">Sedan</option>
+                  <option value="1600000">SUV</option>
+                  <option value="180000">Motorcycle</option>
+                  <option value="110000">Scooter</option>
+                </select>
+              </label>
+              <div class="x-range"><label for="s-year">Year <output id="o-year" for="s-year"></output></label><input type="range" id="s-year" min="2010" max="2026" step="1" value="2020" /></div>
+              <div class="x-range"><label for="s-km">Kilometres <output id="o-km" for="s-km"></output></label><input type="range" id="s-km" min="0" max="200000" step="1000" value="40000" /></div>
+            </div>
+            <div class="x-emi__out" aria-live="polite">
+              <span>Estimated offer</span>
+              <strong class="x-est__fig" id="o-est">₹0</strong>
+              <span class="x-est__tag">Indicative, final price after inspection</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="service">
+          <div class="x-sec__head">
+            <p class="x-idx">Service</p>
+            <h2 class="x-h">Fixed prices. No surprises.</h2>
+            <p class="x-lede">Book a service for your car or bike and know the bill before we start.</p>
+          </div>
+          <div class="x-split x-split--photo">
+            <figure class="x-photo x-reveal"><img src="garage.jpg" alt="A uniformed Chekd technician inspecting a car with a checklist tablet in a Chekd Garage" loading="lazy" style="object-position: 50% 30%" /><figcaption>Chekd Check · 200-point inspection</figcaption></figure>
+            <div>
+              <div class="x-toggle" role="group" aria-label="Service type" id="x-svc">
+                <button type="button" aria-pressed="true" data-kind="car">Cars</button>
+                <button type="button" aria-pressed="false" data-kind="bike">Bikes</button>
+              </div>
+              <ul class="x-prices">
+                <li data-for="car"><span><b>Car Basic</b><small>Engine oil, filter, top-ups and inspection</small></span><span class="x-amt">₹2,499</span></li>
+                <li data-for="car"><span><b>Car Comprehensive</b><small>Full service with all filters, brakes, AC check</small></span><span class="x-amt">₹4,999</span></li>
+                <li data-for="bike" hidden><span><b>Bike General</b><small>Oil change, brakes, chain, 30-point check</small></span><span class="x-amt">₹799</span></li>
+                <li data-for="bike" hidden><span><b>Bike Premium</b><small>General service plus carburettor or injector clean and wash</small></span><span class="x-amt">₹1,499</span></li>
+                <li data-for="car bike"><span><b>EV Health Check</b><small>Battery, motor and charging system report</small></span><span class="x-amt">₹499</span></li>
+                <li data-for="car bike"><span><b>Free Chekd Check</b><small>Condition report at your home</small></span><span class="x-amt x-free">₹0</span></li>
+              </ul>
+              <p class="x-pull">Genuine parts. Fixed prices. Every job added to your Chekd Passport.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="parts">
+          <div class="x-sec__head">
+            <p class="x-idx">Chekd Parts</p>
+            <h2 class="x-h">Genuine parts, fair prices.</h2>
+            <p class="x-lede">OEM and certified aftermarket parts for cars, fitted at a Chekd Garage or delivered to your mechanic.</p>
+          </div>
+          <figure class="x-photo x-reveal" style="margin-bottom: 24px"><img src="parts.jpg" alt="Genuine car parts from Chekd Parts" loading="lazy" style="aspect-ratio: 21 / 9" /><figcaption>Chekd Parts</figcaption></figure>
+          <form class="x-psearch" id="x-psearch" role="search" aria-label="Find a part">
+            <label class="x-field">Car make or model<input name="car" placeholder="Maruti Swift" autocomplete="off" /></label>
+            <label class="x-field">Part<input name="part" placeholder="Brake pads" autocomplete="off" /></label>
+            <button class="x-btn" type="submit">Find parts</button>
+          </form>
+          <div class="x-chips" id="x-pcat" role="group" aria-label="Part category">
+            <button class="x-chip" type="button" aria-pressed="true" data-cat="all">All</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="brakes">Brakes</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="filters">Filters</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="batteries">Batteries</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="tyres">Tyres</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="lights">Lights</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="clutch">Clutch</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="suspension">Suspension</button>
+            <button class="x-chip" type="button" aria-pressed="false" data-cat="accessories">Accessories</button>
+          </div>
+          <p class="x-note" id="x-pcount" role="status">6 parts shown</p>
+          <div class="x-grid" id="x-parts">
+            <article class="x-card x-part" data-cat="brakes" data-fits="maruti suzuki swift baleno" data-name="bosch brake pads pad">
+              <span class="x-cert"><svg aria-hidden="true"><use href="#x-check" /></svg>Certified</span>
+              <h3>Bosch brake pads</h3>
+              <p class="x-fits">Fits Maruti Swift, Baleno</p>
+              <div class="x-card__foot"><p class="x-price">₹1,450</p><button class="x-add" type="button">Add</button></div>
+            </article>
+            <article class="x-card x-part" data-cat="batteries" data-fits="any hatchback" data-name="amaron 35ah battery">
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Genuine</span>
+              <h3>Amaron 35Ah battery</h3>
+              <p class="x-fits">Fits hatchbacks</p>
+              <div class="x-card__foot"><p class="x-price">₹4,299 <small class="x-fits">with exchange</small></p><button class="x-add" type="button">Add</button></div>
+            </article>
+            <article class="x-card x-part" data-cat="filters" data-fits="hyundai creta" data-name="mann air filter">
+              <span class="x-cert"><svg aria-hidden="true"><use href="#x-check" /></svg>Certified</span>
+              <h3>Mann air filter</h3>
+              <p class="x-fits">Fits Hyundai Creta</p>
+              <div class="x-card__foot"><p class="x-price">₹649</p><button class="x-add" type="button">Add</button></div>
+            </article>
+            <article class="x-card x-part" data-cat="lights" data-fits="any h4" data-name="philips h4 headlamp headlight bulb pair lights">
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Genuine</span>
+              <h3>Philips H4 headlamp bulb, pair</h3>
+              <p class="x-fits">Fits cars with H4 headlamps</p>
+              <div class="x-card__foot"><p class="x-price">₹899</p><button class="x-add" type="button">Add</button></div>
+            </article>
+            <article class="x-card x-part" data-cat="tyres" data-fits="honda city maruti suzuki baleno" data-name="mrf zlx 185/65 r15 tyre tire">
+              <span class="x-badge"><svg aria-hidden="true"><use href="#x-check" /></svg>Genuine</span>
+              <h3>MRF ZLX 185/65 R15 tyre</h3>
+              <p class="x-fits">Fits Honda City, Maruti Baleno</p>
+              <div class="x-card__foot"><p class="x-price">₹5,250</p><button class="x-add" type="button">Add</button></div>
+            </article>
+            <article class="x-card x-part" data-cat="clutch" data-fits="tata nexon" data-name="valeo clutch kit">
+              <span class="x-cert"><svg aria-hidden="true"><use href="#x-check" /></svg>Certified</span>
+              <h3>Valeo clutch kit</h3>
+              <p class="x-fits">Fits Tata Nexon</p>
+              <div class="x-card__foot"><p class="x-price">₹6,800</p><button class="x-add" type="button">Add</button></div>
+            </article>
+          </div>
+          <p class="x-empty" id="x-pempty" hidden>No parts match yet. <a href="https://wa.me/919019088160" target="_blank" rel="noopener" style="color: var(--x-ink); font-weight: 700">WhatsApp us</a> and we'll source it.</p>
+          <p class="x-free-line"><svg aria-hidden="true"><use href="#x-check" /></svg>Free fitting with any Chekd Garage service. Doorstep delivery in Bengaluru.</p>
+        </section>
+
+        <section class="x-sec" id="passport">
+          <div class="x-sec__head">
+            <p class="x-idx">Chekd Passport</p>
+            <h2 class="x-h">Your car's history, in one place.</h2>
+            <p class="x-lede">Every car checked, serviced or sold by Chekd Cars gets a digital Chekd Passport, with a ChekdScore that goes up with care.</p>
+          </div>
+          <div class="x-split">
+            <div style="display: grid; gap: 28px; align-content: start">
+              <div>
+                <p class="x-sub3">What's inside</p>
+                <ul class="x-gets">
+                  <li>200-point inspection reports</li>
+                  <li>Every service and part fitted</li>
+                  <li>Odometer readings</li>
+                  <li>Insurance and PUC dates</li>
+                  <li>Ownership and RC status</li>
+                  <li>A ChekdScore that rises with care</li>
+                </ul>
+              </div>
+              <ul class="x-perks x-reveal">
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17l6-6 4 4 6-7M15 8h5v5" /></svg><h3>Sell faster at a better price</h3><p>Buyers pay more for a car with proof of care.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 21h4" /></svg><h3>Reminders before anything is due</h3><p>Service, insurance and PUC, flagged ahead of time.</p></li>
+                <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1" /></svg><h3>Share with any buyer by link</h3><p>One link shows the full history, no paperwork.</p></li>
+              </ul>
+            </div>
+            <div class="x-flip x-reveal" id="x-flip">
+              <div class="x-flip__in">
+                <article class="x-pass x-flip__face" aria-label="Sample Chekd Passport">
+                  <div class="x-pass__top">
+                    <div>
+                      <p class="x-pass__label"><svg aria-hidden="true"><use href="#x-check" /></svg>Chekd Passport</p>
+                      <h3>Hyundai Creta SX 2020</h3>
+                      <span class="x-plate">KA 05 •• 4821</span>
+                    </div>
+                    <div class="x-wscore" style="--v: 88"><span>88<small>ChekdScore</small></span></div>
+                  </div>
+                  <div class="x-pass__chip"><b>Next due: PUC, Dec 2026</b><span>We remind you ahead of time.</span></div>
+                  <p class="x-pass__foot">Sample passport. Yours updates after every check, service and part.</p>
+                  <button class="x-flipbtn" type="button" data-flip>See the history ↻</button>
+                </article>
+                <article class="x-pass x-flip__face x-flip__back" aria-label="Sample Chekd Passport history" inert>
+                  <p class="x-pass__label"><svg aria-hidden="true"><use href="#x-check" /></svg>History · KA 05 •• 4821</p>
+                  <ol class="x-ptl">
+                    <li><b>Chekd Check, 200 points</b><time>Mar 2026</time></li>
+                    <li><b>Service + brake pads</b><time>Jun 2026</time></li>
+                    <li><b>Insurance renewed</b><time>Aug 2026</time></li>
+                    <li class="is-due"><b>PUC due</b><time>Dec 2026</time></li>
+                  </ol>
+                  <button class="x-flipbtn" type="button" data-flip>Back to the passport ↻</button>
+                </article>
+              </div>
+            </div>
+          </div>
+          <div class="x-passcta">
+            <div><button class="x-btn" type="button" id="x-passbtn" aria-expanded="false" aria-controls="x-pform">Get my free Chekd Passport</button></div>
+            <form class="x-form x-js-form x-pform" id="x-pform" novalidate hidden>
+              <h3>Your free Chekd Passport</h3>
+              <div class="x-pform__row">
+                <label class="x-field">Name<input name="name" required autocomplete="name" /></label>
+                <label class="x-field">Phone<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="98765 43210" /></label>
+                <label class="x-field">Car number<input name="reg" required placeholder="KA 05 AB 4821" autocomplete="off" style="text-transform: uppercase" /></label>
+                <button class="x-btn" type="submit">Send my link</button>
+              </div>
+              <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Done. We'll WhatsApp your Chekd Passport link.</span></p>
+            </form>
+          </div>
+        </section>
+
+        <section class="x-sec" id="towns">
+          <div class="x-sec__head">
+            <p class="x-idx">Chekd Cars in your town</p>
+            <h2 class="x-h">Bengaluru first. Karnataka next.</h2>
+            <p class="x-local">A local team, local offers and a local garage in every town we serve.</p>
+          </div>
+          <div class="x-townwrap">
+          <div class="x-dotmap x-reveal" role="img" aria-label="Map of Karnataka. Bengaluru is open. Hubballi, Dharwad, Belagavi, Mysuru and Mangaluru are coming soon.">
+            <span class="x-pin x-pin--on x-pin--l" style="--x: 80%; --y: 71%"><i></i>Bengaluru</span>
+            <span class="x-pin x-pin--l" style="--x: 59%; --y: 84%"><i></i>Mysuru</span>
+            <span class="x-pin" style="--x: 19%; --y: 72%"><i></i>Mangaluru</span>
+            <span class="x-pin" style="--x: 26%; --y: 26%"><i></i>Hubballi</span>
+            <span class="x-pin x-pin--l" style="--x: 22%; --y: 20%"><i></i>Dharwad</span>
+            <span class="x-pin" style="--x: 12%; --y: 12%"><i></i>Belagavi</span>
+          </div>
+          <div class="x-townside">
+          <figure class="x-photo x-reveal"><img src="office.jpg" alt="The Chekd Cars showroom in Bengaluru at dusk, its logo sign lit" loading="lazy" style="aspect-ratio: 16 / 9" /><figcaption>Our Bengaluru hub</figcaption></figure>
+          <div class="x-towns x-reveal">
+            <div class="x-town x-town--on"><span class="x-status x-status--on">Open</span><h3>Bengaluru</h3><p>Hub + garages</p></div>
+            <div class="x-town"><span class="x-status">Coming soon</span><h3>Hubballi</h3></div>
+            <div class="x-town"><span class="x-status">Coming soon</span><h3>Dharwad</h3></div>
+            <div class="x-town"><span class="x-status">Coming soon</span><h3>Belagavi</h3></div>
+            <div class="x-town"><span class="x-status">Coming soon</span><h3>Mysuru</h3></div>
+            <div class="x-town"><span class="x-status">Coming soon</span><h3>Mangaluru</h3></div>
+          </div>
+          <form class="x-form x-js-form" novalidate>
+            <h3>Notify me when you launch in my town</h3>
+            <div class="x-inline">
+              <label class="x-field">Town<input name="town" required autocomplete="address-level2" list="x-townlist" placeholder="Hubballi" /></label>
+              <datalist id="x-townlist"><option value="Hubballi"></option><option value="Dharwad"></option><option value="Belagavi"></option><option value="Mysuru"></option><option value="Mangaluru"></option></datalist>
+              <label class="x-field">Phone<input name="phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder="98765 43210" /></label>
+              <button class="x-btn" type="submit">Notify me</button>
+            </div>
+            <p class="x-ok" role="status"><svg aria-hidden="true"><use href="#x-check" /></svg><span>You're on the list. We'll text you the day we open in your town.</span></p>
+          </form>
+          </div>
+          </div>
+        </section>
+
+        <section class="x-sec" id="team">
+          <div class="x-sec__head">
+            <p class="x-idx">Meet the Chekd team</p>
+            <h2 class="x-h">Real people, checked cars.</h2>
+            <p class="x-lede">Every Chekd Captain is trained, verified and in uniform.</p>
+          </div>
+          <figure class="x-photo x-reveal"><img src="team.jpg" alt="Five Chekd Cars team members in black polos with red sleeve stripes" loading="lazy" style="aspect-ratio: 21 / 9; object-position: 50% 25%" /><figcaption>The Chekd team, Bengaluru</figcaption></figure>
+        </section>
+
+        <section class="x-sec" id="partner">
+          <div class="x-sec__head">
+            <p class="x-idx">Partner with Chekd Cars</p>
+            <h2 class="x-h">Own a Chekd Cars business in your town.</h2>
+          </div>
+          <div class="x-split x-split--photo-r">
+            <div style="display: grid; gap: 24px; align-content: start">
+              <ul class="x-gets x-gets--one">
+                <li>A trusted brand and steady leads.</li>
+                <li>Genuine parts and Garage OS software.</li>
+                <li>Training, finance and marketing support.</li>
+              </ul>
+              <figure class="x-photo x-reveal"><img src="office.jpg" alt="A Chekd Cars outlet at dusk with its illuminated logo sign" loading="lazy" style="aspect-ratio: 4 / 3" /><figcaption>Your Chekd Cars outlet could look like this</figcaption></figure>
+            </div>
+            <form class="x-form x-glassform" id="x-partner" novalidate>
+              <h3>Enquire about a partnership</h3>
+              <p class="x-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>Franchise formats open once you send this.</p>
+              <label class="x-fl"><input name="name" required autocomplete="name" placeholder=" " /><span>Name</span></label>
+              <label class="x-fl"><input name="phone" type="tel" required inputmode="tel" autocomplete="tel" pattern="[0-9+ ]{10,15}" placeholder=" " /><span>Phone</span></label>
+              <label class="x-fl"><input name="city" required autocomplete="address-level2" placeholder=" " /><span>City</span></label>
+              <label class="x-fl"><select name="business"><option>Car dealer</option><option>Garage</option><option>Investor</option><option>Other</option></select><span>Current business</span></label>
+              <button class="x-btn" type="submit">Send enquiry</button>
+              <div class="x-sent" hidden>
+                <svg viewBox="0 0 64 64" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="32" cy="32" r="27" /><path d="M21 33l7 7 15-16" /></svg>
+                <b>Enquiry sent.</b>
+                <p>Your partnership options are below.</p>
+              </div>
+            </form>
+          </div>
+          <div class="x-thanks" id="x-thanks" hidden tabindex="-1" role="status">
+            <p class="x-idx">Thank you</p>
+            <h3>Here's how you can partner with us.</h3>
+            <ul class="x-formats">
+              <li><b>Chekd Garage</b><span>Convert your garage</span></li>
+              <li><b>Chekd Point</b><span>Car sales and quick service</span></li>
+              <li><b>Chekd Hub</b><span>Flagship: sales, refurbishment, service, parts</span></li>
+              <li><b>District Master</b><span>Own and grow a district</span></li>
+            </ul>
+            <p class="x-ok is-on"><svg aria-hidden="true"><use href="#x-check" /></svg><span>Our partnership team will call you within 24 hours with investment details and territory availability.</span></p>
+          </div>
+        </section>
+
+        <section class="x-sec" id="goal">
+          <div class="x-sec__head">
+            <p class="x-idx">Our 5-year goal</p>
+            <h2 class="x-h">Built for every town in India.</h2>
+          </div>
+          <div class="x-stats x-count" id="x-stats">
+            <div class="x-stat"><strong><span data-to="500">500</span><i>+</i></strong><span>Towns</span></div>
+            <div class="x-stat"><strong><span data-to="10">10</span> lakh</strong><span>Chekd Passports</span></div>
+            <div class="x-stat"><strong><span data-to="3">3</span> lakh</strong><span>Cars a year</span></div>
+            <div class="x-stat"><strong><span data-to="5">5</span></strong><span>Languages</span></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="x-foot">
+        <a class="x-outline" href="#top" aria-label="Chekd Cars, back to top">CHEKD</a>
+        <div class="x-foot__row">
+          <p class="x-tagline">Checked. Trusted. Wow.</p>
+          <p class="x-mute">Bengaluru 560064<br /><a href="tel:+919019088160">+91 901 908 8160</a></p>
+          <div class="x-foot__links"><a class="x-btn x-btn--ghost" href="https://wa.me/919019088160" target="_blank" rel="noopener">WhatsApp us</a></div>
+        </div>
+        <p class="x-note">© 2026 Chekd Cars. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <div class="x-float">
+      <a class="x-fab x-fab--top" id="x-totop" href="#top" aria-label="Back to top" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6" /></svg></a>
+      <a class="x-fab x-fab--wa" href="https://wa.me/919019088160" target="_blank" rel="noopener" aria-label="Chat with Chekd Cars on WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2a9.7 9.7 0 0 0-8.4 14.6L2.2 21.8l5.1-1.3A9.7 9.7 0 1 0 12 2.2zm0 17.7a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .2-1.2c-.1-.1-.3-.2-.5-.3z" /></svg></a>
+    </div>
+
+    <nav class="x-tabs" aria-label="Sections">
+      <a href="#buy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="6.5" /><path d="M16 16l4.5 4.5" /></svg>Buy</a>
+      <a href="#service"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6.5a4 4 0 0 0 5 5L12 19a2.1 2.1 0 0 1-3-3l7.5-7.5zM14.5 6.5L18 3l3 3-3.5 3.5" /></svg>Service</a>
+      <a class="x-tabs__fab" href="#sell"><span class="x-tabs__orb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12.5V4h8.5L21 13.5 13.5 21z" /><circle cx="7.5" cy="8.5" r="1.4" /></svg></span>Sell</a>
+      <a href="#doorstep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" /><circle cx="12" cy="9.5" r="2.5" /></svg>Doorstep</a>
+      <a href="#partner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6M5 9v11h14V9M10 20v-6h4v6" /></svg>Partner</a>
+    </nav>
+
+    <script src="hark.js"></script>
+    <script>
+      (function () {
+        var doc = document, root = doc.documentElement;
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var inr = function (n) { return "₹" + Math.round(n).toLocaleString("en-IN"); };
+        var $$ = function (s, el) { return [].slice.call((el || doc).querySelectorAll(s)); };
+
+        // theme: follows the system until toggled; nothing is stored
+        var tbtn = doc.getElementById("x-theme");
+        function setTheme(t) {
+          root.setAttribute("data-wc", t); root.setAttribute("data-theme", t);
+          tbtn.setAttribute("aria-label", t === "dark" ? "Switch to light theme" : "Switch to dark theme");
+        }
+        setTheme(root.getAttribute("data-wc"));
+        tbtn.addEventListener("click", function () { setTheme(root.getAttribute("data-wc") === "dark" ? "light" : "dark"); });
+
+        // pressed-button groups
+        function group(btns, fn) {
+          btns.forEach(function (b) {
+            b.addEventListener("click", function () {
+              btns.forEach(function (o) { o.setAttribute("aria-pressed", o === b ? "true" : "false"); });
+              fn(b);
+            });
+          });
+        }
+
+        // listings filter
+        var grid = doc.getElementById("x-grid"), cards = $$("#x-grid .x-card"), chips = $$("#x-filter .x-chip"), count = doc.getElementById("x-count");
+        var clearBtn = doc.getElementById("x-clear"), bempty = doc.getElementById("x-bempty");
+        cards.forEach(function (c, i) {
+          var specs = $$(".x-specs li", c).map(function (l) { return l.textContent; });
+          var name = c.querySelector("h3").textContent;
+          c._d = { i: i, name: name, price: +c.getAttribute("data-price"), year: +specs[0], km: parseInt(specs[1].replace(/\D/g, ""), 10),
+            fuel: specs.length > 3 ? specs[2] : "", town: specs[specs.length - 1], score: parseInt(c.querySelector(".x-score").textContent, 10) };
+        });
+        var type = "car", q = { brand: "", budget: "", fuel: "", town: "" };
+        function filter(f) {
+          if (f) type = f;
+          var n = 0, lo = 0, hi = Infinity;
+          if (q.budget) { lo = +q.budget.split("-")[0]; hi = +q.budget.split("-")[1]; }
+          cards.forEach(function (c) {
+            var d = c._d;
+            var show = (type === "all" || (type === "ev" ? c.hasAttribute("data-ev") : c.getAttribute("data-type") === type)) &&
+              (!q.brand || d.name.indexOf(q.brand) === 0) && d.price >= lo && d.price <= hi &&
+              (!q.fuel || d.fuel.indexOf(q.fuel) === 0) && (!q.town || d.town === q.town);
+            c.hidden = !show; if (show) n++;
+          });
+          var tags = [q.brand, q.fuel === "EV" ? "Electric" : q.fuel, q.town].filter(Boolean);
+          count.textContent = n + (n === 1 ? " listing" : " listings") + " shown" + (tags.length ? ": " + tags.join(" · ") : "");
+          clearBtn.hidden = !(q.brand || q.budget || q.fuel || q.town);
+          bempty.hidden = n > 0;
+          chips.forEach(function (c) { c.setAttribute("aria-pressed", c.getAttribute("data-filter") === type ? "true" : "false"); });
+        }
+        group(chips, function (b) { filter(b.getAttribute("data-filter")); });
+        filter("car");
+        clearBtn.addEventListener("click", function () {
+          q = { brand: "", budget: "", fuel: "", town: "" };
+          var s = doc.getElementById("x-search"); ["brand", "budget", "fuel", "town"].forEach(function (k) { s[k].value = ""; });
+          filter();
+        });
+
+        // sort
+        doc.getElementById("x-sort").addEventListener("change", function () {
+          var k = this.value;
+          cards.slice().sort(function (a, b) {
+            a = a._d; b = b._d;
+            if (k === "price-asc") return a.price - b.price;
+            if (k === "price-desc") return b.price - a.price;
+            if (k === "score") return b.score - a.score;
+            if (k === "year") return b.year - a.year;
+            if (k === "km") return a.km - b.km;
+            return a.i - b.i;
+          }).forEach(function (c) { grid.appendChild(c); });
+        });
+
+        // hero quick search
+        var kind = "car";
+        group($$("#x-search .x-toggle button"), function (b) { kind = b.getAttribute("data-kind"); });
+        doc.getElementById("x-search").addEventListener("submit", function (e) {
+          e.preventDefault();
+          var s = e.target;
+          q = { brand: s.brand.value, budget: s.budget.value, fuel: s.fuel.value, town: s.town.value };
+          var bikeBrand = q.brand === "Royal Enfield" || q.brand === "Ather";
+          filter(q.brand ? (bikeBrand ? "bike" : "car") : kind);
+          doc.getElementById("buy").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+        });
+
+        // compare up to 3
+        var picked = [], drawer = doc.getElementById("x-drawer"), cmpTable = doc.getElementById("x-cmp-table"), cmpOpen = doc.getElementById("x-cmp-open");
+        cards.forEach(function (c) {
+          var b = doc.createElement("button");
+          b.type = "button"; b.className = "x-cmp"; b.setAttribute("aria-pressed", "false");
+          b.textContent = "+ Compare"; b.setAttribute("aria-label", "Compare " + c._d.name);
+          c.insertBefore(b, c.querySelector(".x-card__foot"));
+          c._cmp = b;
+          b.addEventListener("click", function () {
+            var at = picked.indexOf(c);
+            if (at > -1) picked.splice(at, 1); else if (picked.length < 3) picked.push(c);
+            renderCmp();
+          });
+        });
+        function renderCmp() {
+          cards.forEach(function (c) {
+            var on = picked.indexOf(c) > -1;
+            c._cmp.setAttribute("aria-pressed", on ? "true" : "false");
+            c._cmp.textContent = on ? "✓ Comparing" : "+ Compare";
+            c._cmp.disabled = !on && picked.length >= 3;
+          });
+          doc.getElementById("x-cmp-n").textContent = picked.length;
+          doc.getElementById("x-cmp-names").textContent = picked.map(function (c) { return c._d.name; }).join(", ");
+          drawer.hidden = !picked.length;
+          cmpOpen.disabled = picked.length < 2;
+          if (picked.length < 2) { cmpTable.hidden = true; cmpOpen.setAttribute("aria-expanded", "false"); }
+          var rows = [["Price", function (d) { return inr(d.price); }], ["Year", function (d) { return d.year; }], ["Kilometres", function (d) { return d.km.toLocaleString("en-IN") + " km"; }],
+            ["Fuel", function (d) { return d.fuel || "Not listed"; }], ["Town", function (d) { return d.town; }], ["ChekdScore", function (d) { return d.score; }]];
+          var esc = function (s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;"); };
+          cmpTable.innerHTML = "<table><thead><tr><td></td>" + picked.map(function (c) { return "<th scope=\"col\">" + esc(c._d.name) + "</th>"; }).join("") + "</tr></thead><tbody>" +
+            rows.map(function (r) { return "<tr><th scope=\"row\">" + r[0] + "</th>" + picked.map(function (c) { return "<td>" + esc(r[1](c._d)) + "</td>"; }).join("") + "</tr>"; }).join("") + "</tbody></table>";
+          root.style.setProperty("--x-dh", drawer.hidden ? "0px" : drawer.offsetHeight + 8 + "px");
+        }
+        cmpOpen.addEventListener("click", function () {
+          var open = cmpTable.hidden;
+          cmpTable.hidden = !open; cmpOpen.setAttribute("aria-expanded", open ? "true" : "false");
+          cmpOpen.textContent = open ? "Hide" : "Compare";
+          root.style.setProperty("--x-dh", drawer.offsetHeight + 8 + "px");
+        });
+        doc.getElementById("x-cmp-clear").addEventListener("click", function () { picked = []; cmpOpen.textContent = "Compare"; renderCmp(); });
+
+        // tilt on hover
+        if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+          cards.forEach(function (c) {
+            c.addEventListener("pointermove", function (e) {
+              var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+              c.style.transform = "perspective(900px) rotateX(" + (-y * 6).toFixed(2) + "deg) rotateY(" + (x * 8).toFixed(2) + "deg) translateY(-4px)";
+            });
+            c.addEventListener("pointerleave", function () { c.style.transform = ""; });
+          });
+        }
+
+        // EMI calculator, 13.5% p.a.
+        var ep = doc.getElementById("e-price"), ed = doc.getElementById("e-down"), et = doc.getElementById("e-ten");
+        function emi() {
+          var price = +ep.value;
+          ed.max = price; if (+ed.value > price) ed.value = price;
+          var p = price - +ed.value, n = +et.value, r = 13.5 / 1200;
+          var m = p > 0 ? (p * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1) : 0;
+          doc.getElementById("o-price").textContent = inr(price);
+          doc.getElementById("o-down").textContent = inr(+ed.value);
+          doc.getElementById("o-ten").textContent = n + " months";
+          doc.getElementById("o-emi").textContent = inr(m);
+          doc.getElementById("o-emi-note").textContent = "Loan of " + inr(p) + " at 13.5% p.a. for " + n + " months";
+        }
+        [ep, ed, et].forEach(function (i) { i.addEventListener("input", emi); });
+        emi();
+        cards.forEach(function (c) {
+          c.querySelector(".x-textbtn").addEventListener("click", function () {
+            ep.value = c.getAttribute("data-price");
+            ed.value = Math.round((+ep.value * 0.2) / 5000) * 5000;
+            emi();
+            doc.getElementById("emi").scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+          });
+        });
+
+        // sell estimate: indicative only
+        var sSeg = doc.getElementById("s-seg"), sYear = doc.getElementById("s-year"), sKm = doc.getElementById("s-km");
+        function money(n) { return n >= 100000 ? "₹" + (n / 100000).toFixed(2) + " lakh" : inr(Math.round(n / 500) * 500); }
+        function est() {
+          var age = Math.max(0, 2026 - +sYear.value), km = +sKm.value;
+          var v = +sSeg.value * Math.pow(0.87, age) * (1 - Math.min(km / 250000, 1) * 0.3);
+          doc.getElementById("o-year").textContent = sYear.value;
+          doc.getElementById("o-km").textContent = km.toLocaleString("en-IN") + " km";
+          tweenEst(v * 0.93, v * 1.05);
+        }
+        var estOut = doc.getElementById("o-est"), estA = 0, estB = 0, estRaf = 0;
+        function fmtEst(a, b) { return a >= 100000 ? money(a).replace(" lakh", "") + " to " + money(b).replace("₹", "") : money(a) + " to " + money(b); }
+        function tweenEst(a, b) {
+          var fa = estA, fb = estB, t0 = null;
+          estA = a; estB = b;
+          cancelAnimationFrame(estRaf);
+          if (reduce) { estOut.textContent = fmtEst(a, b); return; }
+          estOut.classList.remove("is-pop"); void estOut.offsetWidth; estOut.classList.add("is-pop");
+          (function step(t) {
+            if (!t0) t0 = t;
+            var k = Math.min((t - t0) / 600, 1), e = 1 - Math.pow(1 - k, 3);
+            estOut.textContent = fmtEst(fa + (a - fa) * e, fb + (b - fb) * e);
+            if (k < 1) estRaf = requestAnimationFrame(step);
+          })(performance.now());
+        }
+        [sSeg, sYear, sKm].forEach(function (i) { i.addEventListener("input", est); });
+        est();
+
+        // service toggle
+        var rows = $$(".x-prices li");
+        group($$("#x-svc button"), function (b) {
+          var k = b.getAttribute("data-kind");
+          rows.forEach(function (r) { r.hidden = r.getAttribute("data-for").split(" ").indexOf(k) < 0; });
+        });
+
+        // forms: inline success, no alerts
+        $$(".x-js-form").forEach(function (f) {
+          f.addEventListener("submit", function (e) {
+            e.preventDefault();
+            if (!f.checkValidity()) {
+              var bad = f.querySelector(":invalid"); bad.focus(); f.reportValidity(); return;
+            }
+            $$("input, select, button[type=submit]", f).forEach(function (el) { el.disabled = true; });
+            f.querySelector(".x-ok").classList.add("is-on");
+          });
+        });
+
+        // doorstep booking: date and slot chips
+        var days = $$("#x-days .x-chip"), slots = $$("#x-slots .x-chip"), now = new Date();
+        days.forEach(function (b) {
+          var off = +b.getAttribute("data-off");
+          if (off > 1) {
+            var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + off);
+            b.textContent = d.toLocaleDateString("en-IN", { weekday: "short", day: "numeric", month: "short" });
+          }
+        });
+        var bookErr = doc.getElementById("x-book-err");
+        group(days, function () { bookErr.classList.remove("is-on"); });
+        group(slots, function () { bookErr.classList.remove("is-on"); });
+        var book = doc.getElementById("x-book");
+        book.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!book.checkValidity()) { book.querySelector(":invalid").focus(); book.reportValidity(); return; }
+          var picked = function (set) { return set.some(function (b) { return b.getAttribute("aria-pressed") === "true"; }); };
+          if (!picked(days) || !picked(slots)) { bookErr.classList.add("is-on"); return; }
+          $$("input, select, button", book).forEach(function (el) { el.disabled = true; });
+          book.querySelector(".x-ok").classList.add("is-on");
+        });
+
+        // partner enquiry: reveal the formats after submit
+        var pf = doc.getElementById("x-partner"), thanks = doc.getElementById("x-thanks");
+        pf.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!pf.checkValidity()) { pf.querySelector(":invalid").focus(); pf.reportValidity(); return; }
+          $$("input, select, button", pf).forEach(function (el) { el.disabled = true; });
+          pf.querySelector("button[type=submit]").textContent = "Enquiry sent";
+          pf.classList.add("is-sent");
+          pf.querySelector(".x-sent").hidden = false;
+          thanks.hidden = false;
+          thanks.classList.add("is-in");
+          thanks.focus({ preventScroll: true });
+          thanks.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        });
+
+        // parts: category chips + make/model and part search
+        var parts = $$("#x-parts .x-part"), pcats = $$("#x-pcat .x-chip"), psearch = doc.getElementById("x-psearch");
+        var pcount = doc.getElementById("x-pcount"), pempty = doc.getElementById("x-pempty"), pcat = "all";
+        function words(s) { return s.toLowerCase().split(/\s+/).filter(Boolean); }
+        function filterParts() {
+          var car = words(psearch.car.value), part = words(psearch.part.value), n = 0;
+          parts.forEach(function (c) {
+            var fits = c.getAttribute("data-fits"), hay = c.getAttribute("data-name") + " " + c.getAttribute("data-cat");
+            var okCat = pcat === "all" || c.getAttribute("data-cat") === pcat;
+            var okCar = !car.length || fits.indexOf("any") === 0 || car.some(function (w) { return fits.indexOf(w) > -1; });
+            var okPart = !part.length || part.some(function (w) { return hay.indexOf(w) > -1 || hay.indexOf(w.replace(/s$/, "")) > -1; });
+            var show = okCat && okCar && okPart;
+            c.hidden = !show; if (show) n++;
+          });
+          pcount.textContent = n + (n === 1 ? " part" : " parts") + " shown";
+          pempty.hidden = n > 0;
+        }
+        group(pcats, function (b) { pcat = b.getAttribute("data-cat"); filterParts(); });
+        psearch.addEventListener("submit", function (e) { e.preventDefault(); filterParts(); });
+        [psearch.car, psearch.part].forEach(function (i) { i.addEventListener("input", filterParts); });
+
+        // cart count, front end only
+        var cart = doc.getElementById("x-cart"), cartN = doc.getElementById("x-cart-n"), inCart = 0;
+        parts.forEach(function (c) {
+          var b = c.querySelector(".x-add"), mine = 0, name = c.querySelector("h3").textContent;
+          b.addEventListener("click", function () {
+            inCart++; mine++;
+            cartN.textContent = inCart;
+            cart.setAttribute("aria-label", "Parts cart, " + inCart + (inCart === 1 ? " item" : " items"));
+            cart.classList.add("has-items");
+            cart.classList.remove("is-bump"); void cart.offsetWidth; cart.classList.add("is-bump");
+            b.classList.add("is-added");
+            b.textContent = "Added (" + mine + ")";
+            b.setAttribute("aria-label", "Add another " + name + ", " + mine + " in cart");
+          });
+        });
+
+        // passport: reveal the mini form
+        var pbtn = doc.getElementById("x-passbtn"), pform = doc.getElementById("x-pform");
+        pbtn.addEventListener("click", function () {
+          var open = pform.hidden;
+          pform.hidden = !open;
+          pbtn.setAttribute("aria-expanded", open ? "true" : "false");
+          if (open) { pform.classList.add("is-in"); pform.querySelector("input").focus({ preventScroll: true }); pform.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" }); }
+        });
+
+        // reveal on scroll and count-up stats
+        $$(".x-sec__head, .x-sec > *, .x-marquee, .x-stats--trust").forEach(function (el) {
+          if (el.id === "x-thanks" || el.id === "x-drawer" || el.hidden || el.querySelector(".x-reveal")) return;
+          el.classList.add("x-reveal");
+        });
+        function countUp(box) {
+          $$("[data-to]", box).forEach(function (el) {
+            var to = +el.getAttribute("data-to"), t0 = null;
+            function step(t) {
+              if (!t0) t0 = t;
+              var k = Math.min((t - t0) / 1400, 1), v = Math.round(to * (1 - Math.pow(1 - k, 3)));
+              el.textContent = v.toLocaleString("en-IN");
+              if (k < 1) requestAnimationFrame(step);
+            }
+            el.textContent = "0"; requestAnimationFrame(step);
+          });
+        }
+        if (reduce || !("IntersectionObserver" in window)) {
+          $$(".x-reveal").forEach(function (el) { el.classList.add("is-in"); });
+        } else {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+          }, { threshold: 0.15 });
+          $$(".x-reveal").forEach(function (el) { io.observe(el); });
+          var so = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) { countUp(e.target); so.unobserve(e.target); } });
+          }, { threshold: 0.4 });
+          $$(".x-count").forEach(function (el) { so.observe(el); });
+        }
+
+        // active section: phone tabs and desktop nav
+        var tabs = $$(".x-tabs a, .x-top nav a");
+        if ("IntersectionObserver" in window) {
+          var to = new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+              if (!e.isIntersecting) return;
+              tabs.forEach(function (a) {
+                var on = a.getAttribute("href") === "#" + e.target.id;
+                a.classList.toggle("is-on", on);
+                if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+              });
+            });
+          }, { rootMargin: "-45% 0px -50% 0px" });
+          $$(".x-sec[id]").forEach(function (s) { to.observe(s); });
+        }
+
+        // doorstep 4-step line draws when it comes into view
+        var flow = doc.getElementById("x-flow");
+        if (reduce || !("IntersectionObserver" in window)) flow.classList.add("is-on");
+        else {
+          var fo = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { flow.classList.add("is-on"); fo.disconnect(); } }); }, { threshold: 0.5 });
+          fo.observe(flow);
+        }
+
+        // passport flip card
+        var flip = doc.getElementById("x-flip"), faces = $$(".x-flip__face", flip);
+        $$("[data-flip]", flip).forEach(function (b) {
+          b.addEventListener("click", function () {
+            var on = flip.classList.toggle("is-flipped");
+            faces[0].inert = on; faces[1].inert = !on;
+            faces[on ? 1 : 0].querySelector("[data-flip]").focus({ preventScroll: true });
+          });
+        });
+
+        // buy carousel arrows
+        var prevB = doc.getElementById("x-prev"), nextB = doc.getElementById("x-next");
+        function snapState() {
+          var max = grid.scrollWidth - grid.clientWidth;
+          prevB.disabled = grid.scrollLeft <= 2;
+          nextB.disabled = grid.scrollLeft >= max - 2;
+        }
+        function slide(dir) {
+          var step = (grid.querySelector(".x-card:not([hidden])") || grid).offsetWidth + 16;
+          var max = grid.scrollWidth - grid.clientWidth;
+          grid.scrollLeft = Math.max(0, Math.min(max, grid.scrollLeft + dir * step));
+          snapState();
+        }
+        prevB.addEventListener("click", function () { slide(-1); });
+        nextB.addEventListener("click", function () { slide(1); });
+        grid.addEventListener("scroll", snapState, { passive: true });
+        window.addEventListener("resize", snapState);
+        snapState();
+        var resetScroll = function () { grid.scrollLeft = 0; snapState(); };
+        chips.forEach(function (c) { c.addEventListener("click", resetScroll); });
+        doc.getElementById("x-sort").addEventListener("change", resetScroll);
+
+        // cursor spotlight on bento tiles and cards
+        $$(".x-promise li, .x-prices li, .x-card, .x-town, .x-formats li, .x-form, .x-emi").forEach(function (el) {
+          el.classList.add("x-spot");
+          if (reduce) return;
+          el.addEventListener("pointermove", function (e) {
+            var r = el.getBoundingClientRect();
+            el.style.setProperty("--mx", e.clientX - r.left + "px");
+            el.style.setProperty("--my", e.clientY - r.top + "px");
+          });
+        });
+
+        // scroll: progress bar, shrinking header, back to top
+        var bar = doc.getElementById("x-progress"), top = doc.querySelector(".x-top"), toTop = doc.getElementById("x-totop"), ticking = false;
+        function onScroll() {
+          ticking = false;
+          var y = window.scrollY, max = root.scrollHeight - window.innerHeight;
+          bar.style.setProperty("--x-p", max > 0 ? Math.min(y / max, 1) : 0);
+          top.classList.toggle("is-small", y > 40);
+          var showTop = y > 700;
+          toTop.classList.toggle("is-on", showTop);
+          toTop.tabIndex = showTop ? 0 : -1;
+        }
+        window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+        window.addEventListener("resize", onScroll);
+        onScroll();
+      })();
+    </script>
+  </body>
+</html>
